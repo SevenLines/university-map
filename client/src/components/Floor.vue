@@ -32,8 +32,10 @@
     }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
-    .content {
+<style lang="scss">
+    rect {
+        fill: white;
+        stroke: silver;
+        stroke-width: 0.2px;
     }
 </style>
