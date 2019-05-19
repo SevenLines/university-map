@@ -20,9 +20,7 @@
     export default class Floor extends Vue {
         @Prop() private msg!: string;
 
-
         mounted() {
-            console.log(this.$refs.svg);
             let panZoomTiger = svgPanZoom(<HTMLElement>this.$refs.svg, {
                 zoomScaleSensitivity: 1
                 , minZoom: 1
@@ -33,9 +31,13 @@
 </script>
 
 <style lang="scss">
-    rect {
-        fill: white;
-        stroke: silver;
+    rect, path {
+        /*fill: white;*/
+        stroke: #848484;
         stroke-width: 0.2px;
+    }
+    text {
+        stroke: none;
+        fill: black;
     }
 </style>
