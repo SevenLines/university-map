@@ -16,5 +16,8 @@ export const mutations: MutationTree<AuditoriesState> = {
     },
     setCurrentDate(state, date: Date) {
         state.currentDate = date;
+    },
+    setCurrentPair(state, pair: number) {
+        state.currentPair = pair;
     }
 };

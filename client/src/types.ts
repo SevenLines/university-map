@@ -8,6 +8,7 @@ export interface AuditoriesState {
     auditories: Dictionary<AuditoryItem>
     auditoriesOccupations: Dictionary<AuditoryOccupationItem>,
     currentDate: Date,
+    currentPair: number,
     showOccupied: boolean,
 }
 

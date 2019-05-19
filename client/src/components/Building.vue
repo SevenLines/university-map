@@ -1,9 +1,7 @@
 <template>
-    <div class="content" style="height: 99vh">
-        <svg ref="svg" width="100%" height="100%">
-            <Floor1 ref="floor1"/>
-        </svg>
-    </div>
+    <svg ref="svg" width="100%" height="100%">
+        <Floor1 ref="floor1"/>
+    </svg>
 </template>
 
 <script lang="ts">

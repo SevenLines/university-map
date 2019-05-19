@@ -31,6 +31,7 @@
 
         @Auditories.State("auditoriesOccupations") auditoriesOccupations: any;
         @Auditories.State("auditories") auditories: any;
+        @Auditories.State("currentPair") currentPair!: number;
 
         private toggleCenterUpdate: boolean = true;
 
@@ -50,7 +51,14 @@
         }
 
         get auditoryOccupation(): AuditoryOccupationItem | null {
-            return this.auditory ? this.auditoriesOccupations[this.auditory.id] : null;
+            let occupation = null;
+            if (this.auditory) {
+                occupation = this.auditoriesOccupations[this.auditory.id]
+                if (occupation) {
+                    return occupation[this.currentPair]
+                }
+            }
+            return occupation;
         }
 
         get regexMatch(): RegExpExecArray | null {
