@@ -11,6 +11,7 @@
     import {Component, Prop, Watch, Vue} from 'vue-property-decorator';
     import {Dictionary} from 'lodash';
     import {State, namespace} from 'vuex-class';
+    import tippy, {Instance as TippyInstance, Tippy} from 'tippy.js';
     import {AuditoryItem, AuditoryOccupationItem, LetterMapping} from "@/types"
 
     const Auditories = namespace("auditories");
@@ -40,6 +41,35 @@
             this.$nextTick(() => {
                 this.toggleCenterUpdate = !this.toggleCenterUpdate;
             })
+        }
+
+        @Watch('auditoryOccupation')
+        onAuditoryOccupationChanged() {
+            this.updateTooltip();
+        }
+
+        mounted(): any {
+            this.updateTooltip();
+        }
+
+        updateTooltip() {
+            if (this.$el) {
+                tippy(this.$el);
+                let instance: TippyInstance = (<any>this.$el)._tippy;
+
+                if (instance) {
+                    if (this.auditoryOccupation) {
+                        instance.enable();
+                        instance.setContent(`
+${this.auditoryOccupation.teacher}<br>
+${this.auditoryOccupation.discipline}<br>
+${this.auditoryOccupation.kont}
+                        `)
+                    } else {
+                        instance.disable();
+                    }
+                }
+            }
         }
 
         get type(): string {

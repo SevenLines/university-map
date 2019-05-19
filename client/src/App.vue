@@ -77,6 +77,8 @@
 
 <style lang="scss">
     @import "~element-ui/lib/theme-chalk/index.css";
+    @import "~tippy.js/index.css";
+
     body {
         margin: 0;
         padding: 0;

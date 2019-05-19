@@ -24,7 +24,10 @@ export interface OccupationItem {
 
 export interface AuditoryOccupationItem {
     key: string;
-    items: Array<OccupationItem>
+    teacher: string,
+    discipline: string,
+    kont: string,
+    nt: number
 }
 
 export const LetterMapping: Dictionary<string> = {
