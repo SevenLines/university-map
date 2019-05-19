@@ -9,7 +9,8 @@ export const auditories: Module<AuditoriesState, RootState> = {
     state: {
         auditories: {},
         auditoriesOccupations: {},
-        date: new Date()
+        currentDate: new Date(),
+        showOccupied: true
     },
     actions,
     mutations,

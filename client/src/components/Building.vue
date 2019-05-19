@@ -1,7 +1,6 @@
 <template>
-    <div class="content">
-        <svg ref="svg" width="100%" height="900px" fill-rule="evenodd" version="1.1"
-             xmlns="http://www.w3.org/2000/svg">
+    <div class="content" style="height: 99vh">
+        <svg ref="svg" width="100%" height="100%">
             <Floor1 ref="floor1"/>
         </svg>
     </div>
@@ -17,14 +16,14 @@
             Floor1
         }
     })
-    export default class Floor extends Vue {
-        @Prop() private msg!: string;
+    export default class Building extends Vue {
+        private panZoomTiger!: SvgPanZoom.Instance;
 
         mounted() {
-            let panZoomTiger = svgPanZoom(<HTMLElement>this.$refs.svg, {
-                zoomScaleSensitivity: 1
-                , minZoom: 1
-                , maxZoom: 10
+            this.panZoomTiger = svgPanZoom(<HTMLElement>this.$refs.svg, {
+                zoomScaleSensitivity: 1,
+                minZoom: 1,
+                maxZoom: 10
             });
         }
     }
@@ -39,5 +38,8 @@
     text {
         stroke: none;
         fill: black;
+    }
+    #way {
+        fill: #fff6e6;
     }
 </style>

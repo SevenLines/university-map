@@ -2,4 +2,5 @@ Flask
 PyYaml
 flask-restplus
 Flask-SQlAlchemy
+Flask-WTF
 pyodbc

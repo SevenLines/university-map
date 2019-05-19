@@ -5,13 +5,14 @@ export interface RootState {
 }
 
 export interface AuditoriesState {
-    auditories: Dictionary<Auditory>
+    auditories: Dictionary<AuditoryItem>
     auditoriesOccupations: Dictionary<AuditoryOccupationItem>,
-    date: Date,
+    currentDate: Date,
+    showOccupied: boolean,
 }
 
-export interface Auditory {
-    id: bigint,
+export interface AuditoryItem {
+    id: number,
     key: string,
     title: string;
 }

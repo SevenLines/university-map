@@ -5,6 +5,7 @@ from sqlalchemy.orm.util import aliased
 from sqlalchemy.sql.expression import or_, and_
 
 from server.base import db
+from server.consts import LETTER_MAPPING_TABLE
 
 
 class Kontkurs(db.Model):
@@ -212,6 +213,12 @@ class Auditory(db.Model):
 
     def __repr__(self):
         return str(self)
+
+    @staticmethod
+    def get_key(title: str):
+        title = title.strip().lower().replace("_вт", "").replace("-", "")
+        title = title.translate(LETTER_MAPPING_TABLE)
+        return title
 
     raspnagr = db.relationship('Raspnagr', backref=db.backref('auditory', lazy='joined'), lazy='dynamic')
     raspis = db.relationship('Raspis', backref=db.backref('auditory', lazy='joined'), lazy='dynamic')

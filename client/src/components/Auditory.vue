@@ -11,7 +11,7 @@
     import {Component, Prop, Watch, Vue} from 'vue-property-decorator';
     import {Dictionary} from 'lodash';
     import {State, namespace} from 'vuex-class';
-    import {LetterMapping} from "@/types"
+    import {AuditoryItem, AuditoryOccupationItem, LetterMapping} from "@/types"
 
     const Auditories = namespace("auditories");
 
@@ -30,6 +30,7 @@
         @Prop() private id!: string;
 
         @Auditories.State("auditoriesOccupations") auditoriesOccupations: any;
+        @Auditories.State("auditories") auditories: any;
 
         private toggleCenterUpdate: boolean = true;
 
@@ -44,9 +45,21 @@
             return this.d ? "path" : "rect";
         }
 
+        get auditory(): AuditoryItem | null {
+            return this.auditories[this.audId];
+        }
+
+        get auditoryOccupation(): AuditoryOccupationItem | null {
+            return this.auditory ? this.auditoriesOccupations[this.auditory.id] : null;
+        }
+
         get regexMatch(): RegExpExecArray | null {
             let r = /aud-([abvgdejik])(\d{3})(\w?)/;
             return r.exec(this.id);
+        }
+
+        get audId(): string {
+            return this.regexMatch ? this.regexMatch[1] + this.regexMatch[2] + this.regexMatch[3] : "";
         }
 
         get korpus(): string | null {
@@ -60,18 +73,33 @@
             if (this.korpus ) {
                 klass[`korpus${this.korpus.toUpperCase()}`] = true;
             }
+            klass['used-in-schedule'] = this.usedInSchedule;
+            klass['is-occupied'] = this.isOccupied;
             return klass
         }
 
+        get usedInSchedule() : boolean {
+            return !!this.auditory;
+        }
+
+        get isOccupied(): boolean {
+            return !!this.auditoryOccupation;
+        }
+
         get auditoryName(): string {
-            let match = this.regexMatch;
-            if (match) {
-                let auditory = match[2];
-                let korpus = this.korpus ? LetterMapping[this.korpus] : "";
-                let letter = match[3] ? LetterMapping[match[3]] : '';
-                return `${korpus}${auditory}${letter.toLowerCase()}`;
+            if (this.auditory) {
+                return this.auditory ? this.auditory.title : "";
+
+            } else {
+                let match = this.regexMatch;
+                if (match) {
+                    let auditory = match[2];
+                    let korpus = this.korpus ? LetterMapping[this.korpus] : "";
+                    let letter = match[3] ? LetterMapping[match[3]] : '';
+                    return `${korpus}${auditory}${letter.toLowerCase()}`;
+                }
+                return "";
             }
-            return "";
         }
 
         get textCenter(): Point {
@@ -103,10 +131,13 @@
     #ffd884;
 
     .auditory {
-        cursor: pointer;
+        &.used-in-schedule {
+            cursor: pointer;
+        }
 
         text {
             text-anchor: middle;
+            dominant-baseline: middle;
             font-size: 2px;
         }
 
@@ -126,21 +157,42 @@
         @for $i from 1 through length($korpuses) {
             $korpus: nth($korpuses, $i);
             $korpusColor: nth($korpusColors, $i);
+            $borderFillColor: lighten($korpusColor, 10);
+            $borderStokeColor: desaturate(darken($korpusColor, 40), 50);
             &.korpus#{$korpus} {
-                text {
-                    stroke: desaturate(darken($korpusColor, 40), 50);
-                    stroke-width: 0.1px;
-                    fill: desaturate(darken($korpusColor, 70), 50);
-                    font-weight: bold;
-                    font-size: 2px;
-                }
-                .border {
-                    fill: lighten($korpusColor, 10);
-                    stroke: desaturate(darken($korpusColor, 40), 50);
-                }
-                &:hover {
+                &.used-in-schedule {
+                    text {
+                        /*stroke: desaturate(darken($korpusColor, 40), 50);
+                        stroke-width: 0.1px;*/
+                        fill: desaturate(darken($korpusColor, 70), 50);
+                        font-weight: bold;
+                        font-size: 2px;
+                    }
+
                     .border {
-                        fill: $korpusColor
+                        fill: $borderFillColor;
+                        stroke: $borderStokeColor;
+                    }
+
+                    &:hover {
+                        .border {
+                            fill: $korpusColor
+                        }
+                    }
+                }
+                &.is-occupied  {
+                    .border {
+                        stroke-width: 0.5px;
+                        stroke: mix($borderStokeColor, red);
+                        fill: darken($borderFillColor, 10);
+                    }
+                    &:hover {
+                        .border {
+                            fill: darken($korpusColor, 10);
+                        }
+                    }
+                    text {
+                        font-size: 3px;
                     }
                 }
             }

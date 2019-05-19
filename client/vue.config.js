@@ -9,4 +9,7 @@ module.exports = {
       .use('vue-svg-loader')
       .loader('vue-svg-loader');
   },
+  devServer: {
+    proxy: 'http://localhost:5000'
+  }
 };
