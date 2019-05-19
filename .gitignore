@@ -241,3 +241,5 @@ venv.bak/
 .mypy_cache/
 
 settings.yaml
+/data/
+.idea
