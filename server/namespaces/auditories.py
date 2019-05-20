@@ -69,17 +69,18 @@ class AuditoriesDayOccupation(Resource):
             *self.common_entites()
         ).order_by(Raspis.aud_id, Raspis.para)
 
-        occupation = {
-            aud_id: {
-                i.para: {
-                    'teacher': i.teacher,
-                    'discipline': i.discipline,
-                    'kont': i.kont,
-                    'nt': i.nt,
-                }
-                for i in items
-            } for aud_id, items in groupby(raspis, lambda x: x.aud_id)
-        }
+        occupation = {}
+        for aud_id, items in groupby(raspis, lambda x: x.aud_id):
+            occupation_item = occupation.setdefault(aud_id, {})
+            for item in items:
+                for para in range(item.kol_par):
+                    para_key = para + item.para
+                    para_item = occupation_item.setdefault(para_key, {
+                        'teacher': item.teacher,
+                        'discipline': item.discipline,
+                        'kont': item.kont,
+                        'nt': item.nt,
+                    })
 
         raspis_zaoch = self.add_joins(RaspisZaoch.query.filter(
             RaspisZaoch.dt == date

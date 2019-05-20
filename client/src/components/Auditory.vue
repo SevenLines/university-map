@@ -60,11 +60,12 @@
                 if (instance) {
                     if (this.auditoryOccupation) {
                         instance.enable();
-                        instance.setContent(`
-${this.auditoryOccupation.teacher}<br>
-${this.auditoryOccupation.discipline}<br>
-${this.auditoryOccupation.kont}
-                        `)
+                        let items = [
+                            this.auditoryOccupation.teacher,
+                            this.auditoryOccupation.discipline,
+                            this.auditoryOccupation.kont
+                        ].filter(i => i);
+                        instance.setContent(items.join("<br>"))
                     } else {
                         instance.disable();
                     }
