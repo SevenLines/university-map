@@ -6,5 +6,5 @@ if __name__ == "__main__":
     try:
         port = int(sys.argv[1])
     except:
-        port = 5000
+        port = 8000
     app.run(port=port)

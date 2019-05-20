@@ -1,30 +1,14 @@
 <template>
     <div id="app">
-        <el-container style="height:100vh">
-            <el-header style="display: flex; align-items: center; justify-content: center">
-                <el-date-picker
-                        v-model="currentDateValue"
-                        type="date"
-                        placeholder="Pick a day">
-                </el-date-picker>
-                <el-pagination
-                        :current-page.sync="currentPairValue"
-                        background
-                        layout="pager"
-                        :pager-count=9
-                        :total=80>
-                </el-pagination>
-                <el-switch
-                        inactive-text="Занятые"
-                        active-text="Свободные"
-                >
-                </el-switch>
-
-            </el-header>
-            <el-main style="padding: 0; overflow: hidden;">
+         <Layout style="height:100vh">
+            <Header style="display: flex; align-items: center; justify-content: center">
+                <DatePicker type="date" placeholder="Select date" style="width: 200px" v-model="currentDateValue"></DatePicker>
+                <NumberSelect v-model="currentPairValue" />
+            </Header>
+            <Content>
                 <building/>
-            </el-main>
-        </el-container>
+            </Content>
+        </Layout>
     </div>
 </template>
 
@@ -32,16 +16,14 @@
     import {Component, Vue} from 'vue-property-decorator';
     import Building from './components/Building.vue';
     import {namespace} from "vuex-class"
-    import ElementUI from 'element-ui';
-    import * as locale from 'element-ui/lib/locale/lang/en';
+    import NumberSelect from "@/components/common/NumberSelect.vue"
 
     const Auditories = namespace("auditories");
-
-    Vue.use(ElementUI, {locale});
 
     @Component({
         components: {
             Building,
+            NumberSelect,
         },
     })
     export default class App extends Vue {
@@ -76,7 +58,7 @@
 </script>
 
 <style lang="scss">
-    @import "~element-ui/lib/theme-chalk/index.css";
+    @import "~iview/dist/styles/iview.css";
     @import "~tippy.js/index.css";
 
     body {
@@ -91,4 +73,6 @@
         text-align: center;
         color: #2c3e50;
     }
+
+
 </style>

@@ -1,2 +1,2 @@
-declare module 'element-ui/lib/locale/lang/en' {
+declare module 'iview/dist/locale/ru-RU' {
 }
