@@ -10,7 +10,7 @@
             Auditory
         }
     })
-    export default class Floor1 extends FloorBase {
+    export default class Floor0 extends FloorBase {
         mounted() {
 
         }

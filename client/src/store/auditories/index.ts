@@ -1,4 +1,4 @@
-import {AuditoriesState, RootState} from "@/types";
+import {AuditoriesLevel, AuditoriesState, AuditoriesStatisticsMode, RootState} from "@/types";
 import {Module} from "vuex";
 import {actions} from "@/store/auditories/actions";
 import {mutations} from "@/store/auditories/mutations";
@@ -11,7 +11,9 @@ export const auditories: Module<AuditoriesState, RootState> = {
         auditoriesOccupations: {},
         currentDate: new Date(),
         showOccupied: true,
-        currentPair: 1
+        currentPair: 1,
+        currentMode: AuditoriesStatisticsMode.Occupied,
+        currentLevel: 1,
     },
     actions,
     mutations,

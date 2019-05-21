@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import {MutationTree} from "vuex";
-import {AuditoriesState, AuditoryItem, AuditoryOccupationItem, RootState} from "@/types";
+import {AuditoriesLevel, AuditoriesState, AuditoriesStatisticsMode, AuditoryItem} from "@/types";
 
 export const mutations: MutationTree<AuditoriesState> = {
     setAuditoriesOccupation(state, payload) {
@@ -19,5 +19,11 @@ export const mutations: MutationTree<AuditoriesState> = {
     },
     setCurrentPair(state, pair: number) {
         state.currentPair = pair;
+    },
+    setCurrentMode(state, mode: AuditoriesStatisticsMode) {
+        state.currentMode = mode;
+    },
+    setCurrentLevel(state, level: number) {
+        state.currentLevel = level;
     }
 };

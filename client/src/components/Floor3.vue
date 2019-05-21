@@ -10,7 +10,9 @@
             Auditory
         }
     })
-    export default class Floor1 extends FloorBase {
+    export default class Floor3 extends FloorBase {
+        protected template: string = "floor1.html";
+
         mounted() {
 
         }

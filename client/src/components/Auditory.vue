@@ -10,9 +10,9 @@
 <script lang="ts">
     import {Component, Prop, Watch, Vue} from 'vue-property-decorator';
     import {Dictionary} from 'lodash';
-    import {State, namespace} from 'vuex-class';
+    import {namespace} from 'vuex-class';
     import tippy, {Instance as TippyInstance, Tippy} from 'tippy.js';
-    import {AuditoryItem, AuditoryOccupationItem, LetterMapping} from "@/types"
+    import {AuditoriesStatisticsMode, AuditoryItem, AuditoryOccupationItem, LetterMapping} from "@/types"
 
     const Auditories = namespace("auditories");
 
@@ -33,6 +33,7 @@
         @Auditories.State("auditoriesOccupations") auditoriesOccupations: any;
         @Auditories.State("auditories") auditories: any;
         @Auditories.State("currentPair") currentPair!: number;
+        @Auditories.State("currentMode") currentMode!: AuditoriesStatisticsMode;
 
         private toggleCenterUpdate: boolean = true;
 
@@ -114,6 +115,8 @@
             }
             klass['used-in-schedule'] = this.usedInSchedule;
             klass['is-occupied'] = this.isOccupied;
+            klass['is-unoccupied'] = !this.isOccupied;
+            klass[`mode-${this.currentMode.toString()}`] = true;
             return klass
         }
 
@@ -219,19 +222,46 @@
                         }
                     }
                 }
-                &.is-occupied  {
-                    .border {
-                        stroke-width: 0.5px;
-                        stroke: mix($borderStokeColor, red);
-                        fill: darken($borderFillColor, 10);
-                    }
-                    &:hover {
+
+                &.mode-Occupied {
+                    &.is-occupied {
                         .border {
-                            fill: darken($korpusColor, 10);
+                            stroke-width: 0.5px;
+                            stroke: mix($borderStokeColor, red);
+                            fill: darken($borderFillColor, 10);
+                        }
+
+                        &:hover {
+                            .border {
+                                fill: darken($korpusColor, 10);
+                            }
+                        }
+
+                        text {
+                            font-size: 3px;
                         }
                     }
-                    text {
-                        font-size: 3px;
+                }
+
+                &.mode-Free {
+                    &.used-in-schedule {
+                        &.is-unoccupied {
+                            .border {
+                                stroke-width: 1px;
+                                stroke: mix(yellowgreen, #ffb626);
+                                fill: yellowgreen;
+                            }
+
+                            &:hover {
+                                .border {
+                                    fill: darken($korpusColor, 10);
+                                }
+                            }
+
+                            text {
+                                font-size: 3px;
+                            }
+                        }
                     }
                 }
             }

@@ -2,10 +2,21 @@
     <div id="app">
          <Layout style="height:100vh">
             <Header style="display: flex; align-items: center; justify-content: center">
-                <DatePicker type="date" placeholder="Select date" style="width: 200px" v-model="currentDateValue"></DatePicker>
+                <Select v-model="modeValue" style="width:200px">
+                    <Option v-for="mode in modes" :value="mode.key" :key="mode.key">{{ mode.value }}</Option>
+                </Select>
+                <DatePicker type="date" placeholder="Select date" style="width: 200px; margin-left: 1em"
+                            v-model="currentDateValue"></DatePicker>
                 <NumberSelect v-model="currentPairValue" />
             </Header>
-            <Content>
+            <Content style="position: relative">
+                <div style="position: absolute; right: 1em; top: 1em;">
+                    Этаж:
+                    <Button v-for="level in levels"
+                            :key="level.key"
+                            @click="currentLevelValue = level.value"
+                            :type="currentLevelValue == level.value ? 'primary': 'default'">{{level.key}}</Button>
+                </div>
                 <building/>
             </Content>
         </Layout>
@@ -17,6 +28,7 @@
     import Building from './components/Building.vue';
     import {namespace} from "vuex-class"
     import NumberSelect from "@/components/common/NumberSelect.vue"
+    import {AuditoriesLevel, AuditoriesStatisticsMode} from '@/types'
 
     const Auditories = namespace("auditories");
 
@@ -31,8 +43,12 @@
         @Auditories.Action('fetchAuditories') fetchAuditories: any;
         @Auditories.Action('updateAuditoryOccupationDate') updateAuditoryOccupationDate: any;
         @Auditories.Mutation('setCurrentPair') setCurrentPair: any;
+        @Auditories.Mutation('setCurrentMode') setCurrentMode: any;
+        @Auditories.Mutation('setCurrentLevel') setCurrentLevel: any;
         @Auditories.State("currentDate") currentDate!: Date;
         @Auditories.State("currentPair") currentPair!: number;
+        @Auditories.State("currentMode") currentMode!: AuditoriesStatisticsMode;
+        @Auditories.State("currentLevel") currentLevel!: AuditoriesLevel;
 
         get currentDateValue(): Date {
             return this.currentDate;
@@ -50,6 +66,38 @@
             this.setCurrentPair(value);
         }
 
+        get modeValue(): AuditoriesStatisticsMode {
+            return this.currentMode;
+        }
+
+        set modeValue(value) {
+            this.setCurrentMode(value);
+        }
+
+        get currentLevelValue(): AuditoriesLevel {
+            return this.currentLevel;
+        }
+
+        set currentLevelValue(value: AuditoriesLevel) {
+            this.setCurrentLevel(value);
+        }
+
+        get modes() {
+            return Object.keys(AuditoriesStatisticsMode).map(key => ({
+                key,
+                value: AuditoriesStatisticsMode[key as any]
+            }));
+        }
+
+        get levels() {
+            return [
+                {key: "Цоколь", value: 0},
+                {key: "Первый", value: 1},
+                {key: "Второй", value: 2},
+                {key: "Третий", value: 3},
+            ]
+        }
+
         created() {
             this.fetchAuditories();
             this.updateAuditoryOccupationDate({date: new Date(2019, 5, 20)});
@@ -60,6 +108,7 @@
 <style lang="scss">
     @import "~iview/dist/styles/iview.css";
     @import "~tippy.js/index.css";
+    @import "~animate.css/animate.css";
 
     body {
         margin: 0;
