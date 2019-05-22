@@ -5,15 +5,16 @@ export interface RootState {
 }
 
 export enum AuditoriesStatisticsMode {
-    Occupied = 'Занятые аудтиории',
-    Free = 'Свободные аудитории',
+    Occupied,
+    Free,
+    ByTeacher,
 }
 
 export enum AuditoriesLevel {
-    Basement = "Цоколь",
-    First = "Первый",
-    Second = "Второй",
-    Third = "Третий",
+    Basement,
+    First,
+    Second,
+    Third,
 }
 
 export interface AuditoriesState {

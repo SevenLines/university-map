@@ -116,7 +116,7 @@
             klass['used-in-schedule'] = this.usedInSchedule;
             klass['is-occupied'] = this.isOccupied;
             klass['is-unoccupied'] = !this.isOccupied;
-            klass[`mode-${this.currentMode.toString()}`] = true;
+            klass[`mode-${AuditoriesStatisticsMode[this.currentMode]}`] = true;
             return klass
         }
 

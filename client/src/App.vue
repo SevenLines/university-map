@@ -5,10 +5,10 @@
                 <div style="display: flex">
                     <b-select placeholder="Select a name" v-model="modeValue">
                         <option
-                                v-for="mode in modes"
-                                :value="mode.key"
-                                :key="mode.key">
-                            {{ mode.value }}
+                                v-for="(mode, id) in modes"
+                                :value="id"
+                                :key="id">
+                            {{ mode }}
                         </option>
                     </b-select>
                     <b-datepicker
@@ -24,11 +24,11 @@
             </div>
             <div style="flex-grow: 1; position: relative; background-color: #f9f9f9">
                 <div style="position: absolute; right: 1em; top: 1em;">
-                    <b-button v-for="level in levels"
-                              :key="level.key"
+                    <b-button v-for="(level, id) in levels"
+                              :key="id"
                               style="margin-right: 0.5em"
-                              @click="currentLevelValue = level.value"
-                              :type="currentLevelValue == level.value ? 'is-primary': ''">{{level.key}}
+                              @click="currentLevelValue = id"
+                              :type="currentLevelValue == id ? 'is-primary': ''">{{level}}
                     </b-button>
                 </div>
                 <building/>
@@ -97,19 +97,19 @@
         }
 
         get modes() {
-            return Object.keys(AuditoriesStatisticsMode).map(key => ({
-                key,
-                value: AuditoriesStatisticsMode[key as any]
-            }));
+            return {
+                [AuditoriesStatisticsMode.Occupied]: 'Занятые',
+                [AuditoriesStatisticsMode.Free]: 'Свободные',
+            }
         }
 
         get levels() {
-            return [
-                {key: "Цоколь", value: 0},
-                {key: "Первый", value: 1},
-                {key: "Второй", value: 2},
-                {key: "Третий", value: 3},
-            ]
+            return {
+                [AuditoriesLevel.Basement]: 'Цоколь',
+                [AuditoriesLevel.First]: 'Первый',
+                [AuditoriesLevel.Second]: 'Второй',
+                [AuditoriesLevel.Third]: 'Третий',
+            }
         }
 
         created() {
