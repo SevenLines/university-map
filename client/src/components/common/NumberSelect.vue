@@ -44,6 +44,12 @@
             background-color: white;
             padding: 0.5em 1em;
 
+            -webkit-transition: all .3s;
+            -moz-transition: all .3s;
+            -ms-transition: all .3s;
+            -o-transition: all .3s;
+            transition: all .3s;
+
             &.selected {
                 background-color: $selectedColor;
                 color:  white;

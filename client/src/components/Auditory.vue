@@ -227,8 +227,8 @@
                     &.is-occupied {
                         .border {
                             stroke-width: 0.5px;
-                            stroke: mix($borderStokeColor, red);
-                            fill: darken($borderFillColor, 10);
+                            stroke: mix($borderStokeColor, red, 15);
+                            fill: #ff557a;
                         }
 
                         &:hover {

@@ -1,25 +1,39 @@
 <template>
-    <div id="app">
-         <Layout style="height:100vh">
-            <Header style="display: flex; align-items: center; justify-content: center">
-                <Select v-model="modeValue" style="width:200px">
-                    <Option v-for="mode in modes" :value="mode.key" :key="mode.key">{{ mode.value }}</Option>
-                </Select>
-                <DatePicker type="date" placeholder="Select date" style="width: 200px; margin-left: 1em"
-                            v-model="currentDateValue"></DatePicker>
-                <NumberSelect v-model="currentPairValue" />
-            </Header>
-            <Content style="position: relative">
+    <div id="app" style="height: 100%;">
+        <div style="display: flex; flex-direction: column; height: 100%">
+            <div style="display: flex; padding: 0.5em 1em">
+                <div style="display: flex">
+                    <b-select placeholder="Select a name" v-model="modeValue">
+                        <option
+                                v-for="mode in modes"
+                                :value="mode.key"
+                                :key="mode.key">
+                            {{ mode.value }}
+                        </option>
+                    </b-select>
+                    <b-datepicker
+                            style="margin-left: 1em"
+                            v-model="currentDateValue"
+                            placeholder="Click to select..."
+                            icon="calendar-today">
+                    </b-datepicker>
+                </div>
+                <div style="align-self: flex-end">
+                    <NumberSelect v-model="currentPairValue"/>
+                </div>
+            </div>
+            <div style="flex-grow: 1; position: relative; background-color: #f9f9f9">
                 <div style="position: absolute; right: 1em; top: 1em;">
-                    Этаж:
-                    <Button v-for="level in levels"
-                            :key="level.key"
-                            @click="currentLevelValue = level.value"
-                            :type="currentLevelValue == level.value ? 'primary': 'default'">{{level.key}}</Button>
+                    <b-button v-for="level in levels"
+                              :key="level.key"
+                              style="margin-right: 0.5em"
+                              @click="currentLevelValue = level.value"
+                              :type="currentLevelValue == level.value ? 'is-primary': ''">{{level.key}}
+                    </b-button>
                 </div>
                 <building/>
-            </Content>
-        </Layout>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -100,15 +114,17 @@
 
         created() {
             this.fetchAuditories();
-            this.updateAuditoryOccupationDate({date: new Date(2019, 5, 20)});
+            this.updateAuditoryOccupationDate({date: new Date()});
         }
     }
 </script>
 
 <style lang="scss">
-    @import "~iview/dist/styles/iview.css";
+    /*@import "~iview/dist/styles/iview.css";*/
     @import "~tippy.js/index.css";
     @import "~animate.css/animate.css";
+    @import '~buefy/dist/buefy.css';
+
 
     body {
         margin: 0;
