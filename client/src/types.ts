@@ -19,11 +19,14 @@ export enum AuditoriesLevel {
 
 export interface AuditoriesState {
     auditories: Dictionary<AuditoryItem>
+    teachers: Dictionary<TeacherItem>
     auditoriesOccupations: Dictionary<AuditoryOccupationItem>,
+    teacherOccupation: Array<TeacherOccupationItem>
     currentDate: Date,
     currentPair: number,
     currentMode: AuditoriesStatisticsMode,
     currentLevel: number,
+    currentTeacherId: number | null,
     showOccupied: boolean,
 }
 
@@ -31,6 +34,12 @@ export interface AuditoryItem {
     id: number,
     key: string,
     title: string;
+}
+
+export interface TeacherItem {
+    id: number,
+    name: string,
+    fullName: string,
 }
 
 export interface OccupationItem {
@@ -43,6 +52,13 @@ export interface AuditoryOccupationItem {
     discipline: string,
     kont: string,
     nt: number
+}
+
+export interface TeacherOccupationItem {
+    para: number,
+    everyweek: number,
+    day: number,
+    aud_id: number,
 }
 
 export const LetterMapping: Dictionary<string> = {

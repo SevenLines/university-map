@@ -11,6 +11,17 @@
                             {{ mode }}
                         </option>
                     </b-select>
+                    <b-autocomplete
+                            style="margin-left: 1em; width: 300px"
+                            v-model="currentTeacherIdValue"
+                            :keep-first="true"
+                            :expanded="true"
+                            :open-on-focus="true"
+                            :data="teachersFilteredOrdered"
+                             @input="onTeacherSelect"
+                            :custom-formatter="i => i.fullName"
+                            field="id">
+                    </b-autocomplete>
                     <b-datepicker
                             style="margin-left: 1em"
                             v-model="currentDateValue"
@@ -38,11 +49,13 @@
 </template>
 
 <script lang="ts">
+    import _ from 'lodash';
     import {Component, Vue} from 'vue-property-decorator';
     import Building from './components/Building.vue';
     import {namespace} from "vuex-class"
     import NumberSelect from "@/components/common/NumberSelect.vue"
-    import {AuditoriesLevel, AuditoriesStatisticsMode} from '@/types'
+    import {AuditoriesLevel, AuditoriesStatisticsMode, AuditoryItem, TeacherItem} from '@/types'
+    import {Dictionary} from "vuex"
 
     const Auditories = namespace("auditories");
 
@@ -55,14 +68,20 @@
     export default class App extends Vue {
         @Auditories.State("auditoriesOccupations") auditoriesOccupations: any;
         @Auditories.Action('fetchAuditories') fetchAuditories: any;
+        @Auditories.Action('fetchTeachers') fetchTeachers: any;
         @Auditories.Action('updateAuditoryOccupationDate') updateAuditoryOccupationDate: any;
         @Auditories.Mutation('setCurrentPair') setCurrentPair: any;
         @Auditories.Mutation('setCurrentMode') setCurrentMode: any;
         @Auditories.Mutation('setCurrentLevel') setCurrentLevel: any;
+        @Auditories.Mutation('setCurrentTeacherId') setCurrentTeacherId: any;
         @Auditories.State("currentDate") currentDate!: Date;
         @Auditories.State("currentPair") currentPair!: number;
         @Auditories.State("currentMode") currentMode!: AuditoriesStatisticsMode;
         @Auditories.State("currentLevel") currentLevel!: AuditoriesLevel;
+        @Auditories.State("currentTeacherId") currentTeacherId!: number;
+        @Auditories.State("teachers") teachers!: Dictionary<TeacherItem>;
+
+        teacherFilter: string = "";
 
         get currentDateValue(): Date {
             return this.currentDate;
@@ -96,10 +115,19 @@
             this.setCurrentLevel(value);
         }
 
+        get currentTeacherIdValue(): number {
+            return this.currentTeacherId;
+        }
+
+        set currentTeacherIdValue(value: number) {
+            this.setCurrentTeacherId(value);
+        }
+
         get modes() {
             return {
                 [AuditoriesStatisticsMode.Occupied]: 'Занятые',
                 [AuditoriesStatisticsMode.Free]: 'Свободные',
+                [AuditoriesStatisticsMode.ByTeacher]: 'По преподавателю',
             }
         }
 
@@ -112,9 +140,21 @@
             }
         }
 
+        get teachersFilteredOrdered() {
+            return _(this.teachers).filter(i => {
+                return !this.teacherFilter || i.fullName.includes(this.teacherFilter)
+            }).sortBy(i => i.fullName).value();
+        }
+
         created() {
             this.fetchAuditories();
+            this.fetchTeachers();
             this.updateAuditoryOccupationDate({date: new Date()});
+        }
+
+        onTeacherSelect(option: any) {
+            console.log(arguments);
+            this.teacherFilter = option;
         }
     }
 </script>

@@ -14,8 +14,11 @@ api = Api(app, prefix="/api")
 # setup Database
 db = SQLAlchemy(app)
 
-from server.namespaces.auditories import api as ns1
-api.add_namespace(ns1)
+# setup API
+from server.namespaces.auditories import api as auditories_ns
+from server.namespaces.teachers import api as teachers_ns
+api.add_namespace(auditories_ns)
+api.add_namespace(teachers_ns)
 
 # setup YAML
 with open(os.path.join(app.root_path, '..', 'settings.yaml')) as f:
