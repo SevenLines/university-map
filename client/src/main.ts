@@ -12,6 +12,11 @@ Vue.use(Buefy, {
     defaultIconPack: 'fas',
 });
 
+import Multiselect from 'vue-multiselect'
+
+// register globally
+Vue.component('multiselect', Multiselect)
+
 Vue.component('v-select', vSelect);
 
 new Vue({

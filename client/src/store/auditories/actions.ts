@@ -9,7 +9,8 @@ export const actions: ActionTree<AuditoriesState, RootState> = {
     updateAuditoryOccupationDate({commit}, {date}): any {
         axios.get(URL_DAY_AUDITORY_OCCUPATION, {
             params: {
-                date: moment(date).format(DATE_FORMAT)
+                date: moment(date).format(DATE_FORMAT),
+                t: new Date().getTime(),
             }
         }).then(r => {
             commit('setCurrentDate', date);
@@ -18,7 +19,9 @@ export const actions: ActionTree<AuditoriesState, RootState> = {
     },
     fetchAuditories({commit}): any {
         axios.get(URL_AUDITORIES_LIST, {
-            params: {}
+            params: {
+                t: new Date().getTime(),
+            }
         }).then(r => {
             commit('setAuditories', r.data)
         })
@@ -26,16 +29,19 @@ export const actions: ActionTree<AuditoriesState, RootState> = {
     updateTeacherOccupation({commit}, {teacher_id}): any {
         axios.get(URL_TEACHER_OCCUPATION, {
             params: {
-                id: teacher_id
+                id: teacher_id,
+                t: new Date().getTime(),
             }
         }).then(r => {
-            commit('setTeacherId', teacher_id);
+            commit('setCurrentTeacherId', teacher_id);
             commit('setTeacherOccupation', r.data)
         })
     },
     fetchTeachers({commit}): any {
         axios.get(URL_TEACHERS_LIST, {
-            params: {}
+            params: {
+                t: new Date().getTime(),
+            }
         }).then(r => {
             commit('setTeachers', r.data)
         })

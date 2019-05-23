@@ -21,7 +21,7 @@ export interface AuditoriesState {
     auditories: Dictionary<AuditoryItem>
     teachers: Dictionary<TeacherItem>
     auditoriesOccupations: Dictionary<AuditoryOccupationItem>,
-    teacherOccupation: Array<TeacherOccupationItem>
+    teacherOccupation: Dictionary<any>
     currentDate: Date,
     currentPair: number,
     currentMode: AuditoriesStatisticsMode,

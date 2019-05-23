@@ -23,7 +23,7 @@ export const mutations: MutationTree<AuditoriesState> = {
         ).keyBy(i => i.id).value();
     },
     setTeacherOccupation(state, payload) {
-        state.teacherOccupation = payload;
+        state.teacherOccupation = _(payload).groupBy(i => i.aud_id).value();
     },
     setCurrentDate(state, date: Date) {
         state.currentDate = date;

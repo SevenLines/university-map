@@ -64,6 +64,6 @@ class TeacherOccupation(Resource):
     def get(self):
         form = self.InnerForm(request.args)
         if form.validate():
-            return self.get_data(form.id)
+            return self.get_data(form.data['id'])
 
         return form.errors

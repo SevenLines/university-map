@@ -1,3 +1,4 @@
+import { AuditoriesStatisticsMode } from '../types'
 <template>
     <g class="auditory" :class="addClasses">
         <component class="border" :is="type" :d="d" :width="width" :height="height" :x="x" :y="y" ref="border"/>
@@ -8,11 +9,12 @@
 </template>
 
 <script lang="ts">
-    import {Component, Prop, Watch, Vue} from 'vue-property-decorator';
+    import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
     import {Dictionary} from 'lodash';
     import {namespace} from 'vuex-class';
-    import tippy, {Instance as TippyInstance, Tippy} from 'tippy.js';
+    import tippy, {Instance as TippyInstance} from 'tippy.js';
     import {AuditoriesStatisticsMode, AuditoryItem, AuditoryOccupationItem, LetterMapping} from "@/types"
+    import get = Reflect.get
 
     const Auditories = namespace("auditories");
 
@@ -85,9 +87,17 @@
         get auditoryOccupation(): AuditoryOccupationItem | null {
             let occupation = null;
             if (this.auditory) {
-                occupation = this.auditoriesOccupations[this.auditory.id]
-                if (occupation) {
-                    return occupation[this.currentPair]
+                switch (this.currentMode) {
+                    case AuditoriesStatisticsMode.Occupied:
+                        occupation = this.auditoriesOccupations[this.auditory.id];
+                        if (occupation) {
+                            return occupation[this.currentPair]
+                        }
+                        break;
+                    case AuditoriesStatisticsMode.Free:
+                        break;
+                    case AuditoriesStatisticsMode.ByTeacher:
+                        break;
                 }
             }
             return occupation;
@@ -110,7 +120,7 @@
 
         get addClasses(): Dictionary<boolean> {
             let klass: Dictionary<boolean> = {};
-            if (this.korpus ) {
+            if (this.korpus) {
                 klass[`korpus${this.korpus.toUpperCase()}`] = true;
             }
             klass['used-in-schedule'] = this.usedInSchedule;
@@ -120,7 +130,7 @@
             return klass
         }
 
-        get usedInSchedule() : boolean {
+        get usedInSchedule(): boolean {
             return !!this.auditory;
         }
 

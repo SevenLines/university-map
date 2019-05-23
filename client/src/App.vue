@@ -1,3 +1,5 @@
+import { AuditoriesStatisticsMode } from './types'
+import { AuditoriesStatisticsMode } from './types'
 <template>
     <div id="app" style="height: 100%;">
         <div style="display: flex; flex-direction: column; height: 100%">
@@ -11,22 +13,23 @@
                             {{ mode }}
                         </option>
                     </b-select>
-                    <v-select
-                            style="margin-left: 1em; width: 300px"
+                    <multiselect
+                            style="margin-left: 1em; width: 400px"
+                            v-if="teacherSelectorVisible"
                             v-model="currentTeacherIdValue"
                             :options="teachersOrdered"
-                            :reduce="teacher => teacher.id"
                             label="fullName"
                     >
-                    </v-select>
+                    </multiselect>
                     <b-datepicker
                             style="margin-left: 1em"
+                            v-if="dateIsVisible"
                             v-model="currentDateValue"
                             placeholder="Click to select..."
                             icon="calendar-today">
                     </b-datepicker>
                 </div>
-                <div style="align-self: flex-end">
+                <div style="align-self: flex-end" v-if="pairsSelectorVisible">
                     <NumberSelect v-model="currentPairValue"/>
                 </div>
             </div>
@@ -51,7 +54,7 @@
     import Building from './components/Building.vue';
     import {namespace} from "vuex-class"
     import NumberSelect from "@/components/common/NumberSelect.vue"
-    import {AuditoriesLevel, AuditoriesStatisticsMode, AuditoryItem, TeacherItem} from '@/types'
+    import {AuditoriesLevel, AuditoriesStatisticsMode, TeacherItem} from '@/types'
     import {Dictionary} from "vuex"
 
     const Auditories = namespace("auditories");
@@ -67,6 +70,7 @@
         @Auditories.Action('fetchAuditories') fetchAuditories: any;
         @Auditories.Action('fetchTeachers') fetchTeachers: any;
         @Auditories.Action('updateAuditoryOccupationDate') updateAuditoryOccupationDate: any;
+        @Auditories.Action('updateTeacherOccupation') updateTeacherOccupation: any;
         @Auditories.Mutation('setCurrentPair') setCurrentPair: any;
         @Auditories.Mutation('setCurrentMode') setCurrentMode: any;
         @Auditories.Mutation('setCurrentLevel') setCurrentLevel: any;
@@ -117,7 +121,7 @@
         }
 
         set currentTeacherIdValue(value: number) {
-            this.setCurrentTeacherId(value);
+            this.updateTeacherOccupation({teacher_id: value.id});
         }
 
         get modes() {
@@ -141,6 +145,18 @@
             return _(this.teachers).sortBy(i => i.fullName).value();
         }
 
+        get teacherSelectorVisible() {
+            return this.currentMode == AuditoriesStatisticsMode.ByTeacher
+        }
+
+        get dateIsVisible() {
+            return this.currentMode != AuditoriesStatisticsMode.ByTeacher
+        }
+
+        get pairsSelectorVisible() {
+            return this.currentMode != AuditoriesStatisticsMode.ByTeacher
+        }
+
         created() {
             this.fetchAuditories();
             this.fetchTeachers();
@@ -148,18 +164,18 @@
         }
 
         onTeacherSelect(option: any) {
-            console.log(arguments);
             this.teacherFilter = option;
         }
     }
 </script>
+
 
 <style lang="scss">
     /*@import "~iview/dist/styles/iview.css";*/
     @import "~tippy.js/index.css";
     @import "~animate.css/animate.css";
     @import '~buefy/dist/buefy.css';
-    @import '~vue-select/dist/vue-select.css';
+    @import '~vue-multiselect/dist/vue-multiselect.min.css';
 
 
     body {

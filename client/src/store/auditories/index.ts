@@ -10,7 +10,7 @@ export const auditories: Module<AuditoriesState, RootState> = {
         auditories: {},
         teachers: {},
         auditoriesOccupations: {},
-        teacherOccupation: [],
+        teacherOccupation: {},
         currentDate: new Date(),
         showOccupied: true,
         currentPair: 1,
