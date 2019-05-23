@@ -11,17 +11,14 @@
                             {{ mode }}
                         </option>
                     </b-select>
-                    <b-autocomplete
+                    <v-select
                             style="margin-left: 1em; width: 300px"
                             v-model="currentTeacherIdValue"
-                            :keep-first="true"
-                            :expanded="true"
-                            :open-on-focus="true"
-                            :data="teachersFilteredOrdered"
-                             @input="onTeacherSelect"
-                            :custom-formatter="i => i.fullName"
-                            field="id">
-                    </b-autocomplete>
+                            :options="teachersOrdered"
+                            :reduce="teacher => teacher.id"
+                            label="fullName"
+                    >
+                    </v-select>
                     <b-datepicker
                             style="margin-left: 1em"
                             v-model="currentDateValue"
@@ -140,10 +137,8 @@
             }
         }
 
-        get teachersFilteredOrdered() {
-            return _(this.teachers).filter(i => {
-                return !this.teacherFilter || i.fullName.includes(this.teacherFilter)
-            }).sortBy(i => i.fullName).value();
+        get teachersOrdered() {
+            return _(this.teachers).sortBy(i => i.fullName).value();
         }
 
         created() {
@@ -164,6 +159,7 @@
     @import "~tippy.js/index.css";
     @import "~animate.css/animate.css";
     @import '~buefy/dist/buefy.css';
+    @import '~vue-select/dist/vue-select.css';
 
 
     body {
@@ -177,6 +173,12 @@
         -moz-osx-font-smoothing: grayscale;
         text-align: center;
         color: #2c3e50;
+    }
+
+    .vs__selected {
+        white-space: nowrap;
+        max-width: 100px;
+        text-overflow: ellipsis;
     }
 
 
