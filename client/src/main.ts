@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import store from './store/index'
-import vSelect from 'vue-select'
+import vSelect from 'vue-select';
 
 
 Vue.config.productionTip = false;
