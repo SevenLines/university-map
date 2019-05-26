@@ -1,4 +1,4 @@
-<template src="./templates/floor1.html"></template>
+<template src="./templates/floor2.html"></template>
 
 <script lang="ts">
     import {Component, Prop, Vue} from 'vue-property-decorator';
@@ -11,11 +11,6 @@
         }
     })
     export default class Floor2 extends FloorBase {
-        protected template: string = "floor1.html";
-
-        mounted() {
-
-        }
     }
 </script>
 

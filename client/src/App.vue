@@ -105,7 +105,7 @@ import { AuditoriesStatisticsMode } from './types'
         }
 
         set modeValue(value) {
-            this.setCurrentMode(value);
+            this.setCurrentMode(Number(value));
         }
 
         get currentLevelValue(): AuditoriesLevel {
@@ -116,11 +116,11 @@ import { AuditoriesStatisticsMode } from './types'
             this.setCurrentLevel(value);
         }
 
-        get currentTeacherIdValue(): number {
+        get currentTeacherIdValue(): any {
             return this.currentTeacherId;
         }
 
-        set currentTeacherIdValue(value: number) {
+        set currentTeacherIdValue(value) {
             this.updateTeacherOccupation({teacher_id: value.id});
         }
 

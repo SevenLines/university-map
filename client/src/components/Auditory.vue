@@ -1,4 +1,3 @@
-import { AuditoriesStatisticsMode } from '../types'
 <template>
     <g class="auditory" :class="addClasses">
         <component class="border" :is="type" :d="d" :width="width" :height="height" :x="x" :y="y" ref="border"/>
@@ -14,7 +13,6 @@ import { AuditoriesStatisticsMode } from '../types'
     import {namespace} from 'vuex-class';
     import tippy, {Instance as TippyInstance} from 'tippy.js';
     import {AuditoriesStatisticsMode, AuditoryItem, AuditoryOccupationItem, LetterMapping} from "@/types"
-    import get = Reflect.get
 
     const Auditories = namespace("auditories");
 
@@ -87,29 +85,30 @@ import { AuditoriesStatisticsMode } from '../types'
         get auditoryOccupation(): AuditoryOccupationItem | null {
             let occupation = null;
             if (this.auditory) {
-                switch (this.currentMode) {
-                    case AuditoriesStatisticsMode.Occupied:
-                        occupation = this.auditoriesOccupations[this.auditory.id];
-                        if (occupation) {
-                            return occupation[this.currentPair]
-                        }
-                        break;
-                    case AuditoriesStatisticsMode.Free:
-                        break;
-                    case AuditoriesStatisticsMode.ByTeacher:
-                        break;
+                if (this.currentMode == AuditoriesStatisticsMode.Occupied) {
+                    occupation = this.auditoriesOccupations[this.auditory.id];
+                    if (occupation) {
+                        return occupation[this.currentPair]
+                    }
                 }
             }
             return occupation;
         }
 
         get regexMatch(): RegExpExecArray | null {
-            let r = /aud-([abvgdejik])(\d{3})(\w?)/;
+            let r: RegExp;
+            if (this.id.includes("amf")) {
+                r = /aud-([abvgdejik])(amf)(\w?)/;
+            } else {
+                r = /aud-([abvgdejik])(\d{3})(\w?)/;
+            }
             return r.exec(this.id);
         }
 
         get audId(): string {
-            return this.regexMatch ? this.regexMatch[1] + this.regexMatch[2] + this.regexMatch[3] : "";
+            return this.regexMatch ? (this.regexMatch[1] || '')
+                + (this.regexMatch[2] || '')
+                + (this.regexMatch[3] || '') : "";
         }
 
         get korpus(): string | null {
@@ -194,11 +193,11 @@ import { AuditoriesStatisticsMode } from '../types'
         }
 
         .border {
-            -webkit-transition: all .3s;
-            -moz-transition: all .3s;
-            -ms-transition: all .3s;
-            -o-transition: all .3s;
-            transition: all .3s;
+            /*-webkit-transition: all .3s;*/
+            /*-moz-transition: all .3s;*/
+            /*-ms-transition: all .3s;*/
+            /*-o-transition: all .3s;*/
+            /*transition: all .3s;*/
             fill: white;
             stroke-width: 0.25px;
             stroke: silver;

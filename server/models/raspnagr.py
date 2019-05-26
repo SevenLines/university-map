@@ -216,7 +216,7 @@ class Auditory(db.Model):
 
     @staticmethod
     def get_key(title: str):
-        title = title.strip().lower().replace("_вт", "").replace("-", "")
+        title = title.strip().lower().replace("_вт", "").replace("-", "").replace(".", "")
         title = title.translate(LETTER_MAPPING_TABLE)
         return title
 
