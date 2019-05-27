@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.35"
-     inkscape:cx="571.11907"
-     inkscape:cy="288.48732"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="1723.7463"
+     inkscape:cy="189.3333"
      inkscape:document-units="mm"
      inkscape:current-layer="svg23309"
      showgrid="false"
@@ -35,8 +35,8 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:window-width="1600"
-     inkscape:window-height="878"
+     inkscape:window-width="1833"
+     inkscape:window-height="1057"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1" />
@@ -506,91 +506,81 @@
      id="aud-j202a"
      width="5.9330544"
      height="10.627493"
-     x="-627.15802"
+     x="621.22498"
      y="26.473143"
      style="fill:#ffffff;stroke:#000000;stroke-width:0.20074989;stroke-miterlimit:4;stroke-dasharray:none"
-     transform="scale(-1,1)"
      inkscape:label="#rect23901-1" />
   <rect
      id="aud-j202b"
      width="5.9330544"
      height="10.627493"
-     x="-620.94983"
+     x="615.01678"
      y="26.473143"
      style="fill:#ffffff;stroke:#000000;stroke-width:0.20074989;stroke-miterlimit:4;stroke-dasharray:none"
-     transform="scale(-1,1)"
      inkscape:label="#rect23901-0-8" />
   <rect
      id="aud-j202v"
      width="5.9330544"
      height="10.627493"
-     x="-614.7417"
+     x="608.80865"
      y="26.473143"
      style="fill:#ffffff;stroke:#000000;stroke-width:0.20074989;stroke-miterlimit:4;stroke-dasharray:none"
-     transform="scale(-1,1)"
      inkscape:label="#rect23901-7-9" />
   <rect
      id="aud-j202g"
      width="5.9330544"
      height="10.627493"
-     x="-608.53351"
+     x="602.60046"
      y="26.473143"
      style="fill:#ffffff;stroke:#000000;stroke-width:0.20074989;stroke-miterlimit:4;stroke-dasharray:none"
-     transform="scale(-1,1)"
      inkscape:label="#rect23901-6-3" />
   <rect
      id="aud-j204"
      width="5.9330544"
      height="10.627493"
-     x="-602.32538"
+     x="596.39233"
      y="26.473143"
      style="fill:#ffffff;stroke:#000000;stroke-width:0.20074989;stroke-miterlimit:4;stroke-dasharray:none"
-     transform="scale(-1,1)"
      inkscape:label="#rect23901-8-5" />
   <rect
      id="aud-j214"
      width="5.9330544"
      height="10.627493"
-     x="-549.10248"
+     x="543.16943"
      y="26.473143"
      style="fill:#ffffff;stroke:#000000;stroke-width:0.20074989;stroke-miterlimit:4;stroke-dasharray:none"
-     transform="scale(-1,1)"
      inkscape:label="#rect23901-4-0-18" />
   <rect
      style="fill:#ffffff;stroke:#000000;stroke-width:0.19045775;stroke-miterlimit:4;stroke-dasharray:none"
      y="26.473143"
-     x="-561.23486"
+     x="555.89459"
      height="10.627495"
      width="5.3402896"
      id="aud-j210"
-     transform="scale(-1,1)"
      inkscape:label="#rect23901-4-0-7-33" />
   <rect
      style="fill:#ffffff;stroke:#000000;stroke-width:0.19045775;stroke-miterlimit:4;stroke-dasharray:none"
      y="26.473143"
-     x="-555.64697"
+     x="550.3067"
      height="10.627495"
      width="5.3402896"
      id="aud-j212"
-     transform="scale(-1,1)"
      inkscape:label="#rect23901-0-9-8-8-5" />
   <rect
      id="aud-j205a"
      width="5.9330544"
      height="10.627493"
-     x="-608.53412"
+     x="602.60107"
      y="8.9033031"
      style="fill:#ffffff;stroke:#000000;stroke-width:0.20074989;stroke-miterlimit:4;stroke-dasharray:none"
-     transform="scale(-1,1)"
      inkscape:label="#rect23901-6-4-5" />
   <rect
      id="aud-j207"
      width="5.9330544"
      height="10.627493"
-     x="-602.32593"
+     x="596.39288"
      y="8.9033031"
      style="fill:#ffffff;stroke:#000000;stroke-width:0.20074989;stroke-miterlimit:4;stroke-dasharray:none"
-     transform="scale(-1,1)"
      inkscape:label="#rect23901-8-7-3" />
   <rect
      style="display:inline;opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.20170283;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -598,10 +588,9 @@
      ref="aud-g121"
      width="11.504233"
      height="10.627498"
-     x="-517.36566"
+     x="505.86142"
      y="137.56145"
-     inkscape:label="#rect71562"
-     transform="scale(-1,1)" />
+     inkscape:label="#rect71562" />
   <rect
      style="display:inline;opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.20170283;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="rect71564-2-8"
@@ -636,108 +625,96 @@
      id="aud-e222"
      width="5.9330544"
      height="10.627493"
-     x="-530.61847"
+     x="524.68542"
      y="137.56145"
      style="fill:#ffffff;stroke:#000000;stroke-width:0.20074989;stroke-miterlimit:4;stroke-dasharray:none"
-     transform="scale(-1,1)"
      inkscape:label="#rect23901-6-5-1-1-5" />
   <rect
      id="aud-e224"
      width="5.9330544"
      height="10.627493"
-     x="-524.41034"
+     x="518.47729"
      y="137.56145"
      style="fill:#ffffff;stroke:#000000;stroke-width:0.20074989;stroke-miterlimit:4;stroke-dasharray:none"
-     transform="scale(-1,1)"
      inkscape:label="#rect23901-8-0-4-4-3" />
   <rect
      style="fill:#ffffff;stroke:#000000;stroke-width:0.19045775;stroke-miterlimit:4;stroke-dasharray:none"
      y="137.56145"
-     x="-561.37524"
+     x="556.03497"
      height="10.627495"
      width="5.3402896"
      id="aud-e216"
-     transform="scale(-1,1)"
      inkscape:label="#rect23901-4-0-7-33-4" />
   <rect
      style="fill:#ffffff;stroke:#000000;stroke-width:0.19045775;stroke-miterlimit:4;stroke-dasharray:none"
      y="137.56145"
-     x="-555.78735"
+     x="550.44708"
      height="10.627495"
      width="5.3402896"
      id="aud-e218"
-     transform="scale(-1,1)"
      inkscape:label="#rect23901-0-9-8-8-5-0" />
   <rect
      id="aud-e203"
      width="5.9330544"
      height="10.627493"
-     x="-627.29895"
+     x="621.36591"
      y="119.99162"
      style="fill:#ffffff;stroke:#000000;stroke-width:0.20074989;stroke-miterlimit:4;stroke-dasharray:none"
-     transform="scale(-1,1)"
      inkscape:label="#rect23901-9-5-3" />
   <rect
      id="rect23901-0-7-1-8"
      width="5.9330544"
      height="10.627493"
-     x="-621.09082"
+     x="615.15778"
      y="119.99162"
-     style="fill:#ffffff;stroke:#000000;stroke-width:0.20074989;stroke-miterlimit:4;stroke-dasharray:none"
-     transform="scale(-1,1)" />
+     style="fill:#ffffff;stroke:#000000;stroke-width:0.20074989;stroke-miterlimit:4;stroke-dasharray:none" />
   <rect
      id="aud-e209"
      width="5.9330544"
      height="10.627493"
-     x="-595.3299"
+     x="589.39685"
      y="119.99162"
      style="fill:#ffffff;stroke:#000000;stroke-width:0.20074989;stroke-miterlimit:4;stroke-dasharray:none"
-     transform="scale(-1,1)"
      inkscape:label="#rect23901-4-4-8-5" />
   <rect
      id="aud-e211"
      width="5.9330544"
      height="10.627493"
-     x="-589.1217"
+     x="583.18866"
      y="119.99162"
      style="fill:#ffffff;stroke:#000000;stroke-width:0.20074989;stroke-miterlimit:4;stroke-dasharray:none"
-     transform="scale(-1,1)"
      inkscape:label="#rect23901-0-9-6-16-1" />
   <rect
      id="aud-e215b"
      width="5.9330544"
      height="10.627493"
-     x="-549.24347"
+     x="543.31042"
      y="119.99162"
      style="fill:#ffffff;stroke:#000000;stroke-width:0.20074989;stroke-miterlimit:4;stroke-dasharray:none"
-     transform="scale(-1,1)"
      inkscape:label="#rect23901-4-0-8-22-0" />
   <rect
      id="aud-e217"
      width="5.9330544"
      height="10.627493"
-     x="-530.61902"
+     x="524.68597"
      y="119.99162"
      style="fill:#ffffff;stroke:#000000;stroke-width:0.20074989;stroke-miterlimit:4;stroke-dasharray:none"
-     transform="scale(-1,1)"
      inkscape:label="#rect23901-6-5-1-0-3-6" />
   <rect
      id="aud-e219"
      width="5.9330544"
      height="10.627493"
-     x="-524.41083"
+     x="518.47778"
      y="119.99162"
      style="fill:#ffffff;stroke:#000000;stroke-width:0.20074989;stroke-miterlimit:4;stroke-dasharray:none"
-     transform="scale(-1,1)"
      inkscape:label="#rect23901-8-0-4-6-3-7" />
   <rect
      style="fill:#ffffff;stroke:#000000;stroke-width:0.20074989;stroke-miterlimit:4;stroke-dasharray:none"
      y="119.99162"
-     x="-504.94547"
+     x="499.01242"
      height="10.627493"
      width="5.9330544"
      id="aud-e223a"
-     transform="scale(-1,1)"
      inkscape:label="#rect23901-7-2-2-4-2-7-2" />
   <rect
      style="display:inline;opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.20170283;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -745,10 +722,9 @@
      ref="aud-g121"
      width="11.504233"
      height="10.627498"
-     x="-517.25671"
+     x="505.75247"
      y="247.93993"
-     inkscape:label="#rect71562"
-     transform="scale(-1,1)" />
+     inkscape:label="#rect71562" />
   <g
      id="g3397"
      transform="matrix(2.5411377,0,0,2.5411377,84.434606,-246.19537)">
@@ -787,73 +763,65 @@
      id="aud-d204"
      width="5.9330544"
      height="10.627493"
-     x="-602.35687"
+     x="596.42383"
      y="247.93993"
      style="fill:#ffffff;stroke:#000000;stroke-width:0.20074989;stroke-miterlimit:4;stroke-dasharray:none"
-     transform="scale(-1,1)"
      inkscape:label="#rect23901-8-5-7-3" />
   <rect
      id="aud-d206"
      width="5.9330544"
      height="10.627493"
-     x="-595.2204"
+     x="589.28735"
      y="247.93993"
      style="fill:#ffffff;stroke:#000000;stroke-width:0.20074989;stroke-miterlimit:4;stroke-dasharray:none"
-     transform="scale(-1,1)"
      inkscape:label="#rect23901-4-8-3-0" />
   <rect
      id="aud-d212"
      width="5.9330544"
      height="10.627493"
-     x="-536.71765"
+     x="530.78461"
      y="247.93993"
      style="fill:#ffffff;stroke:#000000;stroke-width:0.20074989;stroke-miterlimit:4;stroke-dasharray:none"
-     transform="scale(-1,1)"
      inkscape:label="#rect23901-7-2-2-7-4-9" />
   <rect
      id="aud-d214"
      width="5.9330544"
      height="10.627493"
-     x="-530.50952"
+     x="524.57648"
      y="247.93993"
      style="fill:#ffffff;stroke:#000000;stroke-width:0.20074989;stroke-miterlimit:4;stroke-dasharray:none"
-     transform="scale(-1,1)"
      inkscape:label="#rect23901-6-5-1-1-5-8" />
   <rect
      id="aud-d216"
      width="5.9330544"
      height="10.627493"
-     x="-524.30133"
+     x="518.36829"
      y="247.93993"
      style="fill:#ffffff;stroke:#000000;stroke-width:0.20074989;stroke-miterlimit:4;stroke-dasharray:none"
-     transform="scale(-1,1)"
      inkscape:label="#rect23901-8-0-4-4-3-9" />
   <rect
      id="aud-d203"
      width="5.9330544"
      height="10.627493"
-     x="-602.35748"
+     x="596.42444"
      y="230.37007"
      style="fill:#ffffff;stroke:#000000;stroke-width:0.20074989;stroke-miterlimit:4;stroke-dasharray:none"
-     transform="scale(-1,1)"
      inkscape:label="#rect23901-8-7-3-3-5" />
   <rect
      id="aud-d205"
      width="5.9330544"
      height="10.627493"
-     x="-595.22089"
+     x="589.28784"
      y="230.37007"
      style="fill:#ffffff;stroke:#000000;stroke-width:0.20074989;stroke-miterlimit:4;stroke-dasharray:none"
-     transform="scale(-1,1)"
      inkscape:label="#rect23901-4-4-8-5-1" />
   <rect
      id="aud-d215"
      width="5.9330544"
      height="10.627493"
-     x="-524.30188"
+     x="518.36884"
      y="230.37007"
      style="fill:#ffffff;stroke:#000000;stroke-width:0.20074989;stroke-miterlimit:4;stroke-dasharray:none"
-     transform="scale(-1,1)"
      inkscape:label="#rect23901-8-0-4-6-3-7-4" />
   <rect
      style="fill:none;stroke:#000000;stroke-width:0.2030475;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -1254,20 +1222,18 @@
      id="aud-damf"
      width="22.564898"
      height="37.938953"
-     x="-660.31403"
+     x="637.74915"
      y="225.95677"
-     inkscape:label="#rect71375"
-     transform="scale(-1,1)" />
+     inkscape:label="#rect71375" />
   <rect
      style="display:inline;opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.1915797;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="aud-d200"
      ref="aud-g101"
      width="6.6950998"
      height="14.069505"
-     x="-637.00531"
+     x="630.31018"
      y="249.82625"
-     inkscape:label="#rect71377"
-     transform="scale(-1,1)">
+     inkscape:label="#rect71377">
     <title
        id="title3051-0">Научное общество карбон</title>
   </rect>
@@ -1331,20 +1297,18 @@
      id="aud-jamf"
      width="22.564898"
      height="37.938953"
-     x="-660.31403"
+     x="637.74915"
      y="4.4752789"
-     inkscape:label="#rect71375"
-     transform="scale(-1,1)" />
+     inkscape:label="#rect71375" />
   <rect
      style="display:inline;opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.1915797;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="aud-j200"
      ref="aud-g101"
      width="6.6950998"
      height="14.069505"
-     x="-637.00531"
+     x="630.31018"
      y="28.34474"
-     inkscape:label="#rect71377"
-     transform="scale(-1,1)" />
+     inkscape:label="#rect71377" />
   <rect
      style="fill:none;stroke:#000000;stroke-width:0.20304748;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="aud-j205"
@@ -1413,19 +1377,17 @@
      id="aud-j218"
      width="5.5711327"
      height="10.627493"
-     x="-517.22528"
+     x="511.65414"
      y="26.473143"
      style="fill:#ffffff;stroke:#000000;stroke-width:0.19453056;stroke-miterlimit:4;stroke-dasharray:none"
-     transform="scale(-1,1)"
      inkscape:label="#rect23901-8-0-4-4-4-2" />
   <rect
      id="aud-j220"
      width="5.5711327"
      height="10.627493"
-     x="-511.29218"
+     x="505.72104"
      y="26.473143"
      style="fill:#ffffff;stroke:#000000;stroke-width:0.19453056;stroke-miterlimit:4;stroke-dasharray:none"
-     transform="scale(-1,1)"
      inkscape:label="#rect23901-8-0-4-4-4-2-3" />
   <rect
      style="fill:none;stroke:#000000;stroke-width:0.20304748;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -1545,10 +1507,9 @@
      ref="aud-g101"
      width="6.6950998"
      height="14.069505"
-     x="-637.00452"
+     x="630.30939"
      y="139.7422"
-     inkscape:label="#rect71377"
-     transform="scale(-1,1)">
+     inkscape:label="#rect71377">
     <title
        id="title3051-0-0">Научное общество карбон</title>
   </rect>
@@ -1757,10 +1718,9 @@
      ref="aud-k125"
      width="10.645836"
      height="5.8992133"
-     x="-468.3522"
+     x="457.70636"
      y="98.06958"
-     inkscape:label="#rect71581"
-     transform="scale(-1,1)" />
+     inkscape:label="#rect71581" />
   <path
      inkscape:connector-curvature="0"
      style="display:inline;opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.19554839;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -1779,60 +1739,54 @@
      ref="aud-k125"
      width="10.645845"
      height="5.759563"
-     x="-468.37143"
+     x="457.72559"
      y="213.72272"
-     inkscape:label="#rect71581"
-     transform="scale(-1,1)" />
+     inkscape:label="#rect71581" />
   <rect
      style="display:inline;opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.17276317;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="aud-i216"
      ref="aud-k125"
      width="8.3094759"
      height="5.8992133"
-     x="-483.25067"
+     x="474.94119"
      y="123.84354"
-     inkscape:label="#rect71581"
-     transform="scale(-1,1)" />
+     inkscape:label="#rect71581" />
   <rect
      style="display:inline;opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.17276317;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="aud-i212"
      ref="aud-k125"
      width="8.3094759"
      height="5.8992133"
-     x="-483.25067"
+     x="474.94119"
      y="105.17275"
-     inkscape:label="#rect71581"
-     transform="scale(-1,1)" />
+     inkscape:label="#rect71581" />
   <rect
      style="display:inline;opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.16920169;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="aud-i218"
      ref="aud-k125"
      width="7.9704108"
      height="5.8992133"
-     x="-483.26569"
+     x="475.29529"
      y="156.83824"
-     inkscape:label="#rect71581"
-     transform="scale(-1,1)" />
+     inkscape:label="#rect71581" />
   <rect
      style="display:inline;opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.16920169;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="aud-i220"
      ref="aud-k125"
      width="7.9704108"
      height="5.8992133"
-     x="-483.26569"
+     x="475.29529"
      y="163.06183"
-     inkscape:label="#rect71581"
-     transform="scale(-1,1)" />
+     inkscape:label="#rect71581" />
   <rect
      style="display:inline;opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.16718698;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="aud-i226"
      ref="aud-k125"
      width="7.9704113"
      height="5.759563"
-     x="-483.26569"
+     x="475.29529"
      y="213.76804"
-     inkscape:label="#rect71581"
-     transform="scale(-1,1)" />
+     inkscape:label="#rect71581" />
   <rect
      style="fill:none;stroke:#000000;stroke-width:0.2030475;stroke-miterlimit:4;stroke-dasharray:none"
      id="aud-i223"

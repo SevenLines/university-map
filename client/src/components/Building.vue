@@ -4,7 +4,7 @@
 <!--            <Floor0 :key="0" style="transform: translate(0, 0)" :class="floorClass(0)"/>-->
             <Floor1 :key="1" style="transform: translate(2px, -8px)" :class="floorClass(1)"/>
             <Floor2 :key="2" style="transform: translate(4px, -16px)" :class="floorClass(2)"/>
-<!--            <Floor3 :key="3" style="transform: translate(6px, -24px)" :class="floorClass(3)"/>-->
+            <Floor3 :key="3" style="transform: translate(6px, -24px)" :class="floorClass(3)"/>
         </svg>
     </div>
 </template>
