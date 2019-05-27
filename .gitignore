@@ -241,5 +241,8 @@ venv.bak/
 .mypy_cache/
 
 settings.yaml
-/data/
+/Data/**/*.dwg
+/Data/**/*.bak
+/Data/**/*.original
+/Data/**/*.dxf
 .idea
