@@ -1,13 +1,10 @@
+const path = require("path");
+
 module.exports = {
   chainWebpack: (config) => {
-    console.log("cool");
-    const svgRule = config.module.rule('svg');
-
-    svgRule.uses.clear();
-
-    svgRule
-      .use('vue-svg-loader')
-      .loader('vue-svg-loader');
+    config.module.rule('opt.svg').uses.clear().end()
+      .test(/\.opt\.svg$/)
+      .use('opt-svg-loader').loader(path.resolve(__dirname, 'src/utils/opt_svg_loader.js')).end()
   },
   devServer: {
     proxy: 'http://localhost:8000',
