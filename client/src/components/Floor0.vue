@@ -1,4 +1,4 @@
-<template src="./templates/floor1.html"></template>
+<template src="./templates/floor0.html"></template>
 
 <script lang="ts">
     import {Component, Prop, Vue} from 'vue-property-decorator';

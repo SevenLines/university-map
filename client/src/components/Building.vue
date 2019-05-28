@@ -1,7 +1,7 @@
 <template>
     <div style="height: 100%">
         <svg ref="svg" width="100%" height="100%">
-<!--            <Floor0 :key="0" style="transform: translate(0, 0)" :class="floorClass(0)"/>-->
+            <Floor0 :key="0" style="transform: translate(0, 0)" :class="floorClass(0)"/>
             <Floor1 :key="1" style="transform: translate(2px, -8px)" :class="floorClass(1)"/>
             <Floor2 :key="2" style="transform: translate(4px, -16px)" :class="floorClass(2)"/>
             <Floor3 :key="3" style="transform: translate(6px, -24px)" :class="floorClass(3)"/>
@@ -56,7 +56,7 @@
 
 <style lang="scss">
     rect, path {
-        /*fill: white;*/
+        fill: transparent;
         stroke: #848484;
         stroke-width: 0.2px;
     }
