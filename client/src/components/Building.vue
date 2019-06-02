@@ -40,7 +40,7 @@
         mounted() {
             this.panZoomTiger = svgPanZoom(<HTMLElement>this.$refs.svg, {
                 zoomScaleSensitivity: 1,
-                minZoom: 1,
+                minZoom: 0.5,
                 maxZoom: 10
             });
         }

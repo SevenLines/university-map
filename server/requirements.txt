@@ -1,6 +1,6 @@
-Flask
-PyYaml
-flask-restplus
-Flask-SQlAlchemy
-Flask-WTF
-pyodbc
+Flask==1.0.3
+PyYaml==5.1
+flask-restplus==-0.11.0
+Flask-SQlAlchemy==2.4
+Flask-WTF==-0.14.2
+pyodbc==4.0.26
