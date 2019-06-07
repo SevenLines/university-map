@@ -1,3 +1,4 @@
+import {AuditoriesStatisticsMode} from '../types'
 <template>
     <g class="auditory" :class="addClasses">
         <component class="border" :is="type" :d="d" :width="width" :height="height" :x="x" :y="y" ref="border"/>
@@ -85,7 +86,7 @@
         get auditoryOccupation(): AuditoryOccupationItem | null {
             let occupation = null;
             if (this.auditory) {
-                if (this.currentMode == AuditoriesStatisticsMode.Occupied) {
+                if (this.currentMode == AuditoriesStatisticsMode.Occupied || this.currentMode == AuditoriesStatisticsMode.Free) {
                     occupation = this.auditoriesOccupations[this.auditory.id];
                     if (occupation) {
                         return occupation[this.currentPair]
