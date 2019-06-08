@@ -1,7 +1,7 @@
 import json
 from unittest import TestCase
 
-from server.base import app
+from base import app
 
 
 class TestCaseBase(TestCase):

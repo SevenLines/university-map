@@ -2,7 +2,7 @@ from flask import request
 from flask_restplus import Namespace, Resource
 from wtforms import Form, IntegerField
 
-from server.models.raspnagr import Teacher, Raspis, Raspnagr, Discipline, Kontkurs, Kontgrp, Potoklist, Normtime
+from models.raspnagr import Teacher, Raspis, Raspnagr, Discipline, Kontkurs, Kontgrp, Potoklist, Normtime
 
 api = Namespace("teachers")
 

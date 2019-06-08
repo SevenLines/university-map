@@ -4,8 +4,8 @@ from sqlalchemy import func, case, PrimaryKeyConstraint
 from sqlalchemy.orm.util import aliased
 from sqlalchemy.sql.expression import or_, and_
 
-from server.base import db
-from server.consts import LETTER_MAPPING_TABLE
+from base import db
+from consts import LETTER_MAPPING_TABLE
 
 
 class Kontkurs(db.Model):

@@ -6,8 +6,8 @@ from flask_restplus import Resource, Namespace
 from sqlalchemy import or_, and_, func
 from wtforms import Form, DateField
 
-from server.helpers import get_date_week_even
-from server.models.raspnagr import Auditory, Raspis, Raspnagr, Teacher, Discipline, Kontkurs, Kontgrp, Kontlist, \
+from helpers import get_date_week_even
+from models.raspnagr import Auditory, Raspis, Raspnagr, Teacher, Discipline, Kontkurs, Kontgrp, Kontlist, \
     Potoklist, Normtime, RaspisZaoch
 
 api = Namespace("auditories")

@@ -15,8 +15,8 @@ api = Api(app, prefix="/api")
 db = SQLAlchemy(app)
 
 # setup API
-from server.namespaces.auditories import api as auditories_ns
-from server.namespaces.teachers import api as teachers_ns
+from namespaces.auditories import api as auditories_ns
+from namespaces.teachers import api as teachers_ns
 api.add_namespace(auditories_ns)
 api.add_namespace(teachers_ns)
 
