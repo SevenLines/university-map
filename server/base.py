@@ -8,18 +8,6 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__, static_folder=os.path.abspath("static\\dist"))
 
-# setup API
-api = Api(app, prefix="/api")
-
-# setup Database
-db = SQLAlchemy(app)
-
-# setup API
-from namespaces.auditories import api as auditories_ns
-from namespaces.teachers import api as teachers_ns
-api.add_namespace(auditories_ns)
-api.add_namespace(teachers_ns)
-
 # setup YAML
 with open(os.path.join(app.root_path, '..', 'settings.yaml')) as f:
     settings = yaml.load(f, yaml.SafeLoader)
@@ -31,6 +19,18 @@ app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 app.config['SECRET_KEY'] = settings['SECRET_KEY']
+
+# setup Database
+db = SQLAlchemy(app)
+
+
+# setup API
+api = Api(app, prefix="/api")
+
+from namespaces.auditories import api as auditories_ns
+from namespaces.teachers import api as teachers_ns
+api.add_namespace(auditories_ns)
+api.add_namespace(teachers_ns)
 
 @app.after_request
 def set_response_headers(response):

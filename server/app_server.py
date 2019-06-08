@@ -1,6 +1,5 @@
 import sys
 
-from sqlalchemy import text
 from base import app, api, db
 
 if __name__ == "__main__":
@@ -11,7 +10,7 @@ if __name__ == "__main__":
         except:
             raise
         else:
-            print("connection is allright")
+            print("connection is all right")
             exit(0)
 
     print(sys.argv)
