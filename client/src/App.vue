@@ -1,5 +1,3 @@
-import { AuditoriesStatisticsMode } from './types'
-import { AuditoriesStatisticsMode } from './types'
 <template>
     <div id="app" style="height: 100%;">
         <div style="display: flex; flex-direction: column; height: 100%">
