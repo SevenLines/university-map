@@ -246,3 +246,4 @@ settings.yaml
 /Data/**/*.original
 /Data/**/*.dxf
 .idea
+client/package-lock.json
