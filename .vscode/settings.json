@@ -10,8 +10,6 @@
     "python.testing.pyTestEnabled": false,
     "python.testing.nosetestsEnabled": false,
     "python.testing.unittestEnabled": true,
-    "python.linting.pylintEnabled": true,
-    "python.linting.pylintArgs": ["--errors-only"],
     "files.exclude": {
         "**/.git": true,
         "**/.svn": true,
@@ -19,5 +17,7 @@
         "**/CVS": true,
         "**/.DS_Store": true,
         "**/__pycache__": true,
-    }
+    },
+    "python.linting.flake8Enabled": true,
+    "python.linting.enabled": true
 }

@@ -1,6 +1,6 @@
 # coding=utf-8
 from flask import g
-from sqlalchemy import func, case, PrimaryKeyConstraint
+from sqlalchemy import func, PrimaryKeyConstraint
 from sqlalchemy.orm.util import aliased
 from sqlalchemy.sql.expression import or_, and_
 
@@ -175,13 +175,13 @@ class Raspnagr(db.Model):
             )
 
         raspnagrs = Raspnagr.query.filter(
-            Raspnagr.id.in_(Raspnagr.query \
-                            .outerjoin(Kontgrp, Raspnagr.kontgrp_id == Kontgrp.id) \
-                            .outerjoin(Kontgrplist, Kontgrplist.op == Raspnagr.op) \
-                            .outerjoin(Kontlist, Kontlist.op == Raspnagr.op) \
-                            .outerjoin(Kontgrp2, Kontgrp2.id == Kontgrplist.kontgrp_id) \
-                            .outerjoin(KontgrpCommon, func.coalesce(Kontgrp2.id, Kontgrp.id) == KontgrpCommon.id) \
-                            .outerjoin(KontgrpParent, KontgrpCommon.parent_id == KontgrpParent.id) \
+            Raspnagr.id.in_(Raspnagr.query
+                            .outerjoin(Kontgrp, Raspnagr.kontgrp_id == Kontgrp.id)
+                            .outerjoin(Kontgrplist, Kontgrplist.op == Raspnagr.op)
+                            .outerjoin(Kontlist, Kontlist.op == Raspnagr.op)
+                            .outerjoin(Kontgrp2, Kontgrp2.id == Kontgrplist.kontgrp_id)
+                            .outerjoin(KontgrpCommon, func.coalesce(Kontgrp2.id, Kontgrp.id) == KontgrpCommon.id)
+                            .outerjoin(KontgrpParent, KontgrpCommon.parent_id == KontgrpParent.id)
                             .filter(filter_).filter(Raspnagr.sem == sem).with_entities(Raspnagr.id)))
         return raspnagrs
 
@@ -508,10 +508,6 @@ class RaspisZaoch(db.Model):
         if subgroup_numbers is None:
             subgroup_numbers = []
 
-        subgroup_numbers_ids = []
-            # numbers = item.split('-')
-            # subgroup_numbers_ids.append(numbers[0], numbers[1] if len(numbers) > 0 else None)
-
         Kontgrp2 = aliased(Kontgrp)
         KontgrpCommon = aliased(Kontgrp)
         KontgrpParent = aliased(Kontgrp)
@@ -523,8 +519,8 @@ class RaspisZaoch(db.Model):
             for item in subgroup_numbers:
                 c = item.split('-')
                 if len(c) > 1:
-                    conditions_common.append(and_(KontgrpCommon.ngroup==c[0], KontgrpChild.ngroup==c[1]))
-                    conditions_parent.append(and_(KontgrpParent.ngroup==c[0], KontgrpCommon.ngroup==c[1]))
+                    conditions_common.append(and_(KontgrpCommon.ngroup == c[0], KontgrpChild.ngroup == c[1]))
+                    conditions_parent.append(and_(KontgrpParent.ngroup == c[0], KontgrpCommon.ngroup == c[1]))
                 else:
                     conditions_common.append(KontgrpCommon.ngroup == c[0])
                     conditions_parent.append(KontgrpParent.ngroup == c[0])
@@ -582,29 +578,29 @@ class RaspisZaoch(db.Model):
             .order_by(RaspisZaoch.dt,
                       RaspisZaoch.para) \
             .with_entities(
-            RaspisZaoch.id,
-            RaspisZaoch.raspnagr_id,
-            RaspisZaoch.dt,
-            RaspisZaoch.para,
-            RaspisZaoch.aud,
-            RaspisZaoch.aud2,
-            RaspisZaoch.kont_id,
-            RaspisZaoch.kontgrp_id,
-            RaspisZaoch.op_id,
-            RaspisZaoch.type,
-            RaspisZaoch.hours,
-            Auditory.maxstud,
-            Auditory2.maxstud.label('maxstud2'),
-            Raspnagr.prep_id,
-            Raspnagr.stud,
-            Raspnagr.nt,
-            func.rtrim(Normtime.title).label('normtime'),
-            func.rtrim(Teacher.name).label("teacher"),
-            func.rtrim(Auditory.title).label("auditory"),
-            func.rtrim(Auditory2.title).label("auditory2"),
-            func.rtrim(Discipline.title).label("discipline"),
-            func.coalesce(Potoklist.title, Kontgrp.title, Kontkurs.title).label('konts')
-        )
+                RaspisZaoch.id,
+                RaspisZaoch.raspnagr_id,
+                RaspisZaoch.dt,
+                RaspisZaoch.para,
+                RaspisZaoch.aud,
+                RaspisZaoch.aud2,
+                RaspisZaoch.kont_id,
+                RaspisZaoch.kontgrp_id,
+                RaspisZaoch.op_id,
+                RaspisZaoch.type,
+                RaspisZaoch.hours,
+                Auditory.maxstud,
+                Auditory2.maxstud.label('maxstud2'),
+                Raspnagr.prep_id,
+                Raspnagr.stud,
+                Raspnagr.nt,
+                func.rtrim(Normtime.title).label('normtime'),
+                func.rtrim(Teacher.name).label("teacher"),
+                func.rtrim(Auditory.title).label("auditory"),
+                func.rtrim(Auditory2.title).label("auditory2"),
+                func.rtrim(Discipline.title).label("discipline"),
+                func.coalesce(Potoklist.title, Kontgrp.title, Kontkurs.title).label('konts')
+            )
 
     @classmethod
     def get_common_data_format(cls, item):
