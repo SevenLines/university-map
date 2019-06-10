@@ -1,9 +1,9 @@
 import os
-
 import yaml
 from flask import Flask
 from flask_restplus import Api
 from flask_sqlalchemy import SQLAlchemy
+
 
 
 app = Flask(__name__, static_folder=os.path.abspath("static\\dist"))
@@ -23,12 +23,10 @@ app.config['SECRET_KEY'] = settings['SECRET_KEY']
 # setup Database
 db = SQLAlchemy(app)
 
-
 # setup API
-api = Api(app, prefix="/api")
-
 from namespaces.auditories import api as auditories_ns
 from namespaces.teachers import api as teachers_ns
+api = Api(app, prefix="/api")
 api.add_namespace(auditories_ns)
 api.add_namespace(teachers_ns)
 
