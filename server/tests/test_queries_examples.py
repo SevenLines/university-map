@@ -1,5 +1,7 @@
 from tests import TestCaseBase
-from models.raspnagr import Auditory, Raspis
+from sqlalchemy import func
+from models.raspnagr import Auditory, Raspis, Raspnagr, Kontkurs, Discipline
+from pprint import pprint
 
 class TestQueriesExamples(TestCaseBase):
     def test_list_all_auds(self):
@@ -31,17 +33,98 @@ class TestQueriesExamples(TestCaseBase):
         aud = Auditory.query.get(908)
         print(aud.title)
 
-    def test_filter_raspis_by_aud(self):
+    def test_filter_raspis_by_aud1(self):
         """
         Выведет данные по занятиями в аудитории с id 908
         список полей занятия можно подсмотреть кликнув с Ctrl на Raspis
         """
-        schedule = Raspis.query.filter(
-            Raspis.aud_id == 908,
-        ).order_by(Raspis.everyweek, Raspis.day, Raspis.para)
+        schedule = Raspis.query \
+            .filter(Raspis.aud_id == 908) \
+            .order_by(Raspis.everyweek, Raspis.day, Raspis.para)
 
         print("\nquery")
-        print(schedule)  # выводи запроса
+        print(schedule)  # выводит запроса
 
         for item in schedule:
             print(item.everyweek, item.day, item.para)
+
+    def test_filter_raspis_by_aud_and_day(self):
+        """
+        Выведет данные по занятиями в аудитории с id 908 в понедельник
+        список полей занятия можно подсмотреть кликнув с Ctrl на Raspis
+        """
+        schedule = Raspis.query \
+            .filter(Raspis.aud_id == 908) \
+            .filter(Raspis.day == 5) \
+            .order_by(Raspis.everyweek, Raspis.day, Raspis.para)
+
+        for item in schedule:
+            print(item.everyweek, item.day, item.para)
+
+    
+    def test_filter_raspis_by_multiple_auds_with_specific_columns(self):
+        """
+        Выведет данные по занятиями в аудитории с id 908 и 907 в понедельник
+        список полей занятия можно подсмотреть кликнув с Ctrl на Raspis
+
+        Получится такой запрос:
+
+        SELECT rtrim(auditories.obozn) AS auditory,
+            raspnagr.id_51 AS raspnagr_id,
+            raspis.day AS raspis_day, 
+            raspis.para AS raspis_para, 
+            rtrim(kontkurs.obozn) AS kont_title, 
+            rtrim(vacpred.pred) AS discipline 
+        FROM raspis 
+            LEFT OUTER JOIN auditories ON auditories.id_60 = raspis.aud 
+            LEFT OUTER JOIN raspnagr ON raspnagr.id_51 = raspis.raspnagr 
+            LEFT OUTER JOIN kontkurs ON kontkurs.id_1 = raspnagr.kont 
+            LEFT OUTER JOIN vacpred ON vacpred.id_15 = raspnagr.pred 
+        WHERE raspis.aud IN (908, 907) 
+        ORDER BY auditories.obozn, raspis.everyweek, raspis.day, raspis.para
+        """
+        schedule = Raspis.query \
+            .filter(Raspis.aud_id.in_([908, 907])) \
+            .outerjoin(Auditory, Auditory.id == Raspis.aud_id) \
+            .outerjoin(Raspnagr, Raspnagr.id == Raspis.raspnagr_id) \
+            .outerjoin(Kontkurs, Kontkurs.id == Raspnagr.kontkurs_id) \
+            .outerjoin(Discipline, Discipline.id == Raspnagr.pred_id) \
+            .with_entities(
+                func.rtrim(Auditory.title).label("auditory"),
+                Raspnagr.id.label("raspnagr_id"),
+                Raspis.day,
+                Raspis.para,
+                func.rtrim(Kontkurs.title).label("kont_title"),
+                func.rtrim(Discipline.title).label("discipline"),
+            ) \
+            .order_by(Auditory.title, Raspis.everyweek, Raspis.day, Raspis.para)
+
+        print(schedule)
+
+        for item in schedule:
+            print(f"Аудитория {item.auditory} День: {item.day} Пара: {item.para} конитнгент: {item.kont_title} дисциплина: {item.discipline}")
+
+    def test_group_by_para(self):
+        """
+        считаем сколько занятий приходится на каждую пару
+        получается такой запрос
+
+        SELECT raspis.para AS raspis_para, count(*) AS items_count 
+        FROM raspis 
+        GROUP BY raspis.para
+        """
+        result = Raspis.query.with_entities(
+            Raspis.para,
+            func.count("*").label("items_count")
+        ).group_by(Raspis.para)
+
+        # преобразовываем в словарик, где ключ это номер пары, а значение -- количество занятий
+        ouput_dict = {
+            i.para: i.items_count for i in result
+        }
+
+        for para, value in ouput_dict.items():
+            print(f"В {para} пару {value} занятий")
+        
+        # или если нас интересует конкретная пара то так
+        print(f"В {2} пару {ouput_dict[2]} занятий")
