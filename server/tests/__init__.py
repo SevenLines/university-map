@@ -1,8 +1,6 @@
-import json
 from unittest import TestCase
-
 from base import app
-
+import json
 
 class TestCaseBase(TestCase):
     def setUp(self):
@@ -18,9 +16,3 @@ class TestCaseBase(TestCase):
         r = getattr(self.app, method)(*args, **kwargs)
         self.assertEqual(200, r.status_code)
         return json.loads(r.data)
-
-
-class TestAuditoriesOccupation(TestCaseBase):
-    def test_get_groups(self):
-        r = self.api('get', '/api/auditories/day-occupation?date=20.05.2019')
-        print(r)
