@@ -41,8 +41,8 @@
  <path d="m490.17 137.56v2.4162h10.118v8.2112h-13.686v-10.627z" style="fill:none;stroke-width:.079375;stroke:#000"/>
  <rect transform="scale(-1,1)" x="-627.3" y="137.56" width="5.9331" height="10.627" style="fill:#fff;stroke-width:.079375;stroke:#000"/>
  <rect transform="scale(-1,1)" x="-621.09" y="137.56" width="5.9331" height="10.627" style="fill:#fff;stroke-width:.079375;stroke:#000"/>
- <rect transform="scale(-1,1)" x="-602.47" y="137.56" width="5.9331" height="10.627" style="fill:#fff;stroke-width:.079375;stroke:#000"/>
- <rect transform="scale(-1,1)" x="-614.88" y="119.99" width="5.9331" height="10.627" style="fill:#fff;stroke-width:.079375;stroke:#000"/>
+ <rect id="aud-e04" transform="scale(-1,1)" x="-602.47" y="137.56" width="5.9331" height="10.627" style="fill:#fff;stroke-width:.079375;stroke:#000"/>
+ <path transform="scale(.26458)" d="m2325 453.51v0.02734h-23.443v40.109h23.443v0.02734h22.424v-40.164h-22.424z" style="fill:#fff;stroke-width:.35419;stroke:#000"/>
  <rect transform="scale(-1,1)" x="-608.67" y="119.99" width="5.9331" height="10.627" style="fill:#fff;stroke-width:.079375;stroke:#000"/>
  <rect transform="scale(-1,1)" x="-602.47" y="119.99" width="5.9331" height="10.627" style="fill:#fff;stroke-width:.079375;stroke:#000"/>
  <rect transform="scale(-1,1)" x="-627.19" y="247.94" width="5.9331" height="10.627" style="fill:#fff;stroke-width:.079375;stroke:#000"/>
@@ -62,15 +62,15 @@
  <rect id="aud-i00" transform="scale(-1,1)" x="-468.36" y="47.521" width="10.646" height="5.8992" style="fill:none;stroke-width:.079375;stroke:#000" ref="aud-k125"/>
  <rect id="aud-i05" transform="scale(-1,1)" x="-468.37" y="85.748" width="10.646" height="5.8992" style="fill:none;stroke-width:.079375;stroke:#000" ref="aud-k125"/>
  <path id="aud-i09" d="m457.71 105.17v5.8988h6.9086v0.32435h-6.9086v5.9001h10.646v-5.9001h-1.9002v-0.32435h1.9002v-5.8988z" style="fill:none;stroke-width:.079375;stroke:#000"/>
- <rect id="aud-i010" transform="scale(-1,1)" x="-483.25" y="97.934" width="8.3287" height="5.8992" style="fill:none;stroke-width:.079375;stroke:#000" ref="aud-k125"/>
+ <rect id="aud-i010" x="474.92" y="97.934" width="8.3287" height="5.8992" style="fill:none;stroke-width:.079375;stroke:#000" ref="aud-k125"/>
  <rect id="aud-i06" transform="scale(-1,1)" x="-483.27" y="85.613" width="8.3287" height="5.8992" style="fill:none;stroke-width:.079375;stroke:#000" ref="aud-k125"/>
  <rect id="aud-i08" transform="scale(-1,1)" x="-483.25" y="91.774" width="8.3287" height="5.8992" style="fill:none;stroke-width:.079375;stroke:#000" ref="aud-k125"/>
- <rect id="aud-i014" transform="scale(-1,1)" x="-483.25" y="123.84" width="8.3095" height="5.8992" style="fill:none;stroke-width:.079375;stroke:#000" ref="aud-k125"/>
- <rect id="aud-i022" transform="scale(-1,1)" x="-483.27" y="175.51" width="7.9704" height="5.8992" style="fill:none;stroke-width:.079375;stroke:#000" ref="aud-k125"/>
- <rect id="aud-i016" transform="scale(-1,1)" x="-483.27" y="156.84" width="7.9704" height="5.8992" style="fill:none;stroke-width:.079375;stroke:#000" ref="aud-k125"/>
- <rect id="aud-i028" transform="scale(-1,1)" x="-483.27" y="213.77" width="7.9704" height="5.7596" style="fill:none;stroke-width:.079375;stroke:#000" ref="aud-k125"/>
- <rect id="aud-i026" transform="scale(-1,1)" x="-483.27" y="207.69" width="7.9704" height="5.7596" style="fill:none;stroke-width:.079375;stroke:#000" ref="aud-k125"/>
- <rect id="aud-i034" transform="scale(-1,1)" x="-483.27" y="232.82" width="7.9704" height="5.7507" style="fill:none;stroke-width:.079375;stroke:#000" ref="aud-k125"/>
+ <rect id="aud-i014" x="474.94" y="123.84" width="8.3095" height="5.8992" style="fill:none;stroke-width:.079375;stroke:#000" ref="aud-k125"/>
+ <rect id="aud-i022" x="475.3" y="175.51" width="7.9704" height="5.8992" style="fill:none;stroke-width:.079375;stroke:#000" ref="aud-k125"/>
+ <rect id="aud-i016" x="475.3" y="156.84" width="7.9704" height="5.8992" style="fill:none;stroke-width:.079375;stroke:#000" ref="aud-k125"/>
+ <rect id="aud-i028" x="475.3" y="213.77" width="7.9704" height="5.7596" style="fill:none;stroke-width:.079375;stroke:#000" ref="aud-k125"/>
+ <rect id="aud-i026" x="475.3" y="207.69" width="7.9704" height="5.7596" style="fill:none;stroke-width:.079375;stroke:#000" ref="aud-k125"/>
+ <rect id="aud-i034" x="475.3" y="232.82" width="7.9704" height="5.7507" style="fill:none;stroke-width:.079375;stroke:#000" ref="aud-k125"/>
  <rect id="aud-k028" x="178.87" y="47.357" width="8.3245" height="12.123" style="fill:none;stroke-width:.079375;stroke:#000"/>
  <rect id="aud-k013" x="193.78" y="47.374" width="10.646" height="24.57" style="fill:none;stroke-width:.079375;stroke:#000"/>
  <rect id="aud-k011" x="193.78" y="73.28" width="10.627" height="30.541" style="fill:none;stroke-width:.079375;stroke:#000"/>
@@ -92,8 +92,8 @@
  <path id="aud-i019" d="m457.73 219.48v-23.988h5.3183v11.864h5.3275v12.123z" style="fill:none;stroke-width:.079375;stroke:#000"/>
  <rect id="aud-i017" x="457.71" y="169.29" width="10.646" height="12.123" style="fill:none;stroke-width:.079375;stroke:#000"/>
  <rect id="aud-i015a" x="457.71" y="156.84" width="10.646" height="12.123" style="fill:none;stroke-width:.079375;stroke:#000"/>
- <rect id="aud-i015" transform="scale(-1,1)" x="-468.35" y="134.5" width="10.686" height="4.0072" style="fill:none;stroke-width:.079375;stroke:#000" ref="aud-k109b"/>
- <rect id="aud-i013" transform="scale(-1,1)" x="-468.35" y="130.31" width="10.686" height="4.0072" style="fill:none;stroke-width:.079375;stroke:#000" ref="aud-k109b"/>
+ <rect id="aud-i015" x="457.66" y="134.5" width="10.686" height="4.0072" style="fill:none;stroke-width:.079375;stroke:#000" ref="aud-k109b"/>
+ <rect id="aud-i013" x="457.66" y="130.31" width="10.686" height="4.0072" style="fill:none;stroke-width:.079375;stroke:#000" ref="aud-k109b"/>
  <rect id="aud-i011" x="457.71" y="117.62" width="10.646" height="12.123" style="fill:none;stroke-width:.079375;stroke:#000"/>
  <rect id="aud-i07" x="457.71" y="91.909" width="10.646" height="12.06" style="fill:none;stroke-width:.079375;stroke:#000"/>
  <rect id="aud-i03" x="457.73" y="73.427" width="10.646" height="12.06" style="fill:none;stroke-width:.079375;stroke:#000"/>
@@ -133,7 +133,7 @@
  <rect id="aud-e09" x="530.9" y="119.99" width="18.343" height="10.627" style="fill:none;stroke-width:.079375;stroke:#000"/>
  <rect id="aud-e07a" x="550.45" y="119.99" width="10.791" height="9.8274" style="fill:none;stroke-width:.079375;stroke:#000"/>
  <rect id="aud-e07" x="564.57" y="119.99" width="30.763" height="10.627" style="fill:none;stroke-width:.079375;stroke:#000"/>
- <rect id="aud-e05" x="615.16" y="119.99" width="12.143" height="10.627" style="fill:none;stroke-width:.079375;stroke:#000"/>
+ <rect id="aud-e05" x="621.42" y="119.99" width="5.8782" height="10.627" style="fill:none;stroke-width:.055226;stroke:#000"/>
  <rect id="aud-e02" x="602.74" y="137.56" width="12.143" height="10.627" style="fill:none;stroke-width:.079375;stroke:#000"/>
  <rect id="aud-e06" x="576.98" y="137.56" width="18.353" height="10.627" style="fill:none;stroke-width:.079375;stroke:#000"/>
  <rect id="aud-e08" x="564.57" y="137.56" width="12.133" height="10.627" style="fill:none;stroke-width:.079375;stroke:#000"/>

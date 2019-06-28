@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="1264.0619"
-     inkscape:cy="233.74334"
+     inkscape:zoom="1.4"
+     inkscape:cx="1891.2173"
+     inkscape:cy="297.26022"
      inkscape:document-units="mm"
      inkscape:current-layer="svg23309"
      showgrid="false"
@@ -49,7 +49,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -369,14 +369,12 @@
      width="5.9331"
      height="10.627"
      style="fill:#fff;stroke-width:0.079375;stroke:#000;stroke-miterlimit:4;stroke-dasharray:none"
-     id="rect1166" />
-  <rect
-     transform="scale(-1,1)"
-     x="-614.88"
-     y="119.99"
-     width="5.9331"
-     height="10.627"
-     style="fill:#fff;stroke-width:0.079375;stroke:#000;stroke-miterlimit:4;stroke-dasharray:none"
+     id="aud-e04"
+     inkscape:label="#rect1166" />
+  <path
+     style="fill:#ffffff;stroke:#000000;stroke-width:0.35418621;stroke-miterlimit:4;stroke-dasharray:none"
+     d="M 2325.002 453.50586 L 2325.002 453.5332 L 2301.5586 453.5332 L 2301.5586 493.64258 L 2325.002 493.64258 L 2325.002 493.66992 L 2347.4258 493.66992 L 2347.4258 453.50586 L 2325.002 453.50586 z "
+     transform="scale(0.26458333)"
      id="rect1196" />
   <rect
      transform="scale(-1,1)"
@@ -393,7 +391,8 @@
      width="5.9331"
      height="10.627"
      style="fill:#fff;stroke-width:0.079375;stroke:#000;stroke-miterlimit:4;stroke-dasharray:none"
-     id="rect1200" />
+     id="1234"
+     inkscape:label="#rect1200" />
   <rect
      transform="scale(-1,1)"
      x="-627.19"
@@ -532,12 +531,11 @@
      style="fill:none;stroke-width:0.079375;stroke:#000;stroke-miterlimit:4;stroke-dasharray:none" />
   <rect
      id="aud-i010"
-     transform="scale(-1,1)"
-     x="-483.25"
-     y="97.934"
-     width="8.3287"
+     x="474.9213"
+     y="97.933998"
+     width="8.3287001"
      height="5.8992"
-     style="fill:none;stroke-width:0.079375;stroke:#000;stroke-miterlimit:4;stroke-dasharray:none"
+     style="fill:none;stroke:#000000;stroke-width:0.079375;stroke-miterlimit:4;stroke-dasharray:none"
      ref="aud-k125" />
   <rect
      id="aud-i06"
@@ -559,57 +557,51 @@
      ref="aud-k125" />
   <rect
      id="aud-i014"
-     transform="scale(-1,1)"
-     x="-483.25"
+     x="474.94049"
      y="123.84"
-     width="8.3095"
+     width="8.3094997"
      height="5.8992"
-     style="fill:none;stroke-width:0.079375;stroke:#000;stroke-miterlimit:4;stroke-dasharray:none"
+     style="fill:none;stroke:#000000;stroke-width:0.079375;stroke-miterlimit:4;stroke-dasharray:none"
      ref="aud-k125" />
   <rect
      id="aud-i022"
-     transform="scale(-1,1)"
-     x="-483.27"
-     y="175.51"
-     width="7.9704"
+     x="475.29959"
+     y="175.50999"
+     width="7.9703999"
      height="5.8992"
-     style="fill:none;stroke-width:0.079375;stroke:#000;stroke-miterlimit:4;stroke-dasharray:none"
+     style="fill:none;stroke:#000000;stroke-width:0.079375;stroke-miterlimit:4;stroke-dasharray:none"
      ref="aud-k125" />
   <rect
      id="aud-i016"
-     transform="scale(-1,1)"
-     x="-483.27"
+     x="475.29959"
      y="156.84"
-     width="7.9704"
+     width="7.9703999"
      height="5.8992"
-     style="fill:none;stroke-width:0.079375;stroke:#000;stroke-miterlimit:4;stroke-dasharray:none"
+     style="fill:none;stroke:#000000;stroke-width:0.079375;stroke-miterlimit:4;stroke-dasharray:none"
      ref="aud-k125" />
   <rect
      id="aud-i028"
-     transform="scale(-1,1)"
-     x="-483.27"
+     x="475.29959"
      y="213.77"
-     width="7.9704"
-     height="5.7596"
-     style="fill:none;stroke-width:0.079375;stroke:#000;stroke-miterlimit:4;stroke-dasharray:none"
+     width="7.9703999"
+     height="5.7596002"
+     style="fill:none;stroke:#000000;stroke-width:0.079375;stroke-miterlimit:4;stroke-dasharray:none"
      ref="aud-k125" />
   <rect
      id="aud-i026"
-     transform="scale(-1,1)"
-     x="-483.27"
+     x="475.29959"
      y="207.69"
-     width="7.9704"
-     height="5.7596"
-     style="fill:none;stroke-width:0.079375;stroke:#000;stroke-miterlimit:4;stroke-dasharray:none"
+     width="7.9703999"
+     height="5.7596002"
+     style="fill:none;stroke:#000000;stroke-width:0.079375;stroke-miterlimit:4;stroke-dasharray:none"
      ref="aud-k125" />
   <rect
      id="aud-i034"
-     transform="scale(-1,1)"
-     x="-483.27"
-     y="232.82"
-     width="7.9704"
+     x="475.29959"
+     y="232.82001"
+     width="7.9703999"
      height="5.7507"
-     style="fill:none;stroke-width:0.079375;stroke:#000;stroke-miterlimit:4;stroke-dasharray:none"
+     style="fill:none;stroke:#000000;stroke-width:0.079375;stroke-miterlimit:4;stroke-dasharray:none"
      ref="aud-k125" />
   <rect
      id="aud-k028"
@@ -758,21 +750,19 @@
      style="fill:none;stroke-width:0.079375;stroke:#000;stroke-miterlimit:4;stroke-dasharray:none" />
   <rect
      id="aud-i015"
-     transform="scale(-1,1)"
-     x="-468.35"
+     x="457.664"
      y="134.5"
      width="10.686"
-     height="4.0072"
-     style="fill:none;stroke-width:0.079375;stroke:#000;stroke-miterlimit:4;stroke-dasharray:none"
+     height="4.0071998"
+     style="fill:none;stroke:#000000;stroke-width:0.079375;stroke-miterlimit:4;stroke-dasharray:none"
      ref="aud-k109b" />
   <rect
      id="aud-i013"
-     transform="scale(-1,1)"
-     x="-468.35"
+     x="457.664"
      y="130.31"
      width="10.686"
-     height="4.0072"
-     style="fill:none;stroke-width:0.079375;stroke:#000;stroke-miterlimit:4;stroke-dasharray:none"
+     height="4.0071998"
+     style="fill:none;stroke:#000000;stroke-width:0.079375;stroke-miterlimit:4;stroke-dasharray:none"
      ref="aud-k109b" />
   <rect
      id="aud-i011"
@@ -1072,11 +1062,11 @@
      y="119.98999"
      inkscape:label="#rect2925" />
   <rect
-     style="fill:none;stroke:#000000;stroke-width:0.079375;stroke-miterlimit:4;stroke-dasharray:none"
+     style="fill:none;stroke:#000000;stroke-width:0.05522563;stroke-miterlimit:4;stroke-dasharray:none"
      id="aud-e05"
-     width="12.143066"
+     width="5.8781714"
      height="10.627007"
-     x="615.15686"
+     x="621.42175"
      y="119.98999"
      inkscape:label="#rect2999" />
   <rect
