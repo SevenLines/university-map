@@ -128,3 +128,17 @@ class TestQueriesExamples(TestCaseBase):
 
         # или если нас интересует конкретная пара то так
         print(f"В {2} пару {ouput_dict[2]} занятий")
+
+    def test_audience_percentage_day(self):
+        aud = Auditory.query.get(908)
+        res = Raspis.query.filter(Raspis.aud_id == 908)\
+            .with_entities(
+            Raspis.para, func.count("*").label("items_count")).\
+            group_by(Raspis.para)
+
+        output_dict = {
+            i.para: i.items_count for i in res
+        }
+
+        print(f"В аудитории {aud.title.strip()} в {2} пару {output_dict[2]} занятий. Аудитория загружена на "
+              f"{(output_dict[2] / 12 * 100).__round__(2)}%")
