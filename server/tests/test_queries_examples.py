@@ -140,5 +140,5 @@ class TestQueriesExamples(TestCaseBase):
             i.para: i.items_count for i in res
         }
 
-        print(f"В аудитории {aud.title.strip()} в {2} пару {output_dict[2]} занятий. Аудитория загружена на "
-              f"{(output_dict[2] / 12 * 100).__round__(2)}%")
+        print(f"В аудитории {aud.title.strip()} в {3} пару {output_dict[3]} занятий. Аудитория загружена на "
+              f"{(output_dict[3] / 12 * 100).__round__(2)}%")
