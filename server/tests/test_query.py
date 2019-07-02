@@ -13,9 +13,8 @@ class TestQuery(tests.TestCaseBase):
             LEFT JOIN raspnagr rn ON rn.id_51 = r.raspnagr
             LEFT JOIN prepods p ON rn.prep = p.id_61
             WHERE preps is not NULL AND preps = 'Бахвалова З.А.' AND (day-1)%7+1 = 2
-            ORDER BY preps, everyweek, day, para
+            ORDER BY para
             """
-
             schedule = Raspis.query \
                 .filter(Teacher.name is not None) \
                 .filter(func.rtrim(Teacher.name) == "Бахвалова З.А.") \
@@ -27,7 +26,7 @@ class TestQuery(tests.TestCaseBase):
                 Raspis.para,
                 func.rtrim(Auditory.title).label("auditory")
             ) \
-                .order_by(Auditory.title, Raspis.everyweek, Raspis.day, Raspis.para)
+                .order_by(Raspis.para)
             print(schedule)
 
             for item in schedule:
