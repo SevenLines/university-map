@@ -40,7 +40,9 @@ class Graph(object):
 
 # Возвращает граф из .svg по адресу 'path'
 def get_graph(path):
-    svg = parseString(open(path).read())
+    file = open(path)
+    svg = parseString(file.read())
+    file.close()
     nodes = []
     edges = []
     auto_id = 0
@@ -61,10 +63,10 @@ def get_graph(path):
                 x2 = float(points[2].split(",")[0])
                 y2 = float(points[2].split(",")[1])
             else:
-                if points[2] == 'H':
+                if points[2] == 'V':
                     x2 = x1
                     y2 = float(points[3])
-                elif points[2] == 'V':
+                elif points[2] == 'H':
                     x2 = float(points[3])
                     y2 = y1
 
@@ -73,10 +75,10 @@ def get_graph(path):
                 x2 = x1 + float(points[2].split(",")[0])
                 y2 = y1 + float(points[2].split(",")[1])
             else:
-                if points[2] == 'h':
+                if points[2] == 'v':
                     x2 = x1
                     y2 = y1 + float(points[3])
-                elif points[2] == 'v':
+                elif points[2] == 'h':
                     x2 = x1 + float(points[3])
                     y2 = y1
 
@@ -117,12 +119,3 @@ def is_near(first, second):
         return True
     else:
         return False
-
-
-# Выведет информацию по графу
-
-# graph = get_graph("../Data/3этаж.svg")
-# for edge in graph.edges:
-#     print("id1:", edge.first.id, "   id2:", edge.second.id)
-#     print("x1:", edge.first.point.x, "y1:", edge.first.point.y,
-#           " =>  x2:", edge.first.point.x, "y2:", edge.first.point.y)
