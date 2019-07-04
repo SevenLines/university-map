@@ -7,7 +7,7 @@ from models.raspnagr import Teacher, Raspis, Raspnagr, Discipline, Kontkurs, Kon
 
 api = Namespace("teachers")
 
-@api.route('/way_view')
+@api.route('/way_view_teachers')
 class TeacherWayView(Resource):
     def get(self):
         teachers = Raspis.query \

@@ -26,9 +26,11 @@ db = SQLAlchemy(app)
 # setup API
 from namespaces.auditories import api as auditories_ns
 from namespaces.teachers import api as teachers_ns
+from namespaces.groups import api as groups_ns
 api = Api(app, prefix="/api")
 api.add_namespace(auditories_ns)
 api.add_namespace(teachers_ns)
+api.add_namespace(groups_ns)
 
 @app.after_request
 def set_response_headers(response):
