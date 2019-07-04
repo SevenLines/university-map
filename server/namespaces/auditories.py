@@ -125,3 +125,20 @@ class AuditoriesDayOccupation(Resource):
             return self.get_data(form.data['date'])
 
         return form.errors
+
+
+@api.route("/statistic")
+class AuditoryStatisticsView(Resource):
+    def get(self):
+        aud = Auditory.query.get(908)
+
+        #auditories = Raspis.query.filter(Raspis.aud_id == request.args['auditory_id']) \
+        #    .with_entities(
+        #    Raspis.para, func.count("*").label("items_count")). \
+        #    group_by(Raspis.para)
+
+        #output_dict = {
+        #    i.para: (i.items_count / 12 * 100) for i in auditories
+        #}
+        print(request.args)
+        return aud

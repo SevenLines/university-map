@@ -1,6 +1,6 @@
 from tests import TestCaseBase
 from sqlalchemy import func
-from models.raspnagr import Auditory, Raspis, Raspnagr, Kontkurs, Discipline
+from models.raspnagr import Auditory, Raspis, RaspisZaoch, Raspnagr, Kontkurs, Discipline
 
 
 class TestQueriesExamples(TestCaseBase):
@@ -129,16 +129,34 @@ class TestQueriesExamples(TestCaseBase):
         # или если нас интересует конкретная пара то так
         print(f"В {2} пару {ouput_dict[2]} занятий")
 
-    def test_audience_percentage_day(self):
+    def test_audience_percentage_day_for_pair(self):
         aud = Auditory.query.get(908)
-        res = Raspis.query.filter(Raspis.aud_id == 908)\
+        res = Raspis.query.filter(Raspis.aud_id == 908) \
             .with_entities(
-            Raspis.para, func.count("*").label("items_count")).\
+            Raspis.para, func.count("*").label("items_count")). \
             group_by(Raspis.para)
 
         output_dict = {
-            i.para: i.items_count for i in res
+            i.para: round(i.items_count / 12 * 100, 2) for i in res
         }
 
-        print(f"В аудитории {aud.title.strip()} в {3} пару {output_dict[3]} занятий. Аудитория загружена на "
-              f"{(output_dict[3] / 12 * 100).__round__(2)}%")
+        for para, value in output_dict.items():
+            print(f"В аудитории {aud.title.strip()} в {para} пару "
+                  f"аудитория загружена на {value}%")
+
+    def test_audience_percentage_day_for_day(self):
+        aud = Auditory.query.get(908)
+        schedule = Raspis.query \
+            .filter(Raspis.aud_id == 908) \
+            .with_entities(
+                Raspis.day,
+                func.count("*").label("pair_count")) \
+            .group_by(Raspis.day) \
+            .order_by(Raspis.day)
+
+        print(aud)
+        for item in schedule:
+            print(f"В {item.day} день - {item.pair_count} пар. "
+                  f"Аудитория загружена на {round(item.pair_count / 8 * 100, 2)}%")
+
+#   def test_audience_percentage_day_for_day_and_extramural(self):
