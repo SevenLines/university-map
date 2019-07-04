@@ -26,8 +26,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="2.2768838"
-     inkscape:cx="706.59488"
-     inkscape:cy="538.42333"
+     inkscape:cx="171.61809"
+     inkscape:cy="465.89183"
      inkscape:document-units="mm"
      inkscape:current-layer="ways_layer"
      showgrid="false"
@@ -49,7 +49,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -1712,7 +1712,7 @@
        r="0.26726952"
        style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332" />
     <circle
-       id="circle569"
+       id="enter_g301"
        cx="38.019093"
        cy="31.657949"
        r="0.26726952"
@@ -1808,7 +1808,7 @@
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />
     <circle
-       id="enter_304"
+       id="enter_g304"
        cx="70.024612"
        cy="14.218616"
        r="0.26726952"
@@ -3698,13 +3698,13 @@
        d="m 471.8815,51.662023 h 7.39519"
        style="display:inline;fill:none;fill-opacity:1;stroke:#00ff00;stroke-width:0.12701966;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:0.25403932, 0.12701966;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal" />
     <circle
-       id="enter_306"
+       id="enter_g306"
        cx="82.446838"
        cy="14.163416"
        r="0.26726952"
        style="display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332" />
     <circle
-       id="enter_306a"
+       id="enter_g06a"
        cx="94.764481"
        cy="14.163417"
        r="0.26726952"
@@ -3716,7 +3716,7 @@
        cx="88.534401"
        id="enter_g305a" />
     <circle
-       id="enter_305b"
+       id="enter_g305b"
        cx="94.601746"
        cy="31.992039"
        r="0.26726952"
@@ -3734,7 +3734,7 @@
        cx="106.2434"
        id="enter_g307" />
     <circle
-       id="enter_g301"
+       id="enter_g310"
        cx="128.54892"
        cy="14.163417"
        r="0.26726952"
@@ -3944,7 +3944,7 @@
        cx="21.528664"
        id="enter_v301" />
     <circle
-       id="circle669"
+       id="enter_v300"
        cx="13.982281"
        cy="134.2209"
        r="0.26726952"
