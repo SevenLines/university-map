@@ -1,9 +1,9 @@
-from tests import TestCaseBase
+import tests
 from sqlalchemy import func
 from models.raspnagr import Auditory, Raspis, Raspnagr, Kontkurs, Discipline
 
 
-class TestQueriesExamples(TestCaseBase):
+class TestQueriesExamples(tests.TestCaseBase):
     def test_list_all_auds(self):
         """
         Выводит 10 самых больших аудиторий

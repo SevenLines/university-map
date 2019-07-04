@@ -1,10 +1,40 @@
 from flask import request
 from flask_restplus import Namespace, Resource
+from sqlalchemy import func
 from wtforms import Form, IntegerField
 
-from models.raspnagr import Teacher, Raspis, Raspnagr, Discipline, Kontkurs, Kontgrp, Potoklist, Normtime
+from models.raspnagr import Teacher, Raspis, Raspnagr, Discipline, Kontkurs, Kontgrp, Potoklist, Normtime, Auditory
 
 api = Namespace("teachers")
+
+@api.route('/way_view')
+class TeacherWayView(Resource):
+    def get(self):
+        teachers = Raspis.query \
+            .filter(Teacher.name is not None) \
+            .filter(Teacher.id == request.args.get('id'))\
+            .filter((Raspis.day - 1) % 7 + 1 == request.args.get('day')) \
+            .outerjoin(Auditory, Auditory.id == Raspis.aud_id) \
+            .outerjoin(Raspnagr, Raspnagr.id == Raspis.raspnagr_id) \
+            .outerjoin(Teacher, Raspnagr.prep_id == Teacher.id) \
+            .with_entities(
+            Raspis.para,
+            Raspis.day,
+            Teacher.id,
+            func.rtrim(Auditory.title).label("auditory")
+        ) \
+            .order_by(Raspis.para)
+
+        result = [
+            {
+                'id': t.id,
+                'day': t.day,
+                'para': t.para,
+                'auditory': t.auditory.strip()
+            } for t in teachers
+        ]
+
+        return result
 
 
 @api.route('/list')
