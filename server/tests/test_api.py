@@ -7,5 +7,5 @@ class TestAuditoriesOccupation(TestCaseBase):
         print(r)
 
     def test_get_stat(self):
-        r = self.api('get', '/api/auditories/statistic')
+        r = self.api('get', '/api/auditories/statistic?auditory_id=908')
         print(r)
