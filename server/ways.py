@@ -171,12 +171,16 @@ def write_graph(graph, path):
     file.close()
 
 
-def find_paths(graph, start, goal):
+def find_paths(graph, start, goal) -> [Node]:
     stack = [(start, [start])]
     while stack:
         (vertex, path) = stack.pop()
-        for next in set(graph[vertex]) - set(path):
+        for next in set(graph.rel_list[vertex]) - set(path):
             if next == goal:
-                yield path + [next]
+                path += [next]
+                paths = []
+                for i in path:
+                    paths.append(graph.nodes[i])
+                yield paths
             else:
                 stack.append((next, path + [next]))

@@ -20,9 +20,9 @@ class TestGraphReading(TestCase):
 
     def test_find_path(self):
         graph = get_from_svg(self.svg_path)
-        for list in find_paths(graph.rel_list, graph.index_by_id('enter_g303'), graph.index_by_id('enter_v316')):
-            for i in list:
-                print(graph.nodes[i].id)
+        for list in find_paths(graph, graph.index_by_id('enter_g303'), graph.index_by_id('enter_v316')):
+            for node in list:
+                print(node.id)
 
     def test_find_path_with_view(self):
         graph = get_from_svg(self.svg_path)
@@ -32,11 +32,11 @@ class TestGraphReading(TestCase):
             lines.append(line)
         f.close()
         nodes_code = ''
-        for list in find_paths(graph.rel_list, graph.index_by_id('enter_g303'), graph.index_by_id('enter_v316')):
-            for i in list:
+        for list in find_paths(graph, graph.index_by_id('enter_g303'), graph.index_by_id('enter_v316')):
+            for node in list:
                 nodes_code += '<circle\nstyle=\"display:inline;fill:#3333cc;fill-opacity:1;stroke:none;stroke-width:0' \
-                              '.1\"\nr=\"0.4\"\ncy=\"' + str(graph.nodes[i].point.y) + \
-                              '\"\ncx=\"' + str(graph.nodes[i].point.x) + '\"\nid=\"' + str(graph.nodes[i].id) + '\" />\n'
+                              '.1\"\nr=\"0.4\"\ncy=\"' + str(node.point.y) + \
+                              '\"\ncx=\"' + str(node.point.x) + '\"\nid=\"' + str(node.id) + '\" />\n'
         lines.insert(len(lines)-2, nodes_code)
         f = open('path_nodes.svg', 'w')
         for line in lines:
