@@ -54,6 +54,8 @@
     import NumberSelect from "@/components/common/NumberSelect.vue"
     import {AuditoriesLevel, AuditoriesStatisticsMode, TeacherItem} from '@/types'
     import {Dictionary} from "vuex"
+    import EventBus from "@/utils/event_bus";
+    EventBus.$off();
 
     const Auditories = namespace("auditories");
 
@@ -159,6 +161,21 @@
             this.fetchAuditories();
             this.fetchTeachers();
             this.updateAuditoryOccupationDate({date: new Date()});
+
+            // слушаем событие auditoryClicked, подключаем к нему обработчик onAuditoryClicked
+            EventBus.$on("auditoryClicked", this.onAuditoryClicked)
+        }
+
+        // метода который будет вызываться по событию auditoryClicked
+        // так как тут используется TypeScript то надо указывать тип,
+        // чтобы не мучаться с типами можно просто указывать any
+        onAuditoryClicked(data: any) {
+            // чтобы вывести в консоли содержимое data
+            console.log(data)
+            if (data.auditory) {
+                // вывод алерта
+                alert(`Hello auditory ${data.id} with database id=${data.auditory.id} and name=${data.auditory.title}`);
+            }
         }
 
         onTeacherSelect(option: any) {

@@ -1,6 +1,5 @@
-import {AuditoriesStatisticsMode} from '../types'
 <template>
-    <g class="auditory" :class="addClasses">
+    <g class="auditory" :class="addClasses" @click="onAuditoryClick">
         <component class="border" :is="type" :d="d" :width="width" :height="height" :x="x" :y="y" ref="border"/>
         <text :x="textCenter.x" :y="textCenter.y">
             {{auditoryName}}
@@ -14,6 +13,7 @@ import {AuditoriesStatisticsMode} from '../types'
     import {namespace} from 'vuex-class';
     import tippy, {Instance as TippyInstance} from 'tippy.js';
     import {AuditoriesStatisticsMode, AuditoryItem, AuditoryOccupationItem, LetterMapping} from "@/types"
+    import EventBus from "@/utils/event_bus";
 
     const Auditories = namespace("auditories");
 
@@ -73,6 +73,15 @@ import {AuditoriesStatisticsMode} from '../types'
                     }
                 }
             }
+        }
+
+        // метода вызываемый по клику на аудиторию
+        onAuditoryClick() {
+            // вызываем событие на шине событий
+            EventBus.$emit("auditoryClicked", {
+                id: this.id, // это текстовый  идентификатор аудитории
+                auditory: this.auditory // а это уже непосредственно аудитория
+            });
         }
 
         get type(): string {
