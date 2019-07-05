@@ -1,5 +1,5 @@
-from ways import get_from_svg, write_graph, read_graph, find_paths
-from unittest import TestCase, main
+from ways import get_from_svg, write_graph, read_graph, find_paths, get_full_graph
+from unittest import TestCase, main, skip
 
 
 class TestGraphReading(TestCase):
@@ -20,8 +20,8 @@ class TestGraphReading(TestCase):
 
     def test_find_path(self):
         graph = get_from_svg(self.svg_path)
-        for list in find_paths(graph, graph.index_by_id('enter_g303'), graph.index_by_id('enter_v316')):
-            for node in list:
+        for nodes in find_paths(graph, 'enter_g303', 'enter_v316'):
+            for node in nodes:
                 print(node.id)
 
     def test_find_path_with_view(self):
@@ -32,16 +32,26 @@ class TestGraphReading(TestCase):
             lines.append(line)
         f.close()
         nodes_code = ''
-        for list in find_paths(graph, graph.index_by_id('enter_g303'), graph.index_by_id('enter_v316')):
-            for node in list:
+        for nodes in find_paths(graph, 'enter_g303', 'enter_v316'):
+            for node in nodes:
                 nodes_code += '<circle\nstyle=\"display:inline;fill:#3333cc;fill-opacity:1;stroke:none;stroke-width:0' \
                               '.1\"\nr=\"0.4\"\ncy=\"' + str(node.point.y) + \
-                              '\"\ncx=\"' + str(node.point.x) + '\"\nid=\"' + str(node.id) + '\" />\n'
-        lines.insert(len(lines)-2, nodes_code)
+                              '\"\ncx=\"' + str(node.point.x) + '\"\nid=\"' + node.id + '\" />\n'
+        lines.insert(len(lines) - 2, nodes_code)
         f = open('path_nodes.svg', 'w')
         for line in lines:
             f.write(line)
         f.close()
+
+    # Найдёт 2 пути
+    def test_find_path_between_floors(self):
+        graph = get_full_graph(['../../Data/2этаж.svg', '../../Data/3этаж.svg'])
+        paths = find_paths(graph, 'enter_v225', 'enter_v316')
+        for nodes in paths:
+            print('начало')
+            for node in nodes:
+                print(node.id)
+            print('конец\n')
 
 
 if __name__ == '__main__':
