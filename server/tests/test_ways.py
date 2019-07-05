@@ -37,9 +37,56 @@ class TestGraphReading(TestCase):
                 nodes_code += '<circle\nstyle=\"display:inline;fill:#3333cc;fill-opacity:1;stroke:none;stroke-width:0' \
                               '.1\"\nr=\"0.4\"\ncy=\"' + str(node.point.y) + \
                               '\"\ncx=\"' + str(node.point.x) + '\"\nid=\"' + str(node.id) + '\" />\n'
-        lines.insert(len(lines)-2, nodes_code)
+        lines.insert(len(lines) - 2, nodes_code)
         f = open('path_nodes.svg', 'w')
         for line in lines:
+            f.write(line)
+        f.close()
+
+    def test_find_path_between_floors(self):
+        second = get_from_svg('../../Data/2этаж.svg')
+        third = get_from_svg('../../Data/3этаж.svg')
+        graph = third.join(second)
+        graph.add_edge('enter_g_2_3', 'enter_g_3_2')
+        paths = find_paths(graph, graph.index_by_id('enter_v316'), graph.index_by_id('enter_g209'))
+
+        second_svg_code = []
+        f = open('../../Data/2этаж.svg')
+        for line in f.readlines():
+            second_svg_code.append(line)
+        f.close()
+
+        third_svg_code = []
+        f = open('../../Data/3этаж.svg')
+        for line in f.readlines():
+            third_svg_code.append(line)
+        f.close()
+
+        second_path_code = ''
+        third_path_code = ''
+        down = False
+        for list in paths:
+            for node in list:
+                if str(node.id) == 'enter_g_2_3':
+                    down = True
+                code = '<circle\nstyle=\"display:inline;fill:#3333cc;fill-opacity:1;stroke:none;stroke' \
+                       '-width:0.1\"\nr=\"0.4\"\ncy=\"' + str(node.point.y) + \
+                       '\"\ncx=\"' + str(node.point.x) + '\"\nid=\"' + str(node.id) + '\" />\n'
+                if down:
+                    second_path_code += code
+                else:
+                    third_path_code += code
+
+        second_svg_code.insert(len(second_svg_code) - 2, second_path_code)
+        third_svg_code.insert(len(third_svg_code) - 2, third_path_code)
+
+        f = open('2path_nodes.svg', 'w')
+        for line in second_svg_code:
+            f.write(line)
+        f.close()
+
+        f = open('3path_nodes.svg', 'w')
+        for line in third_svg_code:
             f.write(line)
         f.close()
 

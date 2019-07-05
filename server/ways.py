@@ -31,18 +31,9 @@ class Edge(object):
 
 
 class Graph(object):
-    def __init__(self, nodes, edges):
+    def __init__(self, nodes: [Node], edges: [Edge]):
         self.nodes = nodes
         self.edges = edges
-        self.rel_list = [[]]
-        for i in range(len(self.nodes)):
-            if i > 0:
-                self.rel_list.append([])
-            for j in range(len(self.edges)):
-                if self.nodes[i] == self.edges[j].first:
-                    self.rel_list[i].append(self.index_of_node(self.edges[j].second))
-                elif self.nodes[i] == self.edges[j].second:
-                    self.rel_list[i].append(self.index_of_node(self.edges[j].first))
 
     def __eq__(self, other):
         if len(self.nodes) != len(other.nodes):
@@ -57,15 +48,47 @@ class Graph(object):
                 return False
         return True
 
-    def index_of_node(self, node):
+    def index_of_node(self, node: Node):
         for i in range(len(self.nodes)):
             if self.nodes[i] == node:
                 return i
 
-    def index_by_id(self, id):
+    def index_by_id(self, id: str):
         for i in range(len(self.nodes)):
             if self.nodes[i].id == id:
                 return i
+
+    def node_by_id(self, id: str) -> Node:
+        for node in self.nodes:
+            if node.id == id:
+                return node
+
+    def rel_list(self):
+        rel_list = [[]]
+        for i in range(len(self.nodes)):
+            if i > 0:
+                rel_list.append([])
+            for j in range(len(self.edges)):
+                if self.nodes[i] == self.edges[j].first:
+                    rel_list[i].append(self.index_of_node(self.edges[j].second))
+                elif self.nodes[i] == self.edges[j].second:
+                    rel_list[i].append(self.index_of_node(self.edges[j].first))
+        return rel_list
+
+    def join(self, graph):
+        nodes = self.nodes.copy()
+        edges = self.edges.copy()
+        for edge in graph.edges:
+            edges.append(edge)
+        for node in graph.nodes:
+            nodes.append(node)
+        return Graph(nodes, edges)
+
+    def add_edge(self, first_node: Node, second_node: Node):
+        self.edges.append(Edge(first_node, second_node))
+
+    def add_edge(self, first_id: str, second_id: str):
+        self.edges.append(Edge(self.node_by_id(first_id), self.node_by_id(second_id)))
 
 
 def get_from_svg(path) -> Graph:
@@ -150,7 +173,7 @@ def get_vertex(scope) -> [Node]:
     return vertex
 
 
-def is_near(first, second):
+def is_near(first: Point, second: Point):
     z = (first.x - second.x) ** 2 + (first.y - second.y) ** 2
     if math.sqrt(z) < 0.5:
         return True
@@ -165,17 +188,18 @@ def read_graph(path) -> Graph:
     return graph
 
 
-def write_graph(graph, path):
+def write_graph(graph: Graph, path):
     file = open(path, 'wb')
     pickle.dump(graph, file)
     file.close()
 
 
-def find_paths(graph, start, goal) -> [Node]:
+def find_paths(graph: Graph, start, goal) -> [Node]:
+    rel_list = graph.rel_list()
     stack = [(start, [start])]
     while stack:
         (vertex, path) = stack.pop()
-        for next in set(graph.rel_list[vertex]) - set(path):
+        for next in set(rel_list[vertex]) - set(path):
             if next == goal:
                 path += [next]
                 paths = []
