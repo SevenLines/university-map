@@ -32,6 +32,7 @@
                 </div>
             </div>
             <div style="flex-grow: 1; position: relative; background-color: #f9f9f9">
+
                 <div style="position: absolute; right: 1em; top: 1em;">
                     <b-button v-for="(level, id) in levels"
                               :key="id"
@@ -41,8 +42,15 @@
                     </b-button>
                 </div>
                 <building/>
+                 <div class="statistics-window">
+                     <h2>Статистика по аудитории</h2>
+                     <div>
+                    <!-- выводить статистику сюда -->
+                    </div>
+                </div>
             </div>
         </div>
+
     </div>
 </template>
 
@@ -55,6 +63,7 @@
     import {AuditoriesLevel, AuditoriesStatisticsMode, TeacherItem} from '@/types'
     import {Dictionary} from "vuex"
     import EventBus from "@/utils/event_bus";
+
     EventBus.$off();
 
     const Auditories = namespace("auditories");
@@ -196,6 +205,14 @@
     body {
         margin: 0;
         padding: 0;
+    }
+
+    .statistics-window {
+        position: absolute;
+        left: 1em;
+        top: 1em;
+        padding: 1em;
+        background-color: white;
     }
 
     #app {
