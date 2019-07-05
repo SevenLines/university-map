@@ -26,8 +26,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="2.2768838"
-     inkscape:cx="94.539058"
-     inkscape:cy="834.81711"
+     inkscape:cx="144.57547"
+     inkscape:cy="465.89183"
      inkscape:document-units="mm"
      inkscape:current-layer="ways_layer"
      showgrid="false"
@@ -2228,7 +2228,7 @@
        d="M 28.583644,7.5952523 28.490756,23.011301"
        style="fill:none;fill-opacity:1;stroke:#7088b9;stroke-width:0.16633418;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:0.33266836, 0.16633418;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal" />
     <circle
-       id="enter_g_3_2"
+       id="stairs_g_3_start"
        cx="28.586218"
        cy="7.6497374"
        r="0.26726952"
@@ -3950,7 +3950,7 @@
        r="0.26726952"
        style="display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332" />
     <circle
-       id="enter_v_2_3"
+       id="stairs_v_3_start"
        cx="28.569359"
        cy="118.85391"
        r="0.26726952"
@@ -3960,7 +3960,7 @@
        r="0.26726952"
        cy="146.16425"
        cx="184.0155"
-       id="enter_k_3-2" />
+       id="stairs_v_3_end" />
     <path
        sodipodi:nodetypes="cc"
        inkscape:connector-curvature="0"

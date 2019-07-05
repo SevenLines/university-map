@@ -13,8 +13,8 @@ class Point(object):
 
 
 class Node(object):
-    def __init__(self, id, point):
-        self.id = id
+    def __init__(self, id: str, point: Point):
+        self.id = str(id)
         self.point = point
 
     def __eq__(self, other):
@@ -22,7 +22,7 @@ class Node(object):
 
 
 class Edge(object):
-    def __init__(self, first, second):
+    def __init__(self, first: Node, second: Node):
         self.first = first
         self.second = second
 
@@ -84,14 +84,15 @@ class Graph(object):
             nodes.append(node)
         return Graph(nodes, edges)
 
-    def add_edge(self, first_node: Node, second_node: Node):
-        self.edges.append(Edge(first_node, second_node))
-
     def add_edge(self, first_id: str, second_id: str):
-        self.edges.append(Edge(self.node_by_id(first_id), self.node_by_id(second_id)))
+        first = self.node_by_id(first_id)
+        second = self.node_by_id(second_id)
+        if first is not None and second is not None:
+            edge = Edge(first, second)
+            self.edges.append(edge)
 
 
-def get_from_svg(path) -> Graph:
+def get_from_svg(path: str) -> Graph:
     file = open(path)
     svg = parseString(file.read())
     file.close()
@@ -181,26 +182,41 @@ def is_near(first: Point, second: Point):
         return False
 
 
-def read_graph(path) -> Graph:
+def read_graph(path: str) -> Graph:
     file = open(path, 'rb')
     graph = pickle.load(file)
     file.close()
     return graph
 
 
-def write_graph(graph: Graph, path):
+def write_graph(graph: Graph, path: str):
     file = open(path, 'wb')
     pickle.dump(graph, file)
     file.close()
 
 
-def find_paths(graph: Graph, start, goal) -> [Node]:
+def get_full_graph(paths: [str]):
+    graph = Graph([], [])
+    for path in paths:
+        graph = graph.join(get_from_svg(path))
+    for letter in ['b', 'v', 'g', 'd', 'e', 'j']:
+        for floor in range(3):
+            graph.add_edge('stairs_' + letter + '_' + str(floor) + '_start',
+                           'stairs_' + letter + '_' + str(floor + 1) + '_start')
+            graph.add_edge('stairs_' + letter + '_' + str(floor) + '_end',
+                           'stairs_' + letter + '_' + str(floor + 1) + '_end')
+    return graph
+
+
+def find_paths(graph: Graph, start_id, end_id) -> [[Node]]:
+    start = graph.index_by_id(start_id)
+    end = graph.index_by_id(end_id)
     rel_list = graph.rel_list()
     stack = [(start, [start])]
     while stack:
         (vertex, path) = stack.pop()
         for next in set(rel_list[vertex]) - set(path):
-            if next == goal:
+            if next == end:
                 path += [next]
                 paths = []
                 for i in path:
