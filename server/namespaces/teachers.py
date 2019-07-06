@@ -4,6 +4,7 @@ from sqlalchemy import func
 from wtforms import Form, IntegerField
 
 from models.raspnagr import Teacher, Raspis, Raspnagr, Discipline, Kontkurs, Kontgrp, Potoklist, Normtime, Auditory
+from ways import find_paths, get_full_graph
 
 api = Namespace("teachers")
 
@@ -21,6 +22,7 @@ class TeacherWayView(Resource):
             Raspis.para,
             Raspis.day,
             Teacher.id,
+            Auditory.id.label("auditory_id"),
             func.rtrim(Auditory.title).label("auditory")
         ) \
             .order_by(Raspis.para)
@@ -30,11 +32,22 @@ class TeacherWayView(Resource):
                 'id': t.id,
                 'day': t.day,
                 'para': t.para,
+                'auditory_id': t.auditory_id,
                 'auditory': t.auditory.strip()
             } for t in teachers
         ]
 
         return result
+
+    def get_path_teacher(self):
+        schedule = TeacherWayView.get(self)
+        graph = get_full_graph(['../../Data/2этаж.svg', '../../Data/3этаж.svg'])
+        paths = find_paths(graph, 'enter_v316', 'enter_v225')
+        for nodes in paths:
+            for node in nodes:
+                print(node.id)
+
+
 
 
 @api.route('/list')

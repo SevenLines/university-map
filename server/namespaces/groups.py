@@ -22,6 +22,7 @@ class GroupWayView(Resource):
                 Kontgrp.kont_id,
                 Raspis.day,
                 Raspis.para,
+                Auditory.id.label("auditory_id"),
                 func.rtrim(Auditory.title).label("auditory"),
                 func.rtrim(coalesce(Potoklist.title, Kontgrp.title, Kontkurs.title)).label("group")
             ) \
@@ -32,6 +33,7 @@ class GroupWayView(Resource):
                 'kont_id': t.kont_id,
                 'day': t.day,
                 'para': t.para,
+                'auditory_id': t.auditory_id,
                 'auditory': t.auditory,
                 'group': t.group.strip()
             } for t in groups
