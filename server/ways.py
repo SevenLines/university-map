@@ -5,20 +5,32 @@ import math
 
 class Point(object):
     def __init__(self, x, y):
-        self.x = float(x)
-        self.y = float(y)
+        self.__x__ = float(x)
+        self.__y__ = float(y)
 
     def __eq__(self, other):
-        return self.x == other.x and self.y == other.y
+        return self.__x__ == other.__x__ and self.__y__ == other.__y__
+
+    def x(self):
+        return self.__x__
+
+    def y(self):
+        return self.__y__
 
 
 class Node(object):
     def __init__(self, id: str, point: Point):
         self.id = str(id)
-        self.point = point
+        self.__point__ = point
 
     def __eq__(self, other):
-        return self.point == other.point and self.id == other.id
+        return self.__point__ == other.__point__ and self.id == other.id
+
+    def x(self):
+        return self.__point__.x()
+
+    def y(self):
+        return self.__point__.y()
 
 
 class Edge(object):
@@ -32,8 +44,8 @@ class Edge(object):
 
 class Graph(object):
     def __init__(self, nodes: [Node], edges: [Edge]):
-        self.nodes = nodes
-        self.edges = edges
+        self.nodes: [Node] = nodes
+        self.edges: [Edge] = edges
 
     def __eq__(self, other):
         if len(self.nodes) != len(other.nodes):
@@ -90,21 +102,28 @@ class Graph(object):
         if first is not None and second is not None:
             edge = Edge(first, second)
             self.edges.append(edge)
+            # print("Ребро:", first_id, '->', second_id)
 
 
 def get_from_svg(path: str) -> Graph:
-    file = open(path)
-    svg = parseString(file.read())
-    file.close()
-    edges = []
-    auto_id = 0
+    try:
+        file = open(path)
+        svg = parseString(file.read())
+        file.close()
+    except FileNotFoundError as _:
+        return Graph([], [])
 
+    global ways_layer
     for g in svg.getElementsByTagName('g'):
         if g.getAttribute('id') == 'ways_layer':
             ways_layer = g
             break
 
-    nodes = get_vertex(ways_layer)
+    if ways_layer is None:
+        return Graph([], [])
+
+    edges: [Edge] = []
+    nodes: [Node] = get_vertex(ways_layer)
 
     for path in ways_layer.getElementsByTagName('path'):
         d = path.getAttribute('d')
@@ -136,14 +155,14 @@ def get_from_svg(path: str) -> Graph:
                     x2 = x1 + float(points[3])
                     y2 = y1
 
-        first = Node(auto_id, Point(x1, y1))
-        auto_id += 1
-        second = Node(auto_id, Point(x2, y2))
-        auto_id += 1
+        first_point = Point(x1, y1)
+        second_point = Point(x2, y2)
+        first = Node(str(first_point), first_point)
+        second = Node(str(second_point), second_point)
 
         found = False
         for node in nodes:
-            if is_near(node.point, first.point):
+            if is_near(node.__point__, first.__point__):
                 first = node
                 found = True
                 break
@@ -152,7 +171,7 @@ def get_from_svg(path: str) -> Graph:
 
         found = False
         for node in nodes:
-            if is_near(node.point, second.point):
+            if is_near(node.__point__, second.__point__):
                 second = node
                 found = True
                 break
@@ -175,7 +194,7 @@ def get_vertex(scope) -> [Node]:
 
 
 def is_near(first: Point, second: Point):
-    z = (first.x - second.x) ** 2 + (first.y - second.y) ** 2
+    z = (first.x() - second.x()) ** 2 + (first.y() - second.y()) ** 2
     if math.sqrt(z) < 0.5:
         return True
     else:
@@ -199,7 +218,7 @@ def get_full_graph(paths: [str]):
     graph = Graph([], [])
     for path in paths:
         graph = graph.join(get_from_svg(path))
-    for letter in ['b', 'v', 'g', 'd', 'e', 'j']:
+    for letter in ['a', 'b', 'v', 'g', 'd', 'e', 'j']:
         for floor in range(3):
             graph.add_edge('stairs_' + letter + '_' + str(floor) + '_start',
                            'stairs_' + letter + '_' + str(floor + 1) + '_start')
@@ -208,7 +227,7 @@ def get_full_graph(paths: [str]):
     return graph
 
 
-def find_paths(graph: Graph, start_id, end_id) -> [[Node]]:
+def find_paths(graph: Graph, start_id, end_id) -> [Node]:
     start = graph.index_by_id(start_id)
     end = graph.index_by_id(end_id)
     rel_list = graph.rel_list()
@@ -221,6 +240,6 @@ def find_paths(graph: Graph, start_id, end_id) -> [[Node]]:
                 paths = []
                 for i in path:
                     paths.append(graph.nodes[i])
-                yield paths
+                return paths
             else:
                 stack.append((next, path + [next]))
