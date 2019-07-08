@@ -42,11 +42,16 @@
                     </b-button>
                 </div>
                 <building/>
-                 <div class="statistics-window">
-                     <h2>Статистика по аудитории</h2>
-                     <div>
-                    <!-- выводить статистику сюда -->
+                <div class="statistics-window">
+                    <h2>Статистика по аудитории</h2>
+                    <div v-if="clickedAuditory">
+                        <!-- выводить статистику сюда -->
+                        {{ clickedAuditory.title }}
                     </div>
+                    <div v-for="items in AuditoryStatistic">
+                        {{ items.para }} {{ items.count }} {{ items.percentage }}
+                    </div>
+                    <div ref="graph" style="height: 300px"></div>
                 </div>
             </div>
         </div>
@@ -60,9 +65,11 @@
     import Building from './components/Building.vue';
     import {namespace} from "vuex-class"
     import NumberSelect from "@/components/common/NumberSelect.vue"
-    import {AuditoriesLevel, AuditoriesStatisticsMode, TeacherItem} from '@/types'
+    import {AuditoriesLevel, AuditoriesStatisticsMode, AuditoryItem, TeacherItem} from '@/types'
     import {Dictionary} from "vuex"
     import EventBus from "@/utils/event_bus";
+    import axios from 'axios';
+    import echarts from 'echarts';
 
     EventBus.$off();
 
@@ -92,6 +99,10 @@
         @Auditories.State("teachers") teachers!: Dictionary<TeacherItem>;
 
         teacherFilter: string = "";
+
+        clickedAuditory: AuditoryItem | null = null;
+        AuditoryStatistic: any = {};
+        chart: any = null;
 
         get currentDateValue(): Date {
             return this.currentDate;
@@ -175,12 +186,39 @@
             EventBus.$on("auditoryClicked", this.onAuditoryClicked)
         }
 
+        mounted() {
+            this.chart = echarts.init(this.$refs.graph as any);
+            this.chart.setOption({
+                xAxis: {
+                    type: 'category',
+                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: [820, 932, 901, 934, 1290, 1330, 1320],
+                    type: 'bar'
+                }]
+            });
+        }
+
         // метода который будет вызываться по событию auditoryClicked
         // так как тут используется TypeScript то надо указывать тип,
         // чтобы не мучаться с типами можно просто указывать any
         onAuditoryClicked(data: any) {
-            // чтобы вывести в консоли содержимое data
+            axios.get("/api/auditories/statistic", {
+                params: {
+                    auditory_id: data.auditory.id,
+                }
+            }).then(r => {
+                console.log(r.data)
+                console.log(r.data[0].count)
+                console.log(r.data[0].para)
+                this.AuditoryStatistic = r.data
+            })
             console.log(data)
+            // чтобы вывести в консоли содержимое data
             if (data.auditory) {
                 // вывод алерта
                 alert(`Hello auditory ${data.id} with database id=${data.auditory.id} and name=${data.auditory.title}`);

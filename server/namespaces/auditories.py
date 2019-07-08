@@ -139,7 +139,7 @@ class AuditoryStatisticsView(Resource):
             {
                 'para': a.para,
                 'count': a.items_count,
-                'percentage': f"{round(a.items_count / 12 * 100)}"
+                'percentage': round(a.items_count / 16 * 100)
             } for a in auditories
         ]
 
