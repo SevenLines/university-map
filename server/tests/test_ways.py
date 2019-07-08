@@ -1,10 +1,12 @@
 from ways import get_from_svg, write_graph, read_graph, find_paths, get_full_graph
-from unittest import TestCase, main, skip
+from unittest import skip
+import tests
 
 
-class TestGraphReading(TestCase):
+class TestGraphReading(tests.TestCaseBase):
 
     def setUp(self):
+        super(TestGraphReading, self).setUp()
         self.svg_path = '../../Data/3этаж.svg'
         self.save_path = 'graph.bin'
 
@@ -52,7 +54,3 @@ class TestGraphReading(TestCase):
             for node in nodes:
                 print(node.id)
             print('конец\n')
-
-
-if __name__ == '__main__':
-    main()
