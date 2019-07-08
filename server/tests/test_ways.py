@@ -1,8 +1,10 @@
 from ways import get_from_svg, write_graph, read_graph, find_paths, get_full_graph
 from unittest import TestCase, main, skip
+import tests
+from models.raspnagr import Auditory
 
 
-class TestGraphReading(TestCase):
+class TestGraphReading(tests.TestCaseBase):
 
     def setUp(self):
         self.svg_path = '../../Data/3этаж.svg'
@@ -52,6 +54,9 @@ class TestGraphReading(TestCase):
             for node in nodes:
                 print(node.id)
             print('конец\n')
+
+    def test_title_aud(self):
+        self.assertEqual('enter_v316', Auditory.get_new_aud_title('В-316'))
 
 
 if __name__ == '__main__':

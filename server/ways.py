@@ -224,3 +224,4 @@ def find_paths(graph: Graph, start_id, end_id) -> [[Node]]:
                 yield paths
             else:
                 stack.append((next, path + [next]))
+
