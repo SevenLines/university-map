@@ -45,13 +45,9 @@
                 <div class="statistics-window">
                     <h2>Статистика по аудитории</h2>
                     <div v-if="clickedAuditory">
-                        <!-- выводить статистику сюда -->
                         {{ clickedAuditory.title }}
                     </div>
-                    <div v-for="items in AuditoryStatistic">
-                        {{ items.para }} {{ items.count }} {{ items.percentage }}
-                    </div>
-                    <div ref="graph" style="height: 300px"></div>
+                    <div ref="graph" style="height: 400px; width: 300px"></div>
                 </div>
             </div>
         </div>
@@ -188,19 +184,6 @@
 
         mounted() {
             this.chart = echarts.init(this.$refs.graph as any);
-            this.chart.setOption({
-                xAxis: {
-                    type: 'category',
-                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-                },
-                yAxis: {
-                    type: 'value'
-                },
-                series: [{
-                    data: [820, 932, 901, 934, 1290, 1330, 1320],
-                    type: 'bar'
-                }]
-            });
         }
 
         // метода который будет вызываться по событию auditoryClicked
@@ -212,17 +195,39 @@
                     auditory_id: data.auditory.id,
                 }
             }).then(r => {
-                console.log(r.data)
-                console.log(r.data[0].count)
-                console.log(r.data[0].para)
-                this.AuditoryStatistic = r.data
+                this.AuditoryStatistic = r.data;
+                let data = {
+                    title: {
+                        text: 'Статистика'
+                    },
+                    xAxis: {
+                        data: ['1', '2', '3', '4', '5', '6', '7', '8'],
+                        name: "Пара",
+                        nameLocation: 'middle',
+                        nameGap: '30'
+                    },
+                    yAxis: {
+                        type : 'value',
+                        name: "%",
+                        position: 'left',
+                        nameLocation: 'middle',
+                        nameGap: '30'
+                    },
+                    series: [{
+                        data: _.map([0, 1, 2, 3, 4, 5, 6, 7], (i: any) => {
+                            return this.AuditoryStatistic[i]
+                                ? this.AuditoryStatistic[i].percentage
+                                : 0
+                        }),
+                        type: 'bar'
+                    }]
+                }
+                console.log(data)
+                this.chart.setOption(data);
             })
             console.log(data)
             // чтобы вывести в консоли содержимое data
-            if (data.auditory) {
-                // вывод алерта
-                alert(`Hello auditory ${data.id} with database id=${data.auditory.id} and name=${data.auditory.title}`);
-            }
+            this.clickedAuditory = data.auditory
         }
 
         onTeacherSelect(option: any) {

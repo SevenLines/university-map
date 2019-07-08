@@ -135,12 +135,13 @@ class AuditoryStatisticsView(Resource):
             Raspis.para, func.count("*").label("items_count")). \
             group_by(Raspis.para)
 
-        result = [
+        result = {
+            a.para:
             {
                 'para': a.para,
                 'count': a.items_count,
                 'percentage': round(a.items_count / 16 * 100)
             } for a in auditories
-        ]
+        }
 
         return result
