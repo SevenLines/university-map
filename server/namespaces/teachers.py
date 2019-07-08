@@ -43,17 +43,19 @@ class TeacherWayView(Resource):
     def get(self):
         schedule = self.get_data()
         graph = get_full_graph([ '../../Data/2этаж.svg', '../../Data/3этаж.svg'])
-        info = {}
+        aud_list = ['Г-303', 'В-316', 'К-311']
         point_list = []
-        for i in range(len(schedule)):
-            paths = find_paths(graph, Auditory.get_new_aud_title('Г-303'), Auditory.get_new_aud_title('В-316'))
-            for nodes in paths:
-                for node in nodes:
-                    point_list.append({
-                        'x': node.point.x,
-                        'y':node.point.y
-                    })
-
+        point_sub_list =[]
+        for i in range(len(aud_list)-1):
+            paths = find_paths(graph, Auditory.get_new_aud_title(aud_list[i]), Auditory.get_new_aud_title(aud_list[i+1]))
+            for node in paths:
+                point_sub_list.append({
+                    'x': node.x(),
+                    'y': node.y()
+                })
+            point_sub_list[0]['aud'] = aud_list[i]
+            point_sub_list[-1]['aud'] = aud_list[i+1]
+            point_list += point_sub_list
         return point_list
 
 
