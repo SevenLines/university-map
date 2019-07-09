@@ -220,6 +220,10 @@ class Auditory(db.Model):
         title = title.translate(LETTER_MAPPING_TABLE)
         return title
 
+    @staticmethod
+    def get_new_aud_title(title):
+        return f"enter_{Auditory.get_key(title)}"
+
     raspnagr = db.relationship('Raspnagr', backref=db.backref('auditory', lazy='joined'), lazy='dynamic')
     raspis = db.relationship('Raspis', backref=db.backref('auditory', lazy='joined'), lazy='dynamic')
     # raspis_zaoch = db.relationship('RaspisZaoch',  backref=db.backref('auditory', lazy='joined'), lazy='dynamic')

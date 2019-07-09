@@ -2,6 +2,7 @@ from flask import request
 from flask_restplus import Namespace, Resource
 from sqlalchemy import func
 from wtforms import Form, IntegerField
+from ways import pave_the_way_between_audiences
 
 from models.raspnagr import Teacher, Raspis, Raspnagr, Discipline, Kontkurs, Kontgrp, Potoklist, Normtime, Auditory
 
@@ -9,7 +10,7 @@ api = Namespace("teachers")
 
 @api.route('/way_view_teachers')
 class TeacherWayView(Resource):
-    def get(self):
+    def get_data(self):
         teachers = Raspis.query \
             .filter(Teacher.name is not None) \
             .filter(Teacher.id == request.args.get('id'))\
@@ -21,6 +22,7 @@ class TeacherWayView(Resource):
             Raspis.para,
             Raspis.day,
             Teacher.id,
+            Auditory.id.label("auditory_id"),
             func.rtrim(Auditory.title).label("auditory")
         ) \
             .order_by(Raspis.para)
@@ -30,11 +32,20 @@ class TeacherWayView(Resource):
                 'id': t.id,
                 'day': t.day,
                 'para': t.para,
+                'auditory_id': t.auditory_id,
                 'auditory': t.auditory.strip()
             } for t in teachers
         ]
 
         return result
+
+    def get(self):
+        schedule = self.get_data()
+        aud_list = []
+        for i in range(len(schedule)):
+            aud_list.append(schedule[i]['auditory'])
+        return pave_the_way_between_audiences (aud_list)
+
 
 
 @api.route('/list')
