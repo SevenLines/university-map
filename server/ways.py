@@ -1,7 +1,8 @@
 from xml.dom.minidom import parseString
-from models.raspnagr import Auditory
-import pickle
 import math
+import networkx as nx
+import pickle
+from networkx import Graph
 
 
 class Point(object):
@@ -30,6 +31,9 @@ class Node(object):
     def __eq__(self, other):
         return self.point == other.point and self.id == other.id
 
+    def __hash__(self):
+        return hash(self.id + str(self.x) + str(self.y) + str(self.floor))
+
     @property
     def point(self):
         return self.__point
@@ -51,85 +55,15 @@ class Node(object):
         return self.__id
 
 
-class Edge(object):
-    def __init__(self, first: Node, second: Node):
-        self.first = first
-        self.second = second
-
-    def __eq__(self, other):
-        return self.first == other.first and self.second == other.second
-
-
-class Graph(object):
-    def __init__(self, nodes: [Node], edges: [Edge]):
-        self.nodes: [Node] = nodes
-        self.edges: [Edge] = edges
-
-    def __eq__(self, other):
-        if len(self.nodes) != len(other.nodes):
-            return False
-        if len(self.edges) != len(other.edges):
-            return False
-        for i in range(len(self.nodes)):
-            if self.nodes[i] != other.nodes[i]:
-                return False
-        for i in range(len(self.edges)):
-            if self.edges[i] != other.edges[i]:
-                return False
-        return True
-
-    def index_of_node(self, node: Node):
-        for i in range(len(self.nodes)):
-            if self.nodes[i] == node:
-                return i
-
-    def index_by_id(self, id: str):
-        for i in range(len(self.nodes)):
-            if self.nodes[i].id == id:
-                return i
-
-    def node_by_id(self, id: str) -> Node:
-        for node in self.nodes:
-            if node.id == id:
-                return node
-
-    def rel_list(self):
-        rel_list = [[]]
-        for i in range(len(self.nodes)):
-            if i > 0:
-                rel_list.append([])
-            for j in range(len(self.edges)):
-                if self.nodes[i] == self.edges[j].first:
-                    rel_list[i].append(self.index_of_node(self.edges[j].second))
-                elif self.nodes[i] == self.edges[j].second:
-                    rel_list[i].append(self.index_of_node(self.edges[j].first))
-        return rel_list
-
-    def join(self, graph):
-        nodes = self.nodes.copy()
-        edges = self.edges.copy()
-        for edge in graph.edges:
-            edges.append(edge)
-        for node in graph.nodes:
-            nodes.append(node)
-        return Graph(nodes, edges)
-
-    def add_edge(self, first_id: str, second_id: str):
-        first = self.node_by_id(first_id)
-        second = self.node_by_id(second_id)
-        if first is not None and second is not None:
-            edge = Edge(first, second)
-            self.edges.append(edge)
-            # print("Ребро:", first_id, '->', second_id)
-
-
 def get_from_svg(path: str, floor: int) -> Graph:
+    G = Graph()
+
     try:
         file = open(path)
         svg = parseString(file.read())
         file.close()
     except FileNotFoundError as _:
-        return Graph([], [])
+        return G
 
     ways_layer = None
     for g in svg.getElementsByTagName('g'):
@@ -138,9 +72,8 @@ def get_from_svg(path: str, floor: int) -> Graph:
             break
 
     if ways_layer is None:
-        return Graph([], [])
+        return G
 
-    edges: [Edge] = []
     nodes: [Node] = get_vertex(ways_layer, floor)
 
     for path in ways_layer.getElementsByTagName('path'):
@@ -196,9 +129,11 @@ def get_from_svg(path: str, floor: int) -> Graph:
         if not found:
             nodes.append(second)
 
-        edges.append(Edge(first, second))
+        G.add_node(first, label=first.id)
+        G.add_node(second, label=second.id)
+        G.add_edge(first, second, weight=distance(first.point, second.point))
 
-    return Graph(nodes, edges)
+    return G
 
 
 def get_vertex(scope, floor: int) -> [Node]:
@@ -212,11 +147,15 @@ def get_vertex(scope, floor: int) -> [Node]:
 
 
 def is_near(first: Point, second: Point):
-    z = (first.x - second.x) ** 2 + (first.y - second.y) ** 2
+    z = distance(first, second)
     if math.sqrt(z) < 0.5:
         return True
     else:
         return False
+
+
+def distance(first: Point, second: Point):
+    return (first.x - second.x) ** 2 + (first.y - second.y) ** 2
 
 
 def read_graph(path: str) -> Graph:
@@ -232,51 +171,56 @@ def write_graph(graph: Graph, path: str):
     file.close()
 
 
-def get_full_graph(paths: [str], floors: [int]):
-    graph = Graph([], [])
+def get_full_graph(paths: [str], floors: [int]) -> Graph:
+    """
+    Возвращает объединённый из svg файлов граф. Этажи соединены лестницами.
+    Порядок номеров этажей должен совпадать с порядком этажей в svg файлах.
+
+    :param paths: Список svg файлов
+    :param floors: Список номеров этажей.
+    :return:
+    """
+    G = Graph()
     for i in range(len(paths)):
-        graph = graph.join(get_from_svg(paths[i], floors[i]))
+        G = nx.union(G, get_from_svg(paths[i], floors[i]))
     for letter in ['a', 'b', 'v', 'g', 'd', 'e', 'j']:
-        for floor in range(3):
-            graph.add_edge('stairs_' + letter + '_' + str(floor) + '_start',
-                           'stairs_' + letter + '_' + str(floor + 1) + '_start')
-            graph.add_edge('stairs_' + letter + '_' + str(floor) + '_end',
-                           'stairs_' + letter + '_' + str(floor + 1) + '_end')
-    return graph
+        for floor in floors:
+            first = get_node_by_id(G, 'stairs_' + letter + '_' + str(floor) + '_start')
+            second = get_node_by_id(G, 'stairs_' + letter + '_' + str(floor + 1) + '_start')
+            if first is not None and second is not None:
+                G.add_edge(first, second)
+            first = get_node_by_id(G, 'stairs_' + letter + '_' + str(floor) + '_end')
+            second = get_node_by_id(G, 'stairs_' + letter + '_' + str(floor + 1) + '_end')
+            if first is not None and second is not None:
+                G.add_edge(first, second)
+    return G
 
 
-def find_paths(graph: Graph, start_id, end_id) -> [Node]:
-    start = graph.index_by_id(start_id)
-    end = graph.index_by_id(end_id)
-    rel_list = graph.rel_list()
-    stack = [(start, [start])]
-    while stack:
-        (vertex, path) = stack.pop()
-        for next in set(rel_list[vertex]) - set(path):
-            if next == end:
-                path += [next]
-                paths = []
-                for i in path:
-                    paths.append(graph.nodes[i])
-                return paths
-            else:
-                stack.append((next, path + [next]))
+def get_node_by_id(G: Graph, id: str) -> Node:
+    for node in G.nodes:
+        if node.id == id:
+            return node
 
-def pave_the_way_between_audiences (aud_list):
-    graph = get_full_graph(['../../Data/2этаж.svg', '../../Data/3этаж.svg'])
-    point_list = []
-    point_sub_list = []
-    for i in range(len(aud_list) - 1):
-        if (aud_list[i] != aud_list[i + 1]):
-            paths = find_paths(graph, Auditory.get_new_aud_title(aud_list[i]),
-                               Auditory.get_new_aud_title(aud_list[i + 1]))
-            for node in paths:
-                point_sub_list.append({
-                    'x': node.x(),
-                    'y': node.y()
-                })
-            point_sub_list[0]['aud'] = aud_list[i]
-            point_sub_list[-1]['aud'] = aud_list[i + 1]
-            point_list += point_sub_list
-    return point_list
 
+def find_path(G: Graph, start_id: str, end_id: str) -> [Node]:
+    """
+    Находит кратчайший путь между двумя узлами графа.
+
+    :param G: Граф
+    :param start_id: id начального узла
+    :param end_id:  id конечного узла
+    :return: список узлов, через который проходит путь.
+    """
+    start = get_node_by_id(G, start_id)
+    end = get_node_by_id(G, end_id)
+    if start is None or end is None:
+        return None
+    return nx.bidirectional_shortest_path(G, start, end)
+
+
+def set_weight(G: Graph, first_id: str, second_id: str, weight):
+    G[get_node_by_id(G, first_id)][get_node_by_id(G, second_id)]['weight'] = weight
+
+
+def get_weight(G: Graph, first_id: str, second_id: str):
+    return G[get_node_by_id(G, first_id)][get_node_by_id(G, second_id)]['weight']
