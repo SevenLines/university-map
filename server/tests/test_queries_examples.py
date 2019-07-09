@@ -137,7 +137,7 @@ class TestQueriesExamples(tests.TestCaseBase):
             group_by(Raspis.para)
 
         output_dict = {
-            i.para: round(i.items_count / 12 * 100, 2) for i in res
+            i.para: round(i.items_count / 16 * 100, 2) for i in res
         }
 
         for para, value in output_dict.items():

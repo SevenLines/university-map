@@ -72,3 +72,8 @@ export const LetterMapping: Dictionary<string> = {
     i: 'И',
     k: 'К',
 };
+
+export enum AuditoryStatisticsView {
+    para,
+    day,
+}
