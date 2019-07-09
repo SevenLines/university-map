@@ -4,7 +4,7 @@ from sqlalchemy import func
 from sqlalchemy.sql.functions import coalesce
 
 from models.raspnagr import Raspis, Raspnagr, Kontkurs, Kontgrp, Potoklist, Auditory
-from ways import get_full_graph, find_paths
+from ways import get_full_graph, find_paths, pave_the_way_between_audiences
 
 api = Namespace("groups")
 
@@ -42,17 +42,11 @@ class GroupWayView(Resource):
 
         return result
 
+
     def get(self):
         schedule = self.get_data()
-        graph = get_full_graph([ '../../Data/2этаж.svg', '../../Data/3этаж.svg'])
-        point_list = []
+        aud_list = []
         for i in range(len(schedule)):
-            paths = find_paths(graph, Auditory.get_new_aud_title('Г-303'), Auditory.get_new_aud_title('В-316'))
-            for node in paths:
-                point_list.append({
-                    'x': node.x(),
-                    'y': node.y()
-                })
-
-        return point_list
+            aud_list.append(schedule[i]['auditory'])
+        return pave_the_way_between_audiences (aud_list)
 

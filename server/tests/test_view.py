@@ -18,7 +18,7 @@ class TestTeacherView(TestCaseBase):
 
 
     def test_get_view_groups(self):
-        r = self.api('get', '/api/groups/way_view_groups?kont_id=22979&day=1')
+        r = self.api('get', '/api/groups/way_view_groups?kont_id=22762&day=5')
         # self.assertEqual(len(r), 4)
         # self.assertEqual(r[1]['auditory'], 'В-304')
         # self.assertEqual(r[2]['auditory'], 'В-105')
@@ -30,6 +30,7 @@ class TestTeacherView(TestCaseBase):
         # self.assertEqual(r[1]['para'], 4)
         # self.assertEqual(r[2]['para'], 4)
         # self.assertEqual(r[3]['para'], 5)
+        print (r)
 
 
 
