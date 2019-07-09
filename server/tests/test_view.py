@@ -30,7 +30,5 @@ class TestTeacherView(TestCaseBase):
         # self.assertEqual(r[1]['para'], 4)
         # self.assertEqual(r[2]['para'], 4)
         # self.assertEqual(r[3]['para'], 5)
-        print (r)
-
-
+        print(r)
 

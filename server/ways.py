@@ -1,5 +1,4 @@
 from xml.dom.minidom import parseString
-from models.raspnagr import Auditory
 import pickle
 import math
 
@@ -262,21 +261,5 @@ def find_paths(graph: Graph, start_id, end_id) -> [Node]:
             else:
                 stack.append((next, path + [next]))
 
-def pave_the_way_between_audiences (aud_list):
-    graph = get_full_graph(['../../Data/2этаж.svg', '../../Data/3этаж.svg'])
-    point_list = []
-    point_sub_list = []
-    for i in range(len(aud_list) - 1):
-        if (aud_list[i] != aud_list[i + 1]):
-            paths = find_paths(graph, Auditory.get_new_aud_title(aud_list[i]),
-                               Auditory.get_new_aud_title(aud_list[i + 1]))
-            for node in paths:
-                point_sub_list.append({
-                    'x': node.x(),
-                    'y': node.y()
-                })
-            point_sub_list[0]['aud'] = aud_list[i]
-            point_sub_list[-1]['aud'] = aud_list[i + 1]
-            point_list += point_sub_list
-    return point_list
+
 
