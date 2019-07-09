@@ -8,7 +8,7 @@ class TestQuery(tests.TestCaseBase):
 
         def test_filter_by_teacher_and_day(self):
             """
-            SELECT para, a.obozn as aud
+            SELECT para, a.obozn as aud, a.id_60
             FROM raspis r
             LEFT JOIN auditories a ON r.aud = a.id_60
             LEFT JOIN raspnagr rn ON rn.id_51 = r.raspnagr
@@ -19,23 +19,24 @@ class TestQuery(tests.TestCaseBase):
             schedule = Raspis.query \
                 .filter(Teacher.name is not None) \
                 .filter(func.rtrim(Teacher.name) == "Бахвалова З.А.") \
-                .filter((Raspis.day - 1) % 7 + 1 == 1) \
+                .filter((Raspis.day - 1) % 7 + 1 == 5) \
                 .outerjoin(Auditory, Auditory.id == Raspis.aud_id) \
                 .outerjoin(Raspnagr, Raspnagr.id == Raspis.raspnagr_id) \
                 .outerjoin(Teacher, Raspnagr.prep_id == Teacher.id) \
                 .with_entities(
                 Raspis.para,
+                Auditory.id.label("auditory_id"),
                 func.rtrim(Auditory.title).label("auditory")
             ) \
                 .order_by(Raspis.para)
             print(schedule)
 
             for item in schedule:
-                print(f"Пара: {item.para}  Аудитория: {item.auditory}")
+                print(f"Пара: {item.para}  Аудитория: {item.auditory} Аудитория_id: {item.auditory_id}")
 
         def test_filter_by_group_and_day(self):
             """
-            SELECT para, a.obozn as aud,coalesce(pl.konts, kg.obozn, kk.obozn) as kont
+            SELECT para, a.obozn as aud,coalesce(pl.konts, kg.obozn, kk.obozn) as kont, a.id_60
             FROM raspis r
               LEFT JOIN auditories a ON r.aud = a.id_60
               LEFT JOIN raspnagr rn ON rn.id_51 = r.raspnagr
@@ -55,6 +56,7 @@ class TestQuery(tests.TestCaseBase):
                 .outerjoin(Potoklist, Potoklist.op == Raspnagr.op) \
                 .with_entities(
                 Raspis.para,
+                Auditory.id.label("auditory_id"),
                 func.rtrim(Auditory.title).label("auditory"),
                 func.rtrim(coalesce(Potoklist.title, Kontgrp.title, Kontkurs.title)).label("group")
             ) \
@@ -62,4 +64,4 @@ class TestQuery(tests.TestCaseBase):
             print(schedule)
 
             for item in schedule:
-                print(f"Пара: {item.para}  Аудитория: {item.auditory} Группа: {item.group} ")
+                print(f"Пара: {item.para}  Аудитория: {item.auditory}  Аудитория_id: {item.auditory_id} Группа: {item.group} ")
