@@ -2,10 +2,9 @@ from flask import request
 from flask_restplus import Namespace, Resource
 from sqlalchemy import func
 from wtforms import Form, IntegerField
-from ways import Point
+from ways import pave_the_way_between_audiences
 
 from models.raspnagr import Teacher, Raspis, Raspnagr, Discipline, Kontkurs, Kontgrp, Potoklist, Normtime, Auditory
-from ways import find_paths, get_full_graph
 
 api = Namespace("teachers")
 
@@ -42,21 +41,10 @@ class TeacherWayView(Resource):
 
     def get(self):
         schedule = self.get_data()
-        graph = get_full_graph([ '../../Data/2этаж.svg', '../../Data/3этаж.svg'])
-        aud_list = ['Г-303', 'В-316', 'К-311']
-        point_list = []
-        point_sub_list =[]
-        for i in range(len(aud_list)-1):
-            paths = find_paths(graph, Auditory.get_new_aud_title(aud_list[i]), Auditory.get_new_aud_title(aud_list[i+1]))
-            for node in paths:
-                point_sub_list.append({
-                    'x': node.x(),
-                    'y': node.y()
-                })
-            point_sub_list[0]['aud'] = aud_list[i]
-            point_sub_list[-1]['aud'] = aud_list[i+1]
-            point_list += point_sub_list
-        return point_list
+        aud_list = []
+        for i in range(len(schedule)):
+            aud_list.append(schedule[i]['auditory'])
+        return pave_the_way_between_audiences (aud_list)
 
 
 

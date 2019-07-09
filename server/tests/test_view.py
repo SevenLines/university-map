@@ -3,7 +3,7 @@ from tests import TestCaseBase
 
 class TestTeacherView(TestCaseBase):
     def test_get_view_teachers(self):
-        r = self.api('get', '/api/teachers/way_view_teachers?id=3095&day=1')
+        r = self.api('get', '/api/teachers/way_view_teachers?id=2844&day=1')
         # self.assertEqual(len(r), 3)
         #         # self.assertEqual(r[0]['auditory'], 'В-310а')
         #         # self.assertEqual(r[1]['auditory'], 'В-105')

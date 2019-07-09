@@ -18,8 +18,8 @@ class TestQuery(tests.TestCaseBase):
             """
             schedule = Raspis.query \
                 .filter(Teacher.name is not None) \
-                .filter(func.rtrim(Teacher.name) == "Аршинский В.Л.") \
-                .filter((Raspis.day - 1) % 7 + 1 == 1) \
+                .filter(func.rtrim(Teacher.name) == "Бахвалова З.А.") \
+                .filter((Raspis.day - 1) % 7 + 1 == 5) \
                 .outerjoin(Auditory, Auditory.id == Raspis.aud_id) \
                 .outerjoin(Raspnagr, Raspnagr.id == Raspis.raspnagr_id) \
                 .outerjoin(Teacher, Raspnagr.prep_id == Teacher.id) \
