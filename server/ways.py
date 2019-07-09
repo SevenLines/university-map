@@ -5,32 +5,49 @@ import math
 
 class Point(object):
     def __init__(self, x, y):
-        self.__x__ = float(x)
-        self.__y__ = float(y)
+        self.__x = float(x)
+        self.__y = float(y)
 
     def __eq__(self, other):
-        return self.__x__ == other.__x__ and self.__y__ == other.__y__
+        return self.x == other.x and self.y == other.y
 
+    @property
     def x(self):
-        return self.__x__
+        return self.__x
 
+    @property
     def y(self):
-        return self.__y__
+        return self.__y
 
 
 class Node(object):
-    def __init__(self, id: str, point: Point):
-        self.id = str(id)
-        self.__point__ = point
+    def __init__(self, id: str, point: Point, floor: int):
+        self.__id = str(id)
+        self.__point = point
+        self.__floor = floor
 
     def __eq__(self, other):
-        return self.__point__ == other.__point__ and self.id == other.id
+        return self.point == other.point and self.id == other.id
 
+    @property
+    def point(self):
+        return self.__point
+
+    @property
     def x(self):
-        return self.__point__.x()
+        return self.__point.x
 
+    @property
     def y(self):
-        return self.__point__.y()
+        return self.__point.y
+
+    @property
+    def floor(self):
+        return self.__floor
+
+    @property
+    def id(self):
+        return self.__id
 
 
 class Edge(object):
@@ -105,7 +122,7 @@ class Graph(object):
             # print("Ребро:", first_id, '->', second_id)
 
 
-def get_from_svg(path: str) -> Graph:
+def get_from_svg(path: str, floor: int) -> Graph:
     try:
         file = open(path)
         svg = parseString(file.read())
@@ -113,7 +130,7 @@ def get_from_svg(path: str) -> Graph:
     except FileNotFoundError as _:
         return Graph([], [])
 
-    global ways_layer
+    ways_layer = None
     for g in svg.getElementsByTagName('g'):
         if g.getAttribute('id') == 'ways_layer':
             ways_layer = g
@@ -123,7 +140,7 @@ def get_from_svg(path: str) -> Graph:
         return Graph([], [])
 
     edges: [Edge] = []
-    nodes: [Node] = get_vertex(ways_layer)
+    nodes: [Node] = get_vertex(ways_layer, floor)
 
     for path in ways_layer.getElementsByTagName('path'):
         d = path.getAttribute('d')
@@ -157,12 +174,12 @@ def get_from_svg(path: str) -> Graph:
 
         first_point = Point(x1, y1)
         second_point = Point(x2, y2)
-        first = Node(str(first_point), first_point)
-        second = Node(str(second_point), second_point)
+        first = Node(str(first_point), first_point, floor)
+        second = Node(str(second_point), second_point, floor)
 
         found = False
         for node in nodes:
-            if is_near(node.__point__, first.__point__):
+            if is_near(node.point, first.point):
                 first = node
                 found = True
                 break
@@ -171,7 +188,7 @@ def get_from_svg(path: str) -> Graph:
 
         found = False
         for node in nodes:
-            if is_near(node.__point__, second.__point__):
+            if is_near(node.point, second.point):
                 second = node
                 found = True
                 break
@@ -183,18 +200,18 @@ def get_from_svg(path: str) -> Graph:
     return Graph(nodes, edges)
 
 
-def get_vertex(scope) -> [Node]:
+def get_vertex(scope, floor: int) -> [Node]:
     vertex = []
     for circle in scope.getElementsByTagName('circle'):
         x = circle.getAttribute('cx')
         y = circle.getAttribute('cy')
         id = circle.getAttribute('id')
-        vertex.append(Node(id, Point(x, y)))
+        vertex.append(Node(id, Point(x, y), floor))
     return vertex
 
 
 def is_near(first: Point, second: Point):
-    z = (first.x() - second.x()) ** 2 + (first.y() - second.y()) ** 2
+    z = (first.x - second.x) ** 2 + (first.y - second.y) ** 2
     if math.sqrt(z) < 0.5:
         return True
     else:
@@ -214,10 +231,10 @@ def write_graph(graph: Graph, path: str):
     file.close()
 
 
-def get_full_graph(paths: [str]):
+def get_full_graph(paths: [str], floors: [int]):
     graph = Graph([], [])
-    for path in paths:
-        graph = graph.join(get_from_svg(path))
+    for i in range(len(paths)):
+        graph = graph.join(get_from_svg(paths[i], floors[i]))
     for letter in ['a', 'b', 'v', 'g', 'd', 'e', 'j']:
         for floor in range(3):
             graph.add_edge('stairs_' + letter + '_' + str(floor) + '_start',
