@@ -76,6 +76,7 @@
     import EventBus from "@/utils/event_bus";
     import axios from 'axios';
     import echarts from 'echarts';
+    import chroma from 'chroma-js';
 
     EventBus.$off();
 
@@ -235,9 +236,12 @@
                         },
                         series: [{
                             data: _.map([0, 1, 2, 3, 4, 5, 6, 7], (i: any) => {
-                                return this.AuditoryStatistic[i]
-                                    ? this.AuditoryStatistic[i].percentage
-                                    : 0
+                                let value = this.AuditoryStatistic[i] ? this.AuditoryStatistic[i].percentage : 0
+                                let f = chroma.scale(['lightgreen', 'orange', 'red']).domain([0, 50, 100])
+                                return {
+                                    value: value,
+                                    itemStyle: {color: f(Number(value)).hex()}
+                                }
                             }),
                             type: 'bar'
                         }]
@@ -271,9 +275,12 @@
                         },
                         series: [{
                             data: _.map([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], (i: any) => {
-                                return this.AuditoryStatistic[i]
-                                    ? this.AuditoryStatistic[i].percentage
-                                    : 0
+                                let value = this.AuditoryStatistic[i] ? this.AuditoryStatistic[i].percentage : 0
+                                let f = chroma.scale(['lightgreen', 'orange', 'red']).domain([0, 50, 100])
+                                return {
+                                    value: value,
+                                    itemStyle: {color: f(Number(value)).hex()}
+                                }
                             }),
                             type: 'bar'
                         }]
