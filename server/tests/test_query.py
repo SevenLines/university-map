@@ -1,3 +1,5 @@
+from flask import request
+
 import tests
 from sqlalchemy import func
 from sqlalchemy.sql.functions import coalesce
@@ -49,6 +51,8 @@ class TestQuery(tests.TestCaseBase):
             schedule = Raspis.query \
                 .filter(Kontgrp.kont_id == 22979) \
                 .filter((Raspis.day - 1) % 7 + 1 == 1) \
+                .filter(
+                (Raspis.para == 5) | (Raspis.para == 4)) \
                 .outerjoin(Auditory, Auditory.id == Raspis.aud_id) \
                 .outerjoin(Raspnagr, Raspnagr.id == Raspis.raspnagr_id) \
                 .outerjoin(Kontgrp, Kontgrp.id == Raspnagr.kontgrp_id) \
