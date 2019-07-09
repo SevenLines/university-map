@@ -4,7 +4,7 @@ from sqlalchemy import func
 from sqlalchemy.sql.functions import coalesce
 
 from models.raspnagr import Raspis, Raspnagr, Kontkurs, Kontgrp, Potoklist, Auditory
-from ways import get_full_graph, find_paths, pave_the_way_between_audiences
+from ways import pave_the_way_between_audiences
 
 api = Namespace("groups")
 
