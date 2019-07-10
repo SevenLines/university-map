@@ -4,7 +4,7 @@ from sqlalchemy import func
 from sqlalchemy.sql.functions import coalesce
 
 from models.raspnagr import Raspis, Raspnagr, Kontkurs, Kontgrp, Potoklist, Auditory
-from ways import get_full_graph, find_paths
+from ways import get_full_graph, find_path
 
 
 def pave_the_way_between_auds(aud_list):
@@ -14,7 +14,7 @@ def pave_the_way_between_auds(aud_list):
     point_sub_list = []
     for i in range(len(aud_list) - 1):
         if (aud_list[i] != aud_list[i + 1]):
-            paths = find_paths(graph, Auditory.get_new_aud_title(aud_list[i]),
+            paths = find_path(graph, Auditory.get_new_aud_title(aud_list[i]),
                                Auditory.get_new_aud_title(aud_list[i + 1]))
             for node in paths:
                 point_sub_list.append({
@@ -74,7 +74,7 @@ class GroupWayView(Resource):
 
 @api.route('/flow_view')
 class FlowView(Resource):
-    def get_data(self):
+    def get(self):
         query = Raspis.query \
                 .filter(Raspis.day == request.args.get('day')) \
                 .filter((Raspis.para == 3) | (Raspis.para == 4)) \
@@ -93,17 +93,14 @@ class FlowView(Resource):
             ) \
                 .order_by(Raspis.para)
 
-        result = [
-            {
-                'day': t.day,
-                'para': t.para_before,
-                'auditory_id': t.auditory_id,
-                'auditory': t.auditory
-            } for t in query
-        ]
-        return result
+        # transitions = {}
+        # for item in query:
+        #     if item.id is not transitions:
+        #         transitions[item.id] = []
+        #         transitions[item.id].append(item.auditory_id)
+        #
+        # return transitions
 
-    # def get(self, instance, owner):
 
 
 
