@@ -41,62 +41,37 @@
                     </b-button>
                 </div>
                 <building/>
-
-
                 <div class="statistics-window">
-                    <h2>Статистика по аудитории</h2>
-                    <div v-if="clickedAuditory">
-                        {{ clickedAuditory.title }}
+                    <div style="height: 3em; margin-bottom: 0.5em; margin-top: 0.5em">
+                        <h2>Статистика по аудитории</h2>
+                        <div v-if="clickedAuditory">
+                            {{ clickedAuditory.title }}
+                        </div>
                     </div>
-
-
                     <section>
                         <button class="button is-primary is-medium"
                                 @click="isModalActive = true">
                             Показать статистику
                         </button>
-                        <b-modal :active.sync="isModalActive" :width="800" scroll="keep">
+                        <b-modal :active.sync="isModalActive" :width="1000" scroll="keep">
                             <div class="card">
                                 <div class="card-content">
                                     <div class="media">
                                         <div class="media-left">
-                                            <div ref="graph" style="height: 400px; width: 400px"></div>
+                                            <div ref="graph" style="height: 400px; width: 450px"></div>
+                                        </div>
+                                        <div class="media-right">
+                                            <div ref="graph2" style="height: 400px; width: 450px"></div>
                                         </div>
                                     </div>
-                                    <div class="content">
-                                        <div style="display: flex">
-                                            <button class="button is-primary is-medium"
-                                                    style="margin-right: 0.5em">
-                                                Показать статистику
-                                            </button>
-                                            <b-select
-                                                    v-model="currentViewType">
-                                                <option
-                                                        v-for="(view, id) in ViewStyle"
-                                                        :value="id"
-                                                        @click="currentViewType = id">
-                                                    {{ view }}
-                                                </option>
-                                            </b-select>
-                                        </div>
-                                    </div>
+                                    <button class="button is-primary is-medium"
+                                            @click="isModalActive = false">
+                                        Назад
+                                    </button>
                                 </div>
                             </div>
                         </b-modal>
                     </section>
-
-
-                    <div style="display: flex">
-                        <b-select
-                                v-model="currentViewType">
-                            <option
-                                    v-for="(view, id) in ViewStyle"
-                                    :value="id"
-                                    @click="currentViewType = id">
-                                {{ view }}
-                            </option>
-                        </b-select>
-                    </div>
                 </div>
             </div>
         </div>
@@ -145,87 +120,95 @@
 
         teacherFilter: string = "";
 
-        clickedAuditory: AuditoryItem | null = null;
-        AuditoryStatistic: any = {};
-        chart: any = null;
-        currentViewType: AuditoryStatisticsView = 0
+        clickedAuditory: AuditoryItem | null = null
+        AuditoryStatisticPair: any = {}
+        AuditoryStatisticDay: any = {}
         isModalActive: boolean = false
 
-        // остлеживаем не открылась ли модальная форма
         @Watch("isModalActive")
         onIsModalActive() {
             if (this.isModalActive) {
-                // если открылась, то при следующем обновлении интефрейса нарисовать график
                 this.$nextTick(() => {
-                    let chart = echarts.init(this.$refs.graph as any);
-                    chart.setOption(this.graphData);
+                    let chart = echarts.init(this.$refs.graph as any)
+                    chart.setOption(this.chartPara)
+                    let chart2 = echarts.init(this.$refs.graph2 as any)
+                    chart2.setOption(this.chartDay)
                 })
             }
         }
 
-        // вынес опции для графика в свойство, оно будет автоматически пересчитываться
-        // как изменится currentViewType или AuditoryStatistic
-        get graphData(): any {
-            if (this.currentViewType == 0) {
-                return {
-                    title: {
-                        text: 'Статистика'
-                    },
-                    xAxis: {
-                        data: ['1', '2', '3', '4', '5', '6', '7', '8'],
-                        name: "Пара",
-                        nameLocation: 'middle',
-                        nameGap: '30'
-                    },
-                    yAxis: {
-                        type: 'value',
-                        name: "%",
-                        position: 'left',
-                        nameLocation: 'middle',
-                        nameGap: '30'
-                    },
-                    series: [{
-                        data: _.map([0, 1, 2, 3, 4, 5, 6, 7], (i: any) => {
-                            let value = this.AuditoryStatistic[i] ? this.AuditoryStatistic[i].percentage : 0
-                            let f = chroma.scale(['lightgreen', 'orange', 'red']).domain([0, 50, 100])
-                            return {
-                                value: value,
-                                itemStyle: {color: f(Number(value)).hex()}
+        get chartPara(): any {
+            return {
+                title: {
+                    text: 'Статистика по парам'
+                },
+                xAxis: {
+                    data: ['1', '2', '3', '4', '5', '6', '7', '8'],
+                    name: "Пара",
+                    nameLocation: 'middle',
+                    nameGap: '35'
+                },
+                yAxis: {
+                    type: 'value',
+                    name: "%",
+                    position: 'left',
+                    nameLocation: 'middle',
+                    nameGap: '25'
+                },
+                series: [{
+                    data: _.map([0, 1, 2, 3, 4, 5, 6, 7], (i: any) => {
+                        let value = this.AuditoryStatisticPair[i] ? this.AuditoryStatisticPair[i].percentage : 0
+                        let f = chroma.scale(['lightgreen', 'orange', 'red']).domain([0, 50, 100])
+                        return {
+                            value: value,
+                            itemStyle: {color: f(Number(value)).hex()}
+                        }
+                    }),
+                    type: 'bar'
+                }]
+            }
+        }
+
+        get chartDay(): any {
+            return {
+                title: {
+                    text: 'Статистика по дням',
+                },
+                xAxis: {
+                    data: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'],
+                    name: "День",
+                    nameLocation: 'middle',
+                    nameGap: '35',
+                    axisLabel: {
+                        rotate: 90
+                    }
+                },
+                yAxis: {
+                    type: 'value',
+                    name: "%",
+                    position: 'left',
+                    nameLocation: 'middle',
+                    nameGap: '25',
+                },
+                series: [{
+                    data: _.map([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], (i: any) => {
+                        let value = this.AuditoryStatisticDay[i] ? this.AuditoryStatisticDay[i].percentage : 0
+                        let f = chroma.scale(['lightgreen', 'orange', 'red']).domain([0, 50, 100])
+                        return {
+                            value: value,
+                            itemStyle: {
+                                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                    offset: 0,
+                                    color: f(Number(value)).hex()
+                                }, {
+                                    offset: 1,
+                                    color: 'lightgreen'
+                                }])
                             }
-                        }),
-                        type: 'bar'
-                    }]
-                }
-            } else {
-                return {
-                    title: {
-                        text: 'Статистика'
-                    },
-                    xAxis: {
-                        data: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14'],
-                        name: "День",
-                        nameLocation: 'middle',
-                        nameGap: '30'
-                    },
-                    yAxis: {
-                        type: 'value',
-                        name: "%",
-                        position: 'left',
-                        nameLocation: 'middle',
-                        nameGap: '30'
-                    },
-                    series: [{
-                        data: _.map([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], (i: any) => {
-                            let value = this.AuditoryStatistic[i] ? this.AuditoryStatistic[i].percentage : 0
-                            let f = chroma.scale(['lightgreen', 'orange', 'red']).domain([0, 50, 100])
-                            return {
-                                value: value,
-                                itemStyle: {color: f(Number(value)).hex()}
-                            }
-                        }),
-                        type: 'bar'
-                    }]
-                }
+                        }
+                    }),
+                    type: 'bar'
+                }]
             }
         }
 
@@ -302,7 +285,6 @@
             return this.currentMode != AuditoriesStatisticsMode.ByTeacher
         }
 
-        /* На выпадашку */
         get ViewStyle() {
             return {
                 [AuditoryStatisticsView.para]: "По паре",
@@ -318,26 +300,23 @@
             EventBus.$on("auditoryClicked", this.onAuditoryClicked)
         }
 
-
-        // тут теперь только реакция на клик
         onAuditoryClicked(data: any) {
-            if (this.currentViewType == 0) {
-                axios.get("/api/auditories/statistic-para", {
-                    params: {
-                        auditory_id: data.auditory.id,
-                    }
-                }).then(r => {
-                    this.AuditoryStatistic = r.data; // обновляем значение AuditoryStatistic, это вызовет пересчет graphData
-                })
-            } else {
-                axios.get("/api/auditories/statistic-day", {
-                    params: {
-                        auditory_id: data.auditory.id,
-                    }
-                }).then(r => {
-                    this.AuditoryStatistic = r.data; // обновляем значение AuditoryStatistic, это вызовет пересчет graphData
-                })
-            }
+            axios.get("/api/auditories/statistic-para", {
+                params: {
+                    auditory_id: data.auditory.id,
+                }
+            }).then(r => {
+                this.AuditoryStatisticPair = r.data
+            })
+
+            axios.get("/api/auditories/statistic-day", {
+                params: {
+                    auditory_id: data.auditory.id,
+                }
+            }).then(r => {
+                this.AuditoryStatisticDay = r.data
+            })
+
             this.clickedAuditory = data.auditory
         }
 
