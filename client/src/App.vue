@@ -36,7 +36,8 @@
                               :key="id"
                               style="margin-right: 0.5em"
                               @click="currentLevelValue = id"
-                              :type="currentLevelValue == id ? 'is-primary': ''">{{level}}
+                              :type="currentLevelValue == id ? 'is-primary': ''">
+                        {{level}}
                     </b-button>
                 </div>
                 <building/>
@@ -47,15 +48,52 @@
                     <div v-if="clickedAuditory">
                         {{ clickedAuditory.title }}
                     </div>
-                    <div ref="graph" style="height: 400px; width: 400px"></div>
+
+
+                    <section>
+                        <button class="button is-primary is-medium"
+                                @click="isModalActive = true">
+                            Показать статистику
+                        </button>
+                        <b-modal :active.sync="isModalActive" :width="800" scroll="keep">
+                            <div class="card">
+                                <div class="card-content">
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <div ref="graph" style="height: 400px; width: 400px"></div>
+                                        </div>
+                                    </div>
+                                    <div class="content">
+                                        <div style="display: flex">
+                                            <button class="button is-primary is-medium"
+                                                    style="margin-right: 0.5em">
+                                                Показать статистику
+                                            </button>
+                                            <b-select
+                                                    v-model="currentViewType">
+                                                <option
+                                                        v-for="(view, id) in ViewStyle"
+                                                        :value="id"
+                                                        @click="currentViewType = id">
+                                                    {{ view }}
+                                                </option>
+                                            </b-select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </b-modal>
+                    </section>
+
+
                     <div style="display: flex">
                         <b-select
                                 v-model="currentViewType">
                             <option
-                                v-for="(view, id) in ViewStyle"
-                                :value="id"
-                                @click="currentViewType = id">
-                            {{ view }}
+                                    v-for="(view, id) in ViewStyle"
+                                    :value="id"
+                                    @click="currentViewType = id">
+                                {{ view }}
                             </option>
                         </b-select>
                     </div>
@@ -111,6 +149,7 @@
         AuditoryStatistic: any = {};
         chart: any = null;
         currentViewType: AuditoryStatisticsView = 0
+        isModalActive: boolean = false
 
         get currentDateValue(): Date {
             return this.currentDate;
@@ -198,7 +237,6 @@
             this.fetchTeachers();
             this.updateAuditoryOccupationDate({date: new Date()});
 
-            // слушаем событие auditoryClicked, подключаем к нему обработчик onAuditoryClicked
             EventBus.$on("auditoryClicked", this.onAuditoryClicked)
         }
 
@@ -206,9 +244,6 @@
             this.chart = echarts.init(this.$refs.graph as any);
         }
 
-        // метода который будет вызываться по событию auditoryClicked
-        // так как тут используется TypeScript то надо указывать тип,
-        // чтобы не мучаться с типами можно просто указывать any
         onAuditoryClicked(data: any) {
             if (this.currentViewType == 0) {
                 axios.get("/api/auditories/statistic-para", {
@@ -246,7 +281,6 @@
                             type: 'bar'
                         }]
                     }
-                    console.log(data)
                     this.chart.setOption(data);
                 })
             } else {
@@ -285,7 +319,6 @@
                             type: 'bar'
                         }]
                     }
-                    console.log(data)
                     this.chart.setOption(data);
                 })
             }
