@@ -105,7 +105,7 @@
 
 <script lang="ts">
     import _ from 'lodash';
-    import {Component, Vue} from 'vue-property-decorator';
+    import {Component, Vue, Watch} from 'vue-property-decorator';
     import Building from './components/Building.vue';
     import {namespace} from "vuex-class"
     import NumberSelect from "@/components/common/NumberSelect.vue"
@@ -150,6 +150,84 @@
         chart: any = null;
         currentViewType: AuditoryStatisticsView = 0
         isModalActive: boolean = false
+
+        // остлеживаем не открылась ли модальная форма
+        @Watch("isModalActive")
+        onIsModalActive() {
+            if (this.isModalActive) {
+                // если открылась, то при следующем обновлении интефрейса нарисовать график
+                this.$nextTick(() => {
+                    let chart = echarts.init(this.$refs.graph as any);
+                    chart.setOption(this.graphData);
+                })
+            }
+        }
+
+        // вынес опции для графика в свойство, оно будет автоматически пересчитываться
+        // как изменится currentViewType или AuditoryStatistic
+        get graphData(): any {
+            if (this.currentViewType == 0) {
+                return {
+                    title: {
+                        text: 'Статистика'
+                    },
+                    xAxis: {
+                        data: ['1', '2', '3', '4', '5', '6', '7', '8'],
+                        name: "Пара",
+                        nameLocation: 'middle',
+                        nameGap: '30'
+                    },
+                    yAxis: {
+                        type: 'value',
+                        name: "%",
+                        position: 'left',
+                        nameLocation: 'middle',
+                        nameGap: '30'
+                    },
+                    series: [{
+                        data: _.map([0, 1, 2, 3, 4, 5, 6, 7], (i: any) => {
+                            let value = this.AuditoryStatistic[i] ? this.AuditoryStatistic[i].percentage : 0
+                            let f = chroma.scale(['lightgreen', 'orange', 'red']).domain([0, 50, 100])
+                            return {
+                                value: value,
+                                itemStyle: {color: f(Number(value)).hex()}
+                            }
+                        }),
+                        type: 'bar'
+                    }]
+                }
+            } else {
+                return {
+                    title: {
+                        text: 'Статистика'
+                    },
+                    xAxis: {
+                        data: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14'],
+                        name: "День",
+                        nameLocation: 'middle',
+                        nameGap: '30'
+                    },
+                    yAxis: {
+                        type: 'value',
+                        name: "%",
+                        position: 'left',
+                        nameLocation: 'middle',
+                        nameGap: '30'
+                    },
+                    series: [{
+                        data: _.map([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], (i: any) => {
+                            let value = this.AuditoryStatistic[i] ? this.AuditoryStatistic[i].percentage : 0
+                            let f = chroma.scale(['lightgreen', 'orange', 'red']).domain([0, 50, 100])
+                            return {
+                                value: value,
+                                itemStyle: {color: f(Number(value)).hex()}
+                            }
+                        }),
+                        type: 'bar'
+                    }]
+                }
+            }
+        }
 
         get currentDateValue(): Date {
             return this.currentDate;
@@ -240,10 +318,8 @@
             EventBus.$on("auditoryClicked", this.onAuditoryClicked)
         }
 
-        mounted() {
-            this.chart = echarts.init(this.$refs.graph as any);
-        }
 
+        // тут теперь только реакция на клик
         onAuditoryClicked(data: any) {
             if (this.currentViewType == 0) {
                 axios.get("/api/auditories/statistic-para", {
@@ -251,37 +327,7 @@
                         auditory_id: data.auditory.id,
                     }
                 }).then(r => {
-                    this.AuditoryStatistic = r.data;
-                    let data = {
-                        title: {
-                            text: 'Статистика'
-                        },
-                        xAxis: {
-                            data: ['1', '2', '3', '4', '5', '6', '7', '8'],
-                            name: "Пара",
-                            nameLocation: 'middle',
-                            nameGap: '30'
-                        },
-                        yAxis: {
-                            type: 'value',
-                            name: "%",
-                            position: 'left',
-                            nameLocation: 'middle',
-                            nameGap: '30'
-                        },
-                        series: [{
-                            data: _.map([0, 1, 2, 3, 4, 5, 6, 7], (i: any) => {
-                                let value = this.AuditoryStatistic[i] ? this.AuditoryStatistic[i].percentage : 0
-                                let f = chroma.scale(['lightgreen', 'orange', 'red']).domain([0, 50, 100])
-                                return {
-                                    value: value,
-                                    itemStyle: {color: f(Number(value)).hex()}
-                                }
-                            }),
-                            type: 'bar'
-                        }]
-                    }
-                    this.chart.setOption(data);
+                    this.AuditoryStatistic = r.data; // обновляем значение AuditoryStatistic, это вызовет пересчет graphData
                 })
             } else {
                 axios.get("/api/auditories/statistic-day", {
@@ -289,37 +335,7 @@
                         auditory_id: data.auditory.id,
                     }
                 }).then(r => {
-                    this.AuditoryStatistic = r.data;
-                    let data = {
-                        title: {
-                            text: 'Статистика'
-                        },
-                        xAxis: {
-                            data: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14'],
-                            name: "День",
-                            nameLocation: 'middle',
-                            nameGap: '30'
-                        },
-                        yAxis: {
-                            type: 'value',
-                            name: "%",
-                            position: 'left',
-                            nameLocation: 'middle',
-                            nameGap: '30'
-                        },
-                        series: [{
-                            data: _.map([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], (i: any) => {
-                                let value = this.AuditoryStatistic[i] ? this.AuditoryStatistic[i].percentage : 0
-                                let f = chroma.scale(['lightgreen', 'orange', 'red']).domain([0, 50, 100])
-                                return {
-                                    value: value,
-                                    itemStyle: {color: f(Number(value)).hex()}
-                                }
-                            }),
-                            type: 'bar'
-                        }]
-                    }
-                    this.chart.setOption(data);
+                    this.AuditoryStatistic = r.data; // обновляем значение AuditoryStatistic, это вызовет пересчет graphData
                 })
             }
             this.clickedAuditory = data.auditory
