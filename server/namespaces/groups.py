@@ -4,7 +4,7 @@ from sqlalchemy import func
 from sqlalchemy.sql.functions import coalesce
 
 from models.raspnagr import Raspis, Raspnagr, Kontkurs, Kontgrp, Potoklist, Auditory
-from ways import get_full_graph, find_paths
+from ways import get_full_graph, find_path
 
 
 def pave_the_way_between_auds(aud_list):
@@ -14,7 +14,7 @@ def pave_the_way_between_auds(aud_list):
     point_sub_list = []
     for i in range(len(aud_list) - 1):
         if (aud_list[i] != aud_list[i + 1]):
-            paths = find_paths(graph, Auditory.get_new_aud_title(aud_list[i]),
+            paths = find_path(graph, Auditory.get_new_aud_title(aud_list[i]),
                                Auditory.get_new_aud_title(aud_list[i + 1]))
             for node in paths:
                 point_sub_list.append({
@@ -74,36 +74,50 @@ class GroupWayView(Resource):
 
 @api.route('/flow_view')
 class FlowView(Resource):
-    def get_data(self):
+    def get(self):
         query = Raspis.query \
-                .filter(Raspis.day == request.args.get('day')) \
-                .filter((Raspis.para == 3) | (Raspis.para == 4)) \
-                .outerjoin(Auditory, Auditory.id == Raspis.aud_id) \
-                .outerjoin(Raspnagr, Raspnagr.id == Raspis.raspnagr_id) \
-                .outerjoin(Kontgrp, Kontgrp.id == Raspnagr.kontgrp_id) \
-                .outerjoin(Kontkurs, Kontkurs.id == Raspnagr.kontkurs_id) \
-                .outerjoin(Potoklist, Potoklist.op == Raspnagr.op) \
-                .with_entities(
-                Kontgrp.kont_id,
-                Raspis.day,
-                Raspis.para,
-                Auditory.id.label("auditory_id"),
-                func.rtrim(Auditory.title).label("auditory"),
-                func.rtrim(coalesce(Potoklist.title, Kontgrp.title, Kontkurs.title)).label("group")
-            ) \
-                .order_by(Raspis.para)
+            .filter(Raspis.day == 1) \
+            .filter((Raspis.para == 3) | (Raspis.para == 4)) \
+            .filter(Kontgrp.kont_id is not None) \
+            .outerjoin(Auditory, Auditory.id == Raspis.aud_id) \
+            .outerjoin(Raspnagr, Raspnagr.id == Raspis.raspnagr_id) \
+            .outerjoin(Kontgrp, Kontgrp.id == Raspnagr.kontgrp_id) \
+            .outerjoin(Kontkurs, Kontkurs.id == Raspnagr.kontkurs_id) \
+            .outerjoin(Potoklist, Potoklist.op == Raspnagr.op) \
+            .with_entities(
+            Kontgrp.kont_id,
+            Raspis.day,
+            Raspis.para,
+            Auditory.id.label("auditory_id"),
+            func.rtrim(Auditory.title).label("auditory")
+        ) \
+            .order_by(Raspis.para, Kontgrp.kont_id)
 
-        result = [
-            {
-                'day': t.day,
-                'para': t.para_before,
-                'auditory_id': t.auditory_id,
-                'auditory': t.auditory
-            } for t in query
-        ]
-        return result
+        transitions = {}
+        transitions_list = []
+        for item in query:
+            if item.kont_id not in transitions:
+                transitions[item.kont_id] = []
+            transitions[item.kont_id].append(item.auditory)
 
-    # def get(self, instance, owner):
+        for kont_id, auditories in transitions.items():
+            if (len(auditories) != 2):
+                continue
+            transitions_list.append({
+                'kont_id': kont_id,
+                'auditories': auditories
+            })
+
+        return(transitions_list)
+
+    # def get(self):
+    #     transitions_list = self.get_list()
+    #     points = []
+    #     for i in range(len(transitions_list)):
+    #         points.append(pave_the_way_between_auds(transitions_list[i]['auditories']))
+    #     return points
+
+
 
 
 
