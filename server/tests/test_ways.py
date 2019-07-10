@@ -1,4 +1,3 @@
-import tests
 from networkx import Graph
 from ways import get_from_svg, get_full_graph, write_graph, read_graph, find_path, set_weight, get_node_by_id, get_weight
 import tests
