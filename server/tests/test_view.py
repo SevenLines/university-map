@@ -32,3 +32,6 @@ class TestTeacherView(TestCaseBase):
         # self.assertEqual(r[3]['para'], 5)
         print(r)
 
+    def test_flow_view(self):
+        r = self.api('get', '/api/groups/flow_view?day=1')
+
