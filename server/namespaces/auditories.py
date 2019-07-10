@@ -127,20 +127,45 @@ class AuditoriesDayOccupation(Resource):
         return form.errors
 
 
-@api.route("/statistic")
+@api.route("/statistic-para")
 class AuditoryStatisticsView(Resource):
     def get(self):
-        auditories = Raspis.query.filter(Raspis.aud_id == request.args['auditory_id']) \
+        auditories = Raspis.query\
+            .filter(Raspis.aud_id == request.args['auditory_id']) \
             .with_entities(
-            Raspis.para, func.count("*").label("items_count")). \
+                Raspis.para, func.count("*").label("items_count")). \
             group_by(Raspis.para)
 
-        result = [
+        result = {
+            a.para:
             {
                 'para': a.para,
                 'count': a.items_count,
-                'percentage': f"{round(a.items_count / 12 * 100)}"
+                'percentage': round(a.items_count / 16 * 100)
             } for a in auditories
-        ]
+        }
+
+        return result
+
+
+@api.route("/statistic-day")
+class AuditoryStatisticsView(Resource):
+    def get(self):
+        schedule = Raspis.query \
+            .filter(Raspis.aud_id == request.args['auditory_id']) \
+            .with_entities(
+                Raspis.day,
+                func.count("*").label("pair_count")) \
+            .group_by(Raspis.day) \
+            .order_by(Raspis.day)
+
+        result = {
+            s.day:
+            {
+                'day': s.day,
+                'count': s.pair_count,
+                'percentage': round(s.pair_count / 8 * 100)
+            } for s in schedule
+        }
 
         return result

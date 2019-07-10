@@ -1,7 +1,7 @@
 from xml.dom.minidom import parseString
+import pickle
 import math
 import networkx as nx
-import pickle
 from networkx import Graph
 
 

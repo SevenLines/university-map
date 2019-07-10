@@ -2,9 +2,9 @@ from flask import request
 from flask_restplus import Namespace, Resource
 from sqlalchemy import func
 from wtforms import Form, IntegerField
-from ways import pave_the_way_between_audiences
 
 from models.raspnagr import Teacher, Raspis, Raspnagr, Discipline, Kontkurs, Kontgrp, Potoklist, Normtime, Auditory
+from namespaces.groups import pave_the_way_between_auds
 
 api = Namespace("teachers")
 
@@ -44,8 +44,7 @@ class TeacherWayView(Resource):
         aud_list = []
         for i in range(len(schedule)):
             aud_list.append(schedule[i]['auditory'])
-        return pave_the_way_between_audiences (aud_list)
-
+        return pave_the_way_between_auds (aud_list)
 
 
 @api.route('/list')

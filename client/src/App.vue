@@ -16,8 +16,7 @@
                             v-if="teacherSelectorVisible"
                             v-model="currentTeacherIdValue"
                             :options="teachersOrdered"
-                            label="fullName"
-                    >
+                            label="fullName">
                     </multiselect>
                     <b-datepicker
                             style="margin-left: 1em"
@@ -32,7 +31,6 @@
                 </div>
             </div>
             <div style="flex-grow: 1; position: relative; background-color: #f9f9f9">
-
                 <div style="position: absolute; right: 1em; top: 1em;">
                     <b-button v-for="(level, id) in levels"
                               :key="id"
@@ -42,15 +40,28 @@
                     </b-button>
                 </div>
                 <building/>
-                 <div class="statistics-window">
-                     <h2>Статистика по аудитории</h2>
-                     <div>
-                    <!-- выводить статистику сюда -->
+
+
+                <div class="statistics-window">
+                    <h2>Статистика по аудитории</h2>
+                    <div v-if="clickedAuditory">
+                        {{ clickedAuditory.title }}
+                    </div>
+                    <div ref="graph" style="height: 400px; width: 400px"></div>
+                    <div style="display: flex">
+                        <b-select
+                                v-model="currentViewType">
+                            <option
+                                v-for="(view, id) in ViewStyle"
+                                :value="id"
+                                @click="currentViewType = id">
+                            {{ view }}
+                            </option>
+                        </b-select>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 </template>
 
@@ -60,9 +71,11 @@
     import Building from './components/Building.vue';
     import {namespace} from "vuex-class"
     import NumberSelect from "@/components/common/NumberSelect.vue"
-    import {AuditoriesLevel, AuditoriesStatisticsMode, TeacherItem} from '@/types'
+    import {AuditoriesLevel, AuditoriesStatisticsMode, AuditoryItem, TeacherItem, AuditoryStatisticsView} from '@/types'
     import {Dictionary} from "vuex"
     import EventBus from "@/utils/event_bus";
+    import axios from 'axios';
+    import echarts from 'echarts';
 
     EventBus.$off();
 
@@ -92,6 +105,11 @@
         @Auditories.State("teachers") teachers!: Dictionary<TeacherItem>;
 
         teacherFilter: string = "";
+
+        clickedAuditory: AuditoryItem | null = null;
+        AuditoryStatistic: any = {};
+        chart: any = null;
+        currentViewType: AuditoryStatisticsView = 0
 
         get currentDateValue(): Date {
             return this.currentDate;
@@ -166,6 +184,14 @@
             return this.currentMode != AuditoriesStatisticsMode.ByTeacher
         }
 
+        /* На выпадашку */
+        get ViewStyle() {
+            return {
+                [AuditoryStatisticsView.para]: "По паре",
+                [AuditoryStatisticsView.day]: "По дню",
+            }
+        }
+
         created() {
             this.fetchAuditories();
             this.fetchTeachers();
@@ -175,16 +201,88 @@
             EventBus.$on("auditoryClicked", this.onAuditoryClicked)
         }
 
+        mounted() {
+            this.chart = echarts.init(this.$refs.graph as any);
+        }
+
         // метода который будет вызываться по событию auditoryClicked
         // так как тут используется TypeScript то надо указывать тип,
         // чтобы не мучаться с типами можно просто указывать any
         onAuditoryClicked(data: any) {
-            // чтобы вывести в консоли содержимое data
-            console.log(data)
-            if (data.auditory) {
-                // вывод алерта
-                alert(`Hello auditory ${data.id} with database id=${data.auditory.id} and name=${data.auditory.title}`);
+            if (this.currentViewType == 0) {
+                axios.get("/api/auditories/statistic-para", {
+                    params: {
+                        auditory_id: data.auditory.id,
+                    }
+                }).then(r => {
+                    this.AuditoryStatistic = r.data;
+                    let data = {
+                        title: {
+                            text: 'Статистика'
+                        },
+                        xAxis: {
+                            data: ['1', '2', '3', '4', '5', '6', '7', '8'],
+                            name: "Пара",
+                            nameLocation: 'middle',
+                            nameGap: '30'
+                        },
+                        yAxis: {
+                            type: 'value',
+                            name: "%",
+                            position: 'left',
+                            nameLocation: 'middle',
+                            nameGap: '30'
+                        },
+                        series: [{
+                            data: _.map([0, 1, 2, 3, 4, 5, 6, 7], (i: any) => {
+                                return this.AuditoryStatistic[i]
+                                    ? this.AuditoryStatistic[i].percentage
+                                    : 0
+                            }),
+                            type: 'bar'
+                        }]
+                    }
+                    console.log(data)
+                    this.chart.setOption(data);
+                })
+            } else {
+                axios.get("/api/auditories/statistic-day", {
+                    params: {
+                        auditory_id: data.auditory.id,
+                    }
+                }).then(r => {
+                    this.AuditoryStatistic = r.data;
+                    let data = {
+                        title: {
+                            text: 'Статистика'
+                        },
+                        xAxis: {
+                            data: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14'],
+                            name: "День",
+                            nameLocation: 'middle',
+                            nameGap: '30'
+                        },
+                        yAxis: {
+                            type: 'value',
+                            name: "%",
+                            position: 'left',
+                            nameLocation: 'middle',
+                            nameGap: '30'
+                        },
+                        series: [{
+                            data: _.map([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], (i: any) => {
+                                return this.AuditoryStatistic[i]
+                                    ? this.AuditoryStatistic[i].percentage
+                                    : 0
+                            }),
+                            type: 'bar'
+                        }]
+                    }
+                    console.log(data)
+                    this.chart.setOption(data);
+                })
             }
+            this.clickedAuditory = data.auditory
         }
 
         onTeacherSelect(option: any) {

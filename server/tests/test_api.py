@@ -6,6 +6,10 @@ class TestAuditoriesOccupation(TestCaseBase):
         r = self.api('get', '/api/auditories/day-occupation?date=20.05.2019')
         print(r)
 
-    def test_get_stat(self):
-        r = self.api('get', '/api/auditories/statistic?auditory_id=908')
+    def test_get_stat_para(self):
+        r = self.api('get', '/api/auditories/statistic-para?auditory_id=908')
+        print(r)
+
+    def test_get_stat_day(self):
+        r = self.api('get', '/api/auditories/statistic-day?auditory_id=908')
         print(r)
