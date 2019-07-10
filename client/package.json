@@ -11,6 +11,7 @@
     "animate.css": "^3.7.0",
     "axios": "^0.18.0",
     "buefy": "^0.7.6",
+    "chroma-js": "^2.0.4",
     "core-js": "^2.6.5",
     "echarts": "^4.2.1",
     "js-cookie": "^2.2.0",
@@ -28,6 +29,7 @@
   },
   "devDependencies": {
     "@types/chai": "^4.1.0",
+    "@types/chroma-js": "^1.4.1",
     "@types/echarts": "^4.1.9",
     "@types/lodash": "^4.14.129",
     "@types/mocha": "^5.2.4",
