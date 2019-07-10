@@ -88,12 +88,19 @@ class TestGraphReading(tests.TestCaseBase):
         self.assertEqual(new_weight, old_weight + 125)
 
     # Поиск пути в правом крыле 3-его этажа
-    def find_path_3_right(self):
+    def test_find_path_3_right(self):
         print('\nначало')
         for node in find_path(self.G[3], 'enter_d304', 'enter_i303'):
             print(node.id)
         print('конец\n')
         print('\nначало')
         for node in find_path(self.G[3], 'enter_j318', 'enter_j300'):
+            print(node.id)
+        print('конец\n')
+
+    # Поиск пути в правом крыле 2-ого этажа
+    def test_find_path_2_right(self):
+        print('\nначало')
+        for node in find_path(self.G[2], 'enter_d200', 'enter_j219'):
             print(node.id)
         print('конец\n')

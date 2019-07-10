@@ -209,7 +209,7 @@ def find_path(G: Graph, start_id: str, end_id: str) -> [Node]:
     :param G: Граф
     :param start_id: id начального узла
     :param end_id:  id конечного узла
-    :return: список узлов, через который проходит путь.
+    :return: Список узлов, через которые проходит путь.
     """
     start = get_node_by_id(G, start_id)
     end = get_node_by_id(G, end_id)
