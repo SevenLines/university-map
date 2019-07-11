@@ -34,25 +34,27 @@ def get_paths_dict(aud_list):
                 occupation[key]['counter'] += 1
     return occupation
 
-
 def pave_the_way_between_auds(aud_list):
-    svg_files = ['../../Data/0этаж.svg', '../../Data/1этаж.svg', '../../Data/2этаж.svg', '../../Data/3этаж.svg']
-    graph = get_full_graph(svg_files, [0, 1, 2, 3])
     point_list = []
     point_sub_list = []
+
     for i in range(len(aud_list) - 1):
-        if (aud_list[i] != aud_list[i + 1]):
-            paths = find_path(graph, Auditory.get_new_aud_title(aud_list[i]),
-                              Auditory.get_new_aud_title(aud_list[i + 1]))
-            for node in paths:
-                point_sub_list.append({
-                    'x': node.x,
-                    'y': node.y,
-                    'level': node.floor
-                })
-            point_sub_list[0]['aud'] = aud_list[i]
-            point_sub_list[-1]['aud'] = aud_list[i + 1]
-            point_list += point_sub_list
+        pair_auds = []
+        pair_auds.append(aud_list[i])
+        pair_auds.append(aud_list[i+1])
+        path = get_path(pair_auds)
+
+        for node in path:
+            point_sub_list.append({
+                'x': node.x,
+                'y': node.y,
+                'level': node.floor
+            })
+
+        point_sub_list[0]['aud'] = aud_list[i]
+        point_sub_list[-1]['aud'] = aud_list[i + 1]
+
+    point_list += point_sub_list
     return point_list
 
 
