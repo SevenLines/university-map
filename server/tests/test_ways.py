@@ -1,5 +1,6 @@
 from networkx import Graph
-from ways import get_from_svg, get_full_graph, write_graph, read_graph, find_path, set_weight, get_node_by_id, get_weight
+from ways import get_from_svg, get_full_graph, write_graph, read_graph, \
+    find_path, set_weight, get_node_by_id, get_weight
 import tests
 
 
@@ -16,17 +17,16 @@ class TestGraphReading(tests.TestCaseBase):
 
     def setUp(self):
         super(TestGraphReading, self).setUp()
-        self.G = [Graph() for _ in range(4)]
-        self.G[2] = read_graph(self.bin_files[2])
-        self.G[3] = read_graph(self.bin_files[3])
+        self.G = [read_graph(self.bin_files[i]) for i in range(4)]
+        self.full_graph = read_graph(self.full_file)
 
     # Третий этаж читается из svg
-    def test_get_third_floor(self):
+    def test_get_3_floor(self):
         self.assertTrue(len(self.G[3].nodes) > 300)
         self.assertTrue(len(self.G[3].edges) > 300)
 
     # Второй этаж читается из svg
-    def test_get_second_floor(self):
+    def test_get_2_floor(self):
         self.assertTrue(len(self.G[2].nodes) > 300)
         self.assertTrue(len(self.G[2].edges) > 300)
 
@@ -37,14 +37,14 @@ class TestGraphReading(tests.TestCaseBase):
         read_graph(save)
 
     # Поиск пути на третьем этаже
-    def test_find_path3(self):
+    def test_find_path_3(self):
         print('\nначало')
         for node in find_path(self.G[3], 'enter_g303', 'enter_v316'):
             print(node.id)
         print('конец\n')
 
     # Поиск пути на втором этаже
-    def test_find_path2(self):
+    def test_find_path_2(self):
         print('\nначало')
         for node in find_path(self.G[2], 'enter_g203', 'enter_v216'):
             print(node.id)
@@ -68,10 +68,9 @@ class TestGraphReading(tests.TestCaseBase):
             f.write(line)
         f.close()
 
-    # Поиск пути между этажами
-    def test_find_path_between_floors(self):
-        full_graph = read_graph(self.full_file)
-        path = find_path(full_graph, 'enter_v216', 'enter_v316')
+    # Поиск пути между 2-ым и 3-ий этажами
+    def test_find_path_2_3(self):
+        path = find_path(self.full_graph, 'enter_v216', 'enter_v316')
         print('\nначало')
         for node in path:
             print(node.id)
@@ -102,5 +101,19 @@ class TestGraphReading(tests.TestCaseBase):
     def test_find_path_2_right(self):
         print('\nначало')
         for node in find_path(self.G[2], 'enter_d200', 'enter_j219'):
+            print(node.id)
+        print('конец\n')
+
+    # Поиск пути на 1-ом этаже
+    def test_find_path_1(self):
+        print('\nначало')
+        for node in find_path(self.G[1], 'enter_v105', 'enter_d103'):
+            print(node.id)
+        print('конец\n')
+
+    # Поиск пути с 1-ого на 3-ий этаж
+    def test_find_path_1_3(self):
+        print('\nначало')
+        for node in find_path(self.full_graph, 'enter_v105', 'enter_k311'):
             print(node.id)
         print('конец\n')

@@ -26,8 +26,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.87885425"
-     inkscape:cx="1864.7085"
-     inkscape:cy="425.17818"
+     inkscape:cx="1105.8182"
+     inkscape:cy="491.72223"
      inkscape:document-units="mm"
      inkscape:current-layer="ways_layer"
      showgrid="false"
@@ -2374,7 +2374,7 @@
        sodipodi:nodetypes="cc" />
     <path
        style="display:inline;fill:none;fill-opacity:1;stroke:#00ff00;stroke-width:0.12701966;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:0.25403932, 0.12701966;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
-       d="m 190.51603,120.06881 v 16.14238"
+       d="m 190.51603,120.06881 -0.007,14.01825"
        id="path4829-5-8-2-9-1-6-0-1-4-9-0-6-4-8-9-5-9-3-7-7-5-7"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />
@@ -2416,13 +2416,13 @@
        sodipodi:nodetypes="cc" />
     <path
        style="display:inline;fill:none;fill-opacity:1;stroke:#00ff00;stroke-width:0.12701966;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:0.25403932, 0.12701966;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
-       d="m 173.70853,134.08706 h 9.58173"
+       d="m 173.70853,134.08706 h 16.8005"
        id="path305-7-9-5-3-5"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />
     <path
        style="display:inline;fill:none;fill-opacity:1;stroke:#00ff00;stroke-width:0.12701966;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:0.25403932, 0.12701966;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
-       d="m 183.29026,134.08706 0.007,2.12413"
+       d="m 190.50903,134.08706 0.007,2.12413"
        id="path4829-5-8-2-9-1-6-0-1-4-9-0-6-4-8-9-5-9-3-7-7-5-7-3"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />
@@ -2520,7 +2520,7 @@
        sodipodi:nodetypes="cc"
        inkscape:connector-curvature="0"
        id="path671-2"
-       d="m 183.29686,136.21119 h 7.21917"
+       d="m 183.29686,146.4017 h 7.21917"
        style="display:inline;fill:none;fill-opacity:1;stroke:#00ff00;stroke-width:0.11729339;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:0.23458678, 0.11729339;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal" />
     <path
        sodipodi:nodetypes="cc"
@@ -4241,7 +4241,7 @@
     <circle
        style="display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
        r="0.26726952"
-       cy="134.08133"
+       cy="146.38506"
        cx="183.27406"
        id="stairs_v_2_end" />
     <circle
