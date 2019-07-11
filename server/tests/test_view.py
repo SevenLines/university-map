@@ -33,14 +33,7 @@ class TestTeacherView(TestCaseBase):
         print(r)
 
     def test_get_flow_view(self):
-        r = self.api('get', '/api/groups/flow_view')
+        r = self.api('get', '/api/groups/flow_view?day=1&para=3')
         print(r)
 
-
-    def test_arr(self):
-        arr = [1,2,3,4]
-        for i in range(len(arr)-1):
-            pair = []
-            pair.append(arr[i],arr[i+1])
-            print(pair)
 

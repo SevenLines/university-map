@@ -11,9 +11,10 @@ def get_path(aud):
     graph = get_full_graph(svg_files, [0, 1, 2, 3])
     for i in range(len(aud) - 1):
         if (aud[i] != aud[i + 1]):
-            paths = find_path(graph, Auditory.get_new_aud_title(aud[i]),
+            path = find_path(graph, Auditory.get_new_aud_title(aud[i]),
                              Auditory.get_new_aud_title(aud[i + 1]))
-    return paths
+        else: return None
+    return path
 
 
 def get_paths_dict(aud_list):
@@ -44,22 +45,21 @@ def pave_the_way_between_auds(aud_list):
         pair_auds.append(aud_list[i+1])
         path = get_path(pair_auds)
 
-        for node in path:
-            point_sub_list.append({
-                'x': node.x,
-                'y': node.y,
-                'level': node.floor
-            })
-
-        point_sub_list[0]['aud'] = aud_list[i]
-        point_sub_list[-1]['aud'] = aud_list[i + 1]
+        if (path is not None):
+            for node in path:
+                point_sub_list.append({
+                    'x': node.x,
+                    'y': node.y,
+                    'level': node.floor
+                })
+            point_sub_list[0]['aud'] = aud_list[i]
+            point_sub_list[-1]['aud'] = aud_list[i + 1]
 
     point_list += point_sub_list
     return point_list
 
 
 api = Namespace("groups")
-
 
 @api.route('/way_view_groups')
 class GroupWayView(Resource):
@@ -107,8 +107,8 @@ class GroupWayView(Resource):
 class FlowView(Resource):
     def get_list(self):
         query = Raspis.query \
-            .filter(Raspis.day == 1) \
-            .filter((Raspis.para == 3) | (Raspis.para == 4)) \
+            .filter(Raspis.day == request.args.get('day')) \
+            .filter((Raspis.para == request.args.get('para')) | (Raspis.para == 4)) \
             .filter(Kontgrp.kont_id is not None) \
             .outerjoin(Auditory, Auditory.id == Raspis.aud_id) \
             .outerjoin(Raspnagr, Raspnagr.id == Raspis.raspnagr_id) \
