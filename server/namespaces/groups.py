@@ -6,31 +6,32 @@ from sqlalchemy.sql.functions import coalesce
 from models.raspnagr import Raspis, Raspnagr, Kontkurs, Kontgrp, Potoklist, Auditory
 from ways import get_full_graph, find_path
 
-
-def get_path(aud_list):
+def get_path(aud):
     svg_files = ['../../Data/0этаж.svg', '../../Data/1этаж.svg', '../../Data/2этаж.svg', '../../Data/3этаж.svg']
     graph = get_full_graph(svg_files, [0, 1, 2, 3])
+    for i in range(len(aud) - 1):
+        if (aud[i] != aud[i + 1]):
+            paths = find_path(graph, Auditory.get_new_aud_title(aud[i]),
+                             Auditory.get_new_aud_title(aud[i + 1]))
+    return paths
+
+
+def get_paths_dict(aud_list):
     paths=[]
     occupation = {}
-    for
-    for i in range(len(aud_list) - 1):
-        if (aud_list[i] != aud_list[i + 1]):
-            path = find_path(graph, Auditory.get_new_aud_title(aud_list[i]),
-                              Auditory.get_new_aud_title(aud_list[i + 1]))
-
-
-            for path in paths:
-                for node in paths:
-                    key = f"{node.x}{node.y}{node.floor}"
-                    if key not in occupation:
-                        occupation[key] = {
-                            'x': node.x,
-                            'y': node.y,
-                            'level': node.floor,
-                            'counter': 0
-                        }
-                    occupation[key]['counter'] += 1
-
+    for i in range(len(aud_list)):
+        paths.append(get_path(aud_list[i]))
+        for path in paths:
+            for node in path:
+                key = f"{node.x}{node.y}{node.floor}"
+                if key not in occupation:
+                    occupation[key] = {
+                        'x': node.x,
+                        'y': node.y,
+                        'level': node.floor,
+                        'counter': 0
+                    }
+                occupation[key]['counter'] += 1
     return occupation
 
 
@@ -141,13 +142,5 @@ class FlowView(Resource):
     def get(self):
         transitions_list = self.get_list()
         transitions = [['Г-303', 'Г-203'], ['Г-203', 'Г-303'], ['Г-305', 'Г-306']]
-        # points = []
-        density = 0
-        # for i in range(len(transitions)):
-        #     points.append(pave_the_way_between_auds(transitions[i]))
-
-        # for i in range(len(transitions_list)):
-        #    points.append (transitions_list[i]['auditories'])
-        occupation_map = []
-        occupation_map.append(get_path(transitions))
+        occupation_map = [get_paths_dict(transitions)]
         return occupation_map
