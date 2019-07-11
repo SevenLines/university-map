@@ -75,6 +75,8 @@ class TestQuery(tests.TestCaseBase):
                 .filter(Raspis.day == 1) \
                 .filter((Raspis.para == 3) | (Raspis.para == 4)) \
                 .filter(Kontgrp.kont_id is not None) \
+                .filter(Auditory.id is not None) \
+                .filter(func.rtrim(Auditory.title) is not None) \
                 .outerjoin(Auditory, Auditory.id == Raspis.aud_id) \
                 .outerjoin(Raspnagr, Raspnagr.id == Raspis.raspnagr_id) \
                 .outerjoin(Kontgrp, Kontgrp.id == Raspnagr.kontgrp_id) \

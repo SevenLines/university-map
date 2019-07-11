@@ -6,8 +6,7 @@ from sqlalchemy.sql.functions import coalesce
 from models.raspnagr import Raspis, Raspnagr, Kontkurs, Kontgrp, Potoklist, Auditory
 from ways import get_full_graph, find_path
 
-
-def pave_the_way_between_auds(aud_list):
+def pave_the_way_between_auds(aud_list, points: bool):
     svg_files = ['../../Data/0этаж.svg', '../../Data/1этаж.svg', '../../Data/2этаж.svg', '../../Data/3этаж.svg']
     graph = get_full_graph(svg_files, [0, 1, 2, 3])
     point_list = []
@@ -16,16 +15,18 @@ def pave_the_way_between_auds(aud_list):
         if (aud_list[i] != aud_list[i + 1]):
             paths = find_path(graph, Auditory.get_new_aud_title(aud_list[i]),
                                Auditory.get_new_aud_title(aud_list[i + 1]))
-            for node in paths:
-                point_sub_list.append({
-                    'x': node.x,
-                    'y': node.y,
-                    'level': node.floor
-                })
-            point_sub_list[0]['aud'] = aud_list[i]
-            point_sub_list[-1]['aud'] = aud_list[i + 1]
-            point_list += point_sub_list
-    return point_list
+            if(points == True):
+                for node in paths:
+                     point_sub_list.append({
+                       'x': node.x,
+                       'y': node.y,
+                       'level': node.floor
+                    })
+                point_sub_list[0]['aud'] = aud_list[i]
+                point_sub_list[-1]['aud'] = aud_list[i + 1]
+                point_list += point_sub_list
+                return point_list
+        return paths
 
 api = Namespace("groups")
 
@@ -69,12 +70,12 @@ class GroupWayView(Resource):
         aud_list = []
         for i in range(len(schedule)):
             aud_list.append(schedule[i]['auditory'])
-        return pave_the_way_between_auds(aud_list)
+        return pave_the_way_between_auds(aud_list, True)
 
 
 @api.route('/flow_view')
 class FlowView(Resource):
-    def get(self):
+    def get_list(self):
         query = Raspis.query \
             .filter(Raspis.day == 1) \
             .filter((Raspis.para == 3) | (Raspis.para == 4)) \
@@ -110,12 +111,21 @@ class FlowView(Resource):
 
         return(transitions_list)
 
-    # def get(self):
-    #     transitions_list = self.get_list()
-    #     points = []
-    #     for i in range(len(transitions_list)):
-    #         points.append(pave_the_way_between_auds(transitions_list[i]['auditories']))
-    #     return points
+    def get(self):
+        transitions_list = self.get_list()
+        transitions = [['Г-303', 'Г-203'], ['Г-203', 'Г-303'], ['Г-305', 'Г-306']]
+        points = []
+        paths =[]
+        density = 0
+        for i in range(len(transitions)):
+           paths.append(pave_the_way_between_auds(transitions[i]))
+        # for i in range(len(transitions_list)):
+        #    points.append (transitions_list[i]['auditories'])
+
+
+
+        return paths
+
 
 
 
