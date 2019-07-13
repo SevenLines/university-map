@@ -35,5 +35,3 @@ class TestTeacherView(TestCaseBase):
     def test_get_flow_view(self):
         r = self.api('get', '/api/groups/flow_view?day=1&para=3')
         print(r)
-
-

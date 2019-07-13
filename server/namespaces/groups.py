@@ -105,6 +105,7 @@ class GroupWayView(Resource):
 
 @api.route('/flow_view')
 class FlowView(Resource):
+ 
     def get_list(self):
         query = Raspis.query \
             .filter(Raspis.day == request.args.get('day')) \
@@ -140,7 +141,7 @@ class FlowView(Resource):
             })
 
         return (transitions_list)
-
+ 
     def get(self):
         transitions_list = self.get_list()
         transitions = [['Г-303', 'Г-203'], ['Г-203', 'Г-303'], ['Г-305', 'Г-306']]
