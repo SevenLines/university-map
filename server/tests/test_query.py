@@ -69,3 +69,41 @@ class TestQuery(tests.TestCaseBase):
 
             for item in schedule:
                 print(f"Пара: {item.para}  Аудитория: {item.auditory}  Аудитория_id: {item.auditory_id} Группа: {item.group} ")
+
+        def test_group(self):
+            query = Raspis.query \
+                .filter(Raspis.day == 1) \
+                .filter((Raspis.para == 3) | (Raspis.para == 4)) \
+                .filter(Kontgrp.kont_id is not None) \
+                .filter(Auditory.id is not None) \
+                .filter(func.rtrim(Auditory.title) is not None) \
+                .outerjoin(Auditory, Auditory.id == Raspis.aud_id) \
+                .outerjoin(Raspnagr, Raspnagr.id == Raspis.raspnagr_id) \
+                .outerjoin(Kontgrp, Kontgrp.id == Raspnagr.kontgrp_id) \
+                .outerjoin(Kontkurs, Kontkurs.id == Raspnagr.kontkurs_id) \
+                .outerjoin(Potoklist, Potoklist.op == Raspnagr.op) \
+                .with_entities(
+                Kontgrp.kont_id,
+                Raspis.day,
+                Raspis.para,
+                Auditory.id.label("auditory_id"),
+                func.rtrim(Auditory.title).label("auditory")
+            ) \
+                .order_by(Raspis.para, Kontgrp.kont_id)
+
+            transitions = {}
+            transitions_list =[]
+            for item in query:
+                if item.kont_id not in transitions:
+                    transitions[item.kont_id] = []
+                transitions[item.kont_id].append(item.auditory)
+
+            for kont_id, auditories in transitions.items():
+                if (len(auditories) != 2):
+                    continue
+                transitions_list.append({
+                    'kont_id': kont_id,
+                    'auditories': auditories
+                })
+            print(transitions_list)
+

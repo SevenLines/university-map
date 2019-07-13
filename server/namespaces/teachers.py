@@ -44,7 +44,7 @@ class TeacherWayView(Resource):
         aud_list = []
         for i in range(len(schedule)):
             aud_list.append(schedule[i]['auditory'])
-        return pave_the_way_between_auds (aud_list)
+        return pave_the_way_between_auds(aud_list)
 
 
 @api.route('/list')
