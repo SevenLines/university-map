@@ -169,3 +169,25 @@ class AuditoryStatisticsView(Resource):
         }
 
         return result
+
+
+@api.route("/statistic-ext")
+class AuditoryStatisticDayExt(Resource):
+    def get(self):
+        schedule = RaspisZaoch.query \
+            .filter(RaspisZaoch.aud == request.args['auditory_id']) \
+            .with_entities(
+                RaspisZaoch.dt,
+                RaspisZaoch.para,
+                RaspisZaoch.hours) \
+            .order_by(RaspisZaoch.dt)
+
+        result = {
+            s.dt.strftime("%Y-%m-%d"): {
+                'dt': s.dt.strftime("%Y-%m-%d"),
+                'para': s.para,
+                'hours': s.hours
+            } for s in schedule
+        }
+
+        return result

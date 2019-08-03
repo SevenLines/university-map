@@ -1,5 +1,5 @@
 <template :src="`template/${template}`">
-    
+
 </template>
 
 <script lang="ts">
