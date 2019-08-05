@@ -218,9 +218,15 @@
                 }]
             }
         }
-// Календарь
+        // Календарь
         get chartDayExt(): any {
             console.log(this.AuditoryStatisticDayExt)  // ??? Не получается достать дату T.T
+            // доступ к данным так
+            let data = Object.values(this.AuditoryStatisticDayExt).map((i : any) => [i.dt, i.hours]);
+            // или так
+            // let data = _.map(this.AuditoryStatisticDayExt, i => [i.dt, i.hours]);
+            console.log(data)
+
             return {
                 visualMap: {
                     show: false,
@@ -254,23 +260,13 @@
                     monthLabel: {
                         show: true
                     },
-                    range: '2018-06'
+                    range: '2019-04'
                 }],
                 series: [{
-                    type: 'scatter',
-                    coordinateSystem: 'calendar',
-                    symbolSize: 1,
-                    data: 1
-                }, {
-                    type: 'scatter',
-                    coordinateSystem: 'calendar',
-                    symbolSize: 1,
-                    data: 1
-                }, {
-                    name: '降雨量',
                     type: 'heatmap',
                     coordinateSystem: 'calendar',
-                    data: 1
+                    symbolSize: 1,
+                    data: data // подключил
                 }]
             }
         }
