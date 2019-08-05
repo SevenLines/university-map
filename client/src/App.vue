@@ -1,81 +1,85 @@
 <template>
-    <div id="app" style="height: 100%;">
-        <div style="display: flex; flex-direction: column; height: 100%">
-            <div style="display: flex; padding: 0.5em 1em">
-                <div style="display: flex">
-                    <b-select placeholder="Select a name" v-model="modeValue">
-                        <option
-                                v-for="(mode, id) in modes"
-                                :value="id"
-                                :key="id">
-                            {{ mode }}
-                        </option>
-                    </b-select>
-                    <multiselect
-                            style="margin-left: 1em; width: 400px"
-                            v-if="teacherSelectorVisible"
-                            v-model="currentTeacherIdValue"
-                            :options="teachersOrdered"
-                            label="fullName">
-                    </multiselect>
-                    <b-datepicker
-                            style="margin-left: 1em"
-                            v-if="dateIsVisible"
-                            v-model="currentDateValue"
-                            placeholder="Click to select..."
-                            icon="calendar-today">
-                    </b-datepicker>
-                </div>
-                <div style="align-self: flex-end" v-if="pairsSelectorVisible">
-                    <NumberSelect v-model="currentPairValue"/>
-                </div>
-            </div>
-            <div style="flex-grow: 1; position: relative; background-color: #f9f9f9">
-                <div style="position: absolute; right: 1em; top: 1em;">
-                    <b-button v-for="(level, id) in levels"
-                              :key="id"
-                              style="margin-right: 0.5em"
-                              @click="currentLevelValue = id"
-                              :type="currentLevelValue == id ? 'is-primary': ''">
-                        {{level}}
-                    </b-button>
-                </div>
-                <building/>
-                <div class="statistics-window">
-                    <div style="height: 3em; margin-bottom: 0.5em; margin-top: 0.5em">
-                        <h2>Статистика по аудитории</h2>
-                        <div v-if="clickedAuditory">
-                            {{ clickedAuditory.title }}
-                        </div>
-                    </div>
-                    <section>
-                        <button class="button is-primary is-medium"
-                                @click="isModalActive = true">
-                            Показать статистику
-                        </button>
-                        <b-modal :active.sync="isModalActive" :width="1000" scroll="keep">
-                            <div class="card">
-                                <div class="card-content">
-                                    <div class="media">
-                                        <div class="media-left">
-                                            <div ref="graph" style="height: 400px; width: 450px"></div>
-                                        </div>
-                                        <div class="media-right">
-                                            <div ref="graph2" style="height: 400px; width: 450px"></div>
-                                        </div>
-                                    </div>
-                                    <button class="button is-primary is-medium"
-                                            @click="isModalActive = false">
-                                        Назад
-                                    </button>
-                                </div>
-                            </div>
-                        </b-modal>
-                    </section>
-                </div>
-            </div>
+  <div id="app" style="height: 100%;">
+    <div style="display: flex; flex-direction: column; height: 100%">
+      <div style="display: flex; padding: 0.5em 1em">
+        <div style="display: flex">
+          <b-select placeholder="Select a name" v-model="modeValue">
+            <option
+                v-for="(mode, id) in modes"
+                :value="id"
+                :key="id">
+              {{ mode }}
+            </option>
+          </b-select>
+          <multiselect
+              style="margin-left: 1em; width: 550px"
+              v-if="teacherSelectorVisible"
+              v-model="currentTeacherIdValue"
+              :options="teachersOrdered"
+              label="fullName"
+              placeholder="Select teacher">
+          </multiselect>
+          <b-datepicker
+              style="margin-left: 1em"
+              v-if="dateIsVisible"
+              v-model="currentDateValue"
+              placeholder="Click to select..."
+              icon="calendar-today">
+          </b-datepicker>
         </div>
+        <div style="align-self: flex-end" v-if="pairsSelectorVisible">
+          <NumberSelect v-model="currentPairValue"/>
+        </div>
+      </div>
+      <div style="flex-grow: 1; position: relative; background-color: #f9f9f9">
+        <div style="position: absolute; right: 1em; top: 1em;">
+          <b-button v-for="(level, id) in levels"
+                    :key="id"
+                    style="margin-right: 0.5em"
+                    @click="currentLevelValue = id"
+                    :type="currentLevelValue == id ? 'is-primary': ''">
+            {{level}}
+          </b-button>
+        </div>
+        <building/>
+        <div class="statistics-window">
+          <div style="height: 3em; margin-bottom: 0.5em; margin-top: 0.5em">
+            <h2>Статистика по аудитории</h2>
+            <div v-if="clickedAuditory">
+              {{ clickedAuditory.title }}
+            </div>
+          </div>
+          <section>
+            <button class="button is-primary is-medium"
+                    @click="isModalActive = true">
+              Показать статистику
+            </button>
+            <b-modal :active.sync="isModalActive" :width="1000" scroll="keep">
+              <div class="card">
+                <div class="card-content">
+                  <div class="media">
+                    <div class="media-left">
+                      <div ref="graph" style="height: 400px; width: 450px"></div>
+                    </div>
+                    <div class="media-right">
+                      <div ref="graph2" style="height: 400px; width: 450px"></div>
+                    </div>
+                  </div>
+                  <div class="content">
+                    <div ref="graph3" style="height: 400px; width: 450px"></div>
+                  </div>
+                  <button class="button is-primary is-medium"
+                          @click="isModalActive = false">
+                    Назад
+                  </button>
+                </div>
+              </div>
+            </b-modal>
+          </section>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -123,6 +127,7 @@
         clickedAuditory: AuditoryItem | null = null
         AuditoryStatisticPair: any = {}
         AuditoryStatisticDay: any = {}
+        AuditoryStatisticDayExt: any = {}
         isModalActive: boolean = false
 
         @Watch("isModalActive")
@@ -133,6 +138,8 @@
                     chart.setOption(this.chartPara)
                     let chart2 = echarts.init(this.$refs.graph2 as any)
                     chart2.setOption(this.chartDay)
+                    let chart3 = echarts.init(this.$refs.graph3 as any)
+                    chart3.setOption(this.chartDayExt)
                 })
             }
         }
@@ -208,6 +215,58 @@
                         }
                     }),
                     type: 'bar'
+                }]
+            }
+        }
+        // Календарь
+        get chartDayExt(): any {
+            console.log(this.AuditoryStatisticDayExt)  // ??? Не получается достать дату T.T
+            // доступ к данным так
+            let data = Object.values(this.AuditoryStatisticDayExt).map((i : any) => [i.dt, i.hours]);
+            // или так
+            // let data = _.map(this.AuditoryStatisticDayExt, i => [i.dt, i.hours]);
+            console.log(data)
+
+            return {
+                visualMap: {
+                    show: false,
+                    min: 0,
+                    max: 300,
+                    calculable: true,
+                    seriesIndex: [2],
+                    orient: 'horizontal',
+                    left: 'center',
+                    bottom: 20,
+                    inRange: {
+                        color: ['#e0ffff', '#006edd'],
+                        opacity: 0.3
+                    },
+                    controller: {
+                        inRange: {
+                            opacity: 0.5
+                        }
+                    }
+                },
+                calendar: [{
+                    left: 'center',
+                    top: 'middle',
+                    cellSize: [70, 70],
+                    yearLabel: {show: true},
+                    orient: 'vertical',
+                    dayLabel: {
+                        firstDay: 1,
+                        nameMap: 'en'
+                    },
+                    monthLabel: {
+                        show: true
+                    },
+                    range: '2019-04'
+                }],
+                series: [{
+                    type: 'heatmap',
+                    coordinateSystem: 'calendar',
+                    symbolSize: 1,
+                    data: data // подключил
                 }]
             }
         }
@@ -317,6 +376,14 @@
                 this.AuditoryStatisticDay = r.data
             })
 
+            axios.get("/api/auditories/statistic-ext", {
+                params: {
+                    auditory_id: data.auditory.id
+                }
+            }).then(r => {
+                this.AuditoryStatisticDayExt = r.data
+            })
+
             this.clickedAuditory = data.auditory
         }
 
@@ -328,39 +395,39 @@
 
 
 <style lang="scss">
-    /*@import "~iview/dist/styles/iview.css";*/
-    @import "~tippy.js/index.css";
-    @import "~animate.css/animate.css";
-    @import '~buefy/dist/buefy.css';
-    @import '~vue-multiselect/dist/vue-multiselect.min.css';
+  /*@import "~iview/dist/styles/iview.css";*/
+  @import "~tippy.js/index.css";
+  @import "~animate.css/animate.css";
+  @import '~buefy/dist/buefy.css';
+  @import '~vue-multiselect/dist/vue-multiselect.min.css';
 
 
-    body {
-        margin: 0;
-        padding: 0;
-    }
+  body {
+    margin: 0;
+    padding: 0;
+  }
 
-    .statistics-window {
-        position: absolute;
-        left: 1em;
-        top: 1em;
-        padding: 1em;
-        background-color: white;
-    }
+  .statistics-window {
+    position: absolute;
+    left: 1em;
+    top: 1em;
+    padding: 1em;
+    background-color: white;
+  }
 
-    #app {
-        font-family: 'Avenir', Helvetica, Arial, sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        text-align: center;
-        color: #2c3e50;
-    }
+  #app {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+  }
 
-    .vs__selected {
-        white-space: nowrap;
-        max-width: 100px;
-        text-overflow: ellipsis;
-    }
+  .vs__selected {
+    white-space: nowrap;
+    max-width: 100px;
+    text-overflow: ellipsis;
+  }
 
 
 </style>

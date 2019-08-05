@@ -13,3 +13,7 @@ class TestAuditoriesOccupation(TestCaseBase):
     def test_get_stat_day(self):
         r = self.api('get', '/api/auditories/statistic-day?auditory_id=908')
         print(r)
+
+    def test_get_stat_day_ext(self):
+        r = self.api('get', '/api/auditories/statistic-ext?auditory_id=908')
+        print(r)
