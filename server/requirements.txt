@@ -1,5 +1,5 @@
 Flask==1.0.3
-PyYaml==5.1
+PyYaml==5.4
 flask-restplus==0.11.0
 Flask-SQlAlchemy==2.4
 Flask-WTF==0.14.2
